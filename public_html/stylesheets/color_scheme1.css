@@ -1,0 +1,41 @@
+/*
+Purple - #300032  
+Black  - #06000a 
+Red    - #c43235
+*/
+
+
+body {
+    background-color: #300032;
+}
+
+#header {
+    background-color: #06000a;
+}
+
+#header-title {
+    color: #e6e6ff;
+}
+
+.map-button {
+    color: #c43235;
+    background-color: #06000a;
+    font-weight: 700;
+    border: none;
+}
+
+
+.map-button.active.focus,
+.map-button.active:hover,
+.map-button:active.focus,
+.map-button:active:focus,
+.map-button:active:hover,
+.map-button.focus,
+.map-button:focus,
+.map-button:active,
+.map-button.active,
+.map-button.active:focus,
+.map-button:hover {
+    color: #06000a;
+    background-color: #c43235;
+}

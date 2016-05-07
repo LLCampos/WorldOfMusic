@@ -1,0 +1,63 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffccff;
+}
+
+
+#list_of_artists {
+    display: inline-block;
+}
+
+#list_of_artists li:hover {
+    cursor: pointer;
+}
+
+select option:disabled {
+	display: none;
+	color: #808080;
+}
+
+#artist_info {
+    position: relative;
+    left: 100px;
+}
+
+
+/* ARTIST INFO BOX */
+
+#artist_info {
+    display: inline-block;
+    padding: 20px;
+    border: 1px groove rgba(112,112,112, 1);
+    background-color: rgba(112,112,112, 0.05);
+}
+
+#artist_info_main_div {
+    width: 350px;
+    height: 315px;
+    display: inline-block;
+}
+
+.artist-picture {
+    border-radius: 50%;
+}
+
+#artist_info .artist-picture {
+    display: inline-block;
+    float: left;
+    margin: 15px;
+}
+
+#artist_youtube_video {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+#artist_tweets {
+    display: inline-block;
+}

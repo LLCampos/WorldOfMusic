@@ -1,0 +1,51 @@
+#country_description {
+    font-family:'Open Sans', sans-serif;
+    font-size: 100%;
+    font-weight:400;
+	border: 0.3em solid #FF9933;
+    padding: 1em 4em;
+    width: 90%;
+    border-radius: 5em;
+	margin: auto;
+
+}
+
+#country_name {
+	text-align: center;
+	color: white;
+	margin: 1em;
+	border: 0.1em solid #FF9933;
+    border-radius: 2em;
+    padding: 0.1em;
+	background-color: #FF9933;
+}
+
+.title {
+	display: inline;
+	font-weight: bold;
+}
+
+#country_zone_capital,
+#country_zone_population,
+#country_zone_region,
+#country_zone_subregion,
+#country_zone_music_description, {
+	margin-bottom: 1
+}
+
+#country_description{
+	background-color: #202020;
+	color: white;
+	font-family:'Open Sans', sans-serif;
+    font-size:1em;
+    font-weight:400em;
+	text-align: justify;
+}
+
+#country_zone_flag {
+	float: right;
+    margin: 1em;
+	border: 0.1em solid white;
+    border-radius: 0.3em;
+    padding: 0.3em;
+}

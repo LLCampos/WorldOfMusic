@@ -1,0 +1,78 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+	<title>Artists</title>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link type="text/css" rel="stylesheet" href="main_artist.css"/>
+	<link type="text/css" rel="stylesheet" href="color_scheme_artists.css"/>
+</head>
+<body>
+<header id="header-artist">
+	<div id = "container">
+		<div id = "Name" vocab = "http://schema.org/" typeof = "MusicGroup" property = "name">Justin Timberlake</div>
+	</div>
+</header>
+
+<section id = "links-stuff">
+	<div id = "lastfm-facebook-twitter">
+		<p id = "links"><b>Links:</b></p>
+		<a id = "lastfm-logo-link" href = "http://www.last.fm/pt/music/Justin+Timberlake"> <img id = "lastfm-logo-pic" src="lastfm-logo.png"> </a> 
+			<p id = "lastfm-listeners">
+				<div property="interactionStatistic" typeof="InteractionCounter">
+					<div property="interactionService" itemscope itemid="https://www.last.fm/" itemtype="http://schema.org/Website">
+						<meta property="name" content="Last.fm" />
+					</div>
+      				<link property="interactionType" href="http://schema.org/LikeAction"/>
+      				<span id = "number-of-lastfm-listeners"property="userInteractionCount" content="last fm listeners">last fm listeners</span>
+      			</div>					
+			</p>
+		<a id = "facebook-logo-link" href = "https://www.facebook.com/justintimberlake/?fref=ts"> <img id = "facebook-logo-pic"src="facebook-logo.png"> </a>
+			<p id = "facebook-likes">
+			    <div property="interactionStatistic" typeof="InteractionCounter">
+      				<div property="interactionService" itemscope itemid="https://www.facebook.com" itemtype="http://schema.org/Website">
+        				<meta property="name" content="Facebook" />
+      				</div>
+      				<link property="interactionType" href="http://schema.org/LikeAction"/>
+      				<span id = "number-of-facebook-likes"property="userInteractionCount" content="Facebook Like Count">Facebook Like Count</span>
+    			</div>
+			</p>
+ 		<a id = "twitter-logo-link" href="https://twitter.com/jtimberlake?lang=pt"> <img id = "twitter-logo-pic"src="twitter-logo.png"> </a>
+ 			<p id = "twitters-followers">
+ 				<div property="interactionStatistic" typeof="InteractionCounter">
+      				<div property="interactionService" itemscope itemid="https://twitter.com" itemtype="http://schema.org/SoftwareApplication">
+        				<meta property="name" content="Twitter" />
+      				</div>
+      				<link property="interactionType" href="http://schema.org/LikeAction"/>
+      				<span id = "number-of-twitters-followers"property="userInteractionCount" content="Twitter Count">Twitter Count</span>
+    			</div>
+ 			</p>
+	</div>
+
+ 	<div id = "youtube" property="video" typeof="VideoObject">
+ 		<iframe width="640" height="360" src="https://www.youtube.com/embed/uuZE_IRwLNI" frameborder="0" allowfullscreen></iframe>
+ 	</div>	 	
+
+	<div id = "biography">
+		<p><b><span property = "description">Biography</span></b></p>
+		<br></br>
+			<p>Justin Randall Timberlake (Memphis, Estados Unidos, 31 de janeiro de 1981) é um cantor-compositor, ator e empresário. Alcançou a fama 
+			nos anos 90 ao se tornar um membro da boyband *NSYNC. Com seus dois primeiros álbuns solo, Justified (2002) e FutureSex/LoveSounds (2006), 
+			estabeleceu-se como um dos cantores mais bem sucedidos do mercado. Após uma longa pausa de sete anos na carreira musical, Timberlake 
+			retornou em 2013 com um projeto divido em dois álbuns, compilados em The 20/20 Experience - The Complete Experience.</p>
+	</div>
+	<div>
+		<img id = "profile-pic" property = "image" src = "imagem.png">
+	</div>
+	<div id ="twitters-zone" vocab="http://schema.org/" typeof="SocialMediaPosting" resource="LINK DO TWEET">
+		<p>Twitters</p>
+	</div>
+	<div id = "sytle-country-zone">
+		<p><b><span property = 'genre'>Style:</span></b> Pop</p>
+		<p><b><span property = 'foundingLocation'>Country:</span></b> EUA</p>
+	</div>
+</section>
+</body>
+</html>

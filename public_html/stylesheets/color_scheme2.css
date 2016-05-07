@@ -1,0 +1,66 @@
+/*
+Grey   -  #666666
+Black  -  #282828
+Orange -  #FF9933
+*/
+
+
+body {
+    background-color: #666666;
+}
+
+a {
+    color: #FF9933;
+}
+
+a:hover {
+    color: #FF9933;
+    text-decoration: underline;
+}
+
+#header {
+    background-color: #282828 ;
+}
+
+#header-title {
+    color: #FF9933;
+}
+
+.map-button {
+    color: #FF9933;
+    background-color: #282828 ;
+    font-weight: 700;
+    border: none;
+}
+
+
+.map-button.active.focus,
+.map-button.active:hover,
+.map-button:active.focus,
+.map-button:active:focus,
+.map-button:active:hover,
+.map-button.focus,
+.map-button:focus,
+.map-button:active,
+.map-button.active,
+.map-button.active:focus,
+.map-button:hover {
+    color: #282828 ;
+    background-color: #FF9933;
+}
+
+/* ########## Country Zone ############### */
+
+#go-to-random-artist-button {
+    background-color: #FF9933;
+}
+
+/* ##### Artist Zone ########### */
+
+#header-artist-zone {
+    background-color: #282828;
+}
+
+#lastfm, #facebook-twitter,#youtube_video_artist, #artist-biography, #twitters-zone, #style-country-zone, #social-network-info-artist-zone {
+    color: white;
+}

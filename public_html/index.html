@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>World of Music</title>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type='text/javascript' src="scripts/script.js"></script>
+    <script type='text/javascript' src="scripts/facebook.js"></script>
+    <script type="text/javascript" src="scripts/jquery.shorten.js"></script>
+    <script type="text/javascript" src="scripts/map_variables.js"></script>
+    <script type="text/javascript" src="scripts/titleCaps.js"></script>
+    <script type="text/javascript" src="scripts/spin.js"></script>
+    <script type="text/javascript" src="scripts/jquery.spin.js"></script>
+    <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-world-mill.js"></script>
+    <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-europe-mill.js"></script>
+    <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-africa-mill.js"></script>
+    <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-asia-mill.js"></script>
+    <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-north_america-mill.js"></script>
+    <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-oceania-mill.js"></script>
+    <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-south_america-mill.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/color_scheme2.css">
+    <link rel="stylesheet" type="text/css" href="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-2.0.3.css" type="text/css" media="screen">
+</head>
+<body>
+
+<header id='header'>
+    <h1 id='header-title'>World Of Music</h1>
+    <div id="facebook-header-zone">
+        <div id="header-image-user-facebook"></div>
+        <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div>
+    </div>
+</header>
+
+<section id="map-zone">
+
+<div id="map-buttons" class="btn-group" role="group" aria-label="...">
+    <button id="world-map-button" type="button" class="btn btn-default map-button active">World</button>
+    <button id="africa-map-button" type="button" class="btn btn-default map-button">Africa</button>
+    <button id="asia-map-button"    type="button" class="btn btn-default map-button">Asia</button>
+    <button id="europe-map-button" type="button" class="btn btn-default map-button">Europe</button>
+    <button id="north-america-map-button" type="button" class="btn btn-default map-button">North America</button>
+    <button id="oceania-map-button" type="button" class="btn btn-default map-button">Oceania</button>
+    <button id="south-america-map-button" type="button" class="btn btn-default map-button">South America</button>
+</div>
+<div id="map"></div>
+</section>
+
+<section id="country-zone">
+    <div id="button-to-map">
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <div id="country" vocab="http://schema.org/" typeof="Country">
+        <div>
+            <h2 id="country_name" vocab = "http://schema.org/" typeof = "Country" property="name"></h2>
+        </div>
+        <div>
+            <img id="country_zone_flag" src="" class="img-responsive" alt="country flag" width="304" height="236" property="dbo:flag" vocab="http://dbpeorg">
+        </div>
+
+        <div id="country_general_info">
+            <div>
+                <h5 class="country_zone_title">Capital: </h5>
+                <p id="country_zone_capital" class="country_zone_description" property="dbo:capital" vocab="http://dbpedia.org"></p>
+            </div>
+            <div>
+                <h5 class="country_zone_title">Population: </h5>
+                <p id="country_zone_population" class="country_zone_description" property="dbo:populationTotal" vocab="http://dbpedia.org"></p>
+            </div>
+            <div>
+                <h5 class="country_zone_title">Region: </h5>
+                <p id="country_zone_region" class="country_zone_description" property="region" ></p>
+            </div>
+            <div>
+                <h5 class="country_zone_title">Sub-Region: </h5>
+                <p id="country_zone_subregion" class="country_zone_description" property="subregion"></p>
+            </div>
+        </div>
+
+        <div>
+            <h5 class="country_zone_title">Music: </h5>
+            <p id="country_zone_music_description" class="country_zone_description" property="country music"></p>
+        </div>
+
+        <div id="country_artists_top">
+            <ol>
+
+            </ol>
+        </div>
+
+        <button type="button" class="btn btn-warning" id="go-to-random-artist-button">Take me to a random artist!</button>
+
+        <div id='artist_addition_form_zone'>
+            <div id="alert_success_artist_submission" class="alert alert-success" role="alert">Artist submitted! :D</div>
+            <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert"></div>
+            <form id='artist_addition_form' role="form">
+                <div class="form-group">
+                    <label>Artist name:</label>
+                    <input class="form-control" id="input_artist_name">
+                </div>
+                <button class="btn btn-default" id="add_artist_button">Add artist!</button>
+            </form>
+            <div id="artist_addition_form_zone_spinner"></div>
+        </div>
+    </div>
+
+
+</section>
+
+<section id="artist-zone">
+<div id = "artist-page" vocab = "http://schema.org/" typeof = "MusicGroup">
+    <header id="header-artist-zone">
+        <div id="button-to-country">
+            <button type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div id="header-artist-zone-name" property="name"></div>
+    </header>
+
+    <div id="artist-info-artist-zone">
+        <img id="profile-pic-artist-zone" property="image" src="">
+        <div id="style-country-zone">
+            <p><b><span>Genre: </span></b><span id="artist-genre-artist-zone" property='genre'></span></p>
+            <p><b><span>Country: </span></b><span id="artist-country-artist-zone" property='foundingLocation'></span></p>
+        </div>
+        <div id="social-network-info-artist-zone">
+            <p><b>Social</b></p>
+
+            <a id="lastfm-logo-link" href=""> <img id="lastfm-logo-pic" src="resources/images/lastfm-logo.png"> </a>
+                <p id="lastfm-listeners">
+                    <div property="interactionStatistic" typeof="InteractionCounter">
+                        <div property="interactionService" itemscope itemid="https://www.last.fm/" itemtype="http://schema.org/Website">
+                            <meta property="name" content="Last.fm" />
+                        </div>
+                        <link property="interactionType" href="http://schema.org/LikeAction"/>
+                        <span id="lastfm-listeners"><span id="number-of-lastfm-listeners" property="userInteractionCount"></span> listeners</span>
+                    </div>
+                </p>
+
+            <!--<a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
+                <p id="facebook-likes">
+                    <div property="interactionStatistic" typeof="http://schema.org/InteractionCounter">
+                        <meta property="interactionType" content="http://schema.org/LikeAction" />
+                        <span id="number-of-facebook-likes" property="userInteractionCount"></span>
+                    </div>
+                </p>
+            -->
+
+            <a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
+                <p id="facebook-likes">
+                    <div property="interactionStatistic" typeof="InteractionCounter">
+                        <div property="interactionService" itemscope itemid="https://www.facebook.com" itemtype="http://schema.org/Website">
+                            <meta property="name" content="Facebook" />
+                        </div>
+                        <link property="interactionType" href="http://schema.org/LikeAction"/>
+                        <span id="facebook-likes"><span id="number-of-facebook-likes" property="userInteractionCount"></span> likes</span>
+                    </div>
+                </p>
+
+
+            <!--
+            <a id="twitter-logo-link" href=""> <img id="twitter-logo-pic" src="resources/images/twitter-logo.png"> </a>
+                <p id="twitters-followers">
+                    <div property="interactionStatistic" typeof="InteractionCounter">
+                        <div property="interactionService" itemscope itemid="https://twitter.com" itemtype="http://schema.org/SoftwareApplication">
+                            <meta property="name" content="Twitter" />
+                        </div>
+                        <link property="interactionType" href="http://schema.org/LikeAction"/>
+                        <span id='twitter-followers'><span id="number-of-twitters-followers" property="userInteractionCount" content="Twitter Count"></span> followers</span>
+                    </div>
+                </p>
+            -->
+        </div>
+
+        <div id="youtube_video_artist" typeof="VideoObject">
+            <iframe width="480" height="360" src="" frameborder="0" allowfullscreen property="video"></iframe>
+        </div>
+
+        <div id="artist-biography">
+            <p><b><span>Biography</span></b></p>
+            <p id="artist-biography-text" property="description"></p>
+        </div>
+        <button type="button" class="btn btn-danger" id="delete_artist_button">Delete artist!</button>
+        <!--
+        <div id ="twitters-zone" vocab="http://schema.org/" typeof="SocialMediaPosting" resource="LINK DO TWEET">
+            <p>Twitters</p>
+        </div>
+        -->
+    </div>
+</div>
+</section>
+
+
+</body>
+</html>

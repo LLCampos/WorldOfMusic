@@ -1,0 +1,46 @@
+/*
+Black - #06000a
+Gray - #282828 
+Orange - #D9853B 
+
+gray #666666
+orange site #FF9933
+gray next #515151
+
+*/
+
+/*#####################################Header##########################################*/
+#header-artist {
+    background-color: #06000a;
+}
+
+#container {
+	background-color: #06000a;
+}
+
+#Name {
+	width: 100%; background: #06000a;
+}
+
+/*#Style {
+	width: 30%; background: #06000a;
+}
+
+#Country {
+	width: 30%; background: #06000a;
+}
+
+*/
+body {
+    background-color: #666666 ;
+}
+
+#lastfm, #facebook-twitter,#youtube, #biography, #twitters-zone, #sytle-country-zone, #lastfm-facebook-twitter {
+	color: white;
+}
+
+/* 
+#end-header {
+	height:8%;  background-color: #778899;
+}
+*/
