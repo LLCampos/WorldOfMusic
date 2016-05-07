@@ -124,75 +124,101 @@
         <div id="header-artist-zone-name" property="name"></div>
     </header>
 
-    <div id="artist-info-artist-zone">
-        <img id="profile-pic-artist-zone" property="image" src="">
-        <div id="style-country-zone">
-            <p><b><span>Genre: </span></b><span id="artist-genre-artist-zone" property='genre'></span></p>
-            <p><b><span>Country: </span></b><span id="artist-country-artist-zone" property='foundingLocation'></span></p>
-        </div>
-        <div id="social-network-info-artist-zone">
-            <p><b>Social</b></p>
 
-            <a id="lastfm-logo-link" href=""> <img id="lastfm-logo-pic" src="resources/images/lastfm-logo.png"> </a>
-                <p id="lastfm-listeners">
-                    <div property="interactionStatistic" typeof="InteractionCounter">
-                        <div property="interactionService" itemscope itemid="https://www.last.fm/" itemtype="http://schema.org/Website">
-                            <meta property="name" content="Last.fm" />
+    <div id="artist-info-artist-zone" class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-4" id="artist_main_info">
+                <div id="artist_id_card" class="row">
+                    <div class="col-md-5"><img id="profile-pic-artist-zone" property="image" src=""></div>
+                    <div class="col-md-7">
+                    <div id="style-country-zone">
+                        <p><b><span>Genre: </span></b><span id="artist-genre-artist-zone" property='genre'></span></p>
+                        <p><b><span>Country: </span></b><span id="artist-country-artist-zone" property='foundingLocation'></span></p>
+                    </div>
+
+                    <div id="social-network-info-artist-zone">
+                        <div id="lastfm_zone">
+                            <a id="lastfm-logo-link" href=""> <img id="lastfm-logo-pic" src="resources/images/lastfm-logo.png"> </a>
+                            <div property="interactionStatistic" typeof="InteractionCounter" id="lastfm-listeners">
+                                <div property="interactionService" itemscope itemid="https://www.last.fm/" itemtype="http://schema.org/Website">
+                                    <meta property="name" content="Last.fm" />
+                                </div>
+                                <link property="interactionType" href="http://schema.org/LikeAction"/>
+                                <span><span id="number-of-lastfm-listeners" property="userInteractionCount"></span> listeners</span>
+                            </div>
                         </div>
-                        <link property="interactionType" href="http://schema.org/LikeAction"/>
-                        <span id="lastfm-listeners"><span id="number-of-lastfm-listeners" property="userInteractionCount"></span> listeners</span>
-                    </div>
-                </p>
 
-            <!--<a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
-                <p id="facebook-likes">
-                    <div property="interactionStatistic" typeof="http://schema.org/InteractionCounter">
-                        <meta property="interactionType" content="http://schema.org/LikeAction" />
-                        <span id="number-of-facebook-likes" property="userInteractionCount"></span>
-                    </div>
-                </p>
-            -->
-
-            <a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
-                <p id="facebook-likes">
-                    <div property="interactionStatistic" typeof="InteractionCounter">
-                        <div property="interactionService" itemscope itemid="https://www.facebook.com" itemtype="http://schema.org/Website">
-                            <meta property="name" content="Facebook" />
+                        <!--<a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
+                            <p id="facebook-likes">
+                                <div property="interactionStatistic" typeof="http://schema.org/InteractionCounter">
+                                    <meta property="interactionType" content="http://schema.org/LikeAction" />
+                                    <span id="number-of-facebook-likes" property="userInteractionCount"></span>
+                                </div>
+                            </p>
+                        -->
+                        <div id="facebook-zone">
+                            <a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
+                            <p id="facebook-likes">
+                                <div property="interactionStatistic" typeof="InteractionCounter" id="facebook-likes">
+                                    <div property="interactionService" itemscope itemid="https://www.facebook.com" itemtype="http://schema.org/Website">
+                                        <meta property="name" content="Facebook" />
+                                    </div>
+                                    <link property="interactionType" href="http://schema.org/LikeAction"/>
+                                    <span><span id="number-of-facebook-likes" property="userInteractionCount"></span> likes</span>
+                                </div>
+                            </p>
                         </div>
-                        <link property="interactionType" href="http://schema.org/LikeAction"/>
-                        <span id="facebook-likes"><span id="number-of-facebook-likes" property="userInteractionCount"></span> likes</span>
-                    </div>
-                </p>
-
-
-            <!--
-            <a id="twitter-logo-link" href=""> <img id="twitter-logo-pic" src="resources/images/twitter-logo.png"> </a>
-                <p id="twitters-followers">
-                    <div property="interactionStatistic" typeof="InteractionCounter">
-                        <div property="interactionService" itemscope itemid="https://twitter.com" itemtype="http://schema.org/SoftwareApplication">
-                            <meta property="name" content="Twitter" />
                         </div>
-                        <link property="interactionType" href="http://schema.org/LikeAction"/>
-                        <span id='twitter-followers'><span id="number-of-twitters-followers" property="userInteractionCount" content="Twitter Count"></span> followers</span>
+
+
+
+                        <!--
+                        <a id="twitter-logo-link" href=""> <img id="twitter-logo-pic" src="resources/images/twitter-logo.png"> </a>
+                            <p id="twitters-followers">
+                                <div property="interactionStatistic" typeof="InteractionCounter">
+                                    <div property="interactionService" itemscope itemid="https://twitter.com" itemtype="http://schema.org/SoftwareApplication">
+                                        <meta property="name" content="Twitter" />
+                                    </div>
+                                    <link property="interactionType" href="http://schema.org/LikeAction"/>
+                                    <span id='twitter-followers'><span id="number-of-twitters-followers" property="userInteractionCount" content="Twitter Count"></span> followers</span>
+                                </div>
+                            </p>
+                        -->
+                        <!--
+                        <div id ="twitters-zone" vocab="http://schema.org/" typeof="SocialMediaPosting" resource="LINK DO TWEET">
+                            <p>Twitters</p>
+                        </div>
+                        -->
                     </div>
-                </p>
-            -->
-        </div>
+                </div>
 
-        <div id="youtube_video_artist" typeof="VideoObject">
-            <iframe width="480" height="360" src="" frameborder="0" allowfullscreen property="video"></iframe>
-        </div>
 
-        <div id="artist-biography">
-            <p><b><span>Biography</span></b></p>
-            <p id="artist-biography-text" property="description"></p>
+
+
+
+                <div id="artist-biography">
+                    <p><b><span>Biography</span></b></p>
+                    <p id="artist-biography-text" property="description"></p>
+                </div>
+                <button type="button" class="btn btn-danger" id="delete_artist_button">Delete artist!</button>
+            </div>
+
+            <div class="col-md-6">
+                <div id="youtube_video_artist" typeof="VideoObject">
+                    <iframe width="480" height="360" src="" frameborder="0" allowfullscreen property="video"></iframe>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+
+                <div id="artist_vote_zone">
+                    <p>Do you aprove this artist?</p>
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                </div>
+            </div>
         </div>
-        <button type="button" class="btn btn-danger" id="delete_artist_button">Delete artist!</button>
-        <!--
-        <div id ="twitters-zone" vocab="http://schema.org/" typeof="SocialMediaPosting" resource="LINK DO TWEET">
-            <p>Twitters</p>
-        </div>
-        -->
     </div>
 </div>
 </section>
