@@ -22,14 +22,22 @@
     <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-south_america-mill.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/color_scheme2.css">
     <link rel="stylesheet" type="text/css" href="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-2.0.3.css" type="text/css" media="screen">
 </head>
 <body>
 
-<button type="button" class="btn btn-warning" class="orange_button" id="help_us_button"><p>Help Us Improve Our App!</p></button>
+<button type="button" class="btn btn-warning orange_button" data-toggle="modal" data-target="#feedback_modal" id="help_us_button"><p>Help Us Improve Our App!</p></button>
 
 <header id='header'>
+    <div id="map-buttons" class="btn-group" role="group" aria-label="...">
+        <button id="world-map-button" type="button" class="btn btn-default map-button active">World</button>
+        <button id="africa-map-button" type="button" class="btn btn-default map-button">Africa</button>
+        <button id="asia-map-button"    type="button" class="btn btn-default map-button">Asia</button>
+        <button id="europe-map-button" type="button" class="btn btn-default map-button">Europe</button>
+        <button id="north-america-map-button" type="button" class="btn btn-default map-button">North America</button>
+        <button id="oceania-map-button" type="button" class="btn btn-default map-button">Oceania</button>
+        <button id="south-america-map-button" type="button" class="btn btn-default map-button">South America</button>
+    </div>
     <h1 id='header-title'>World Of Music</h1>
     <div id="facebook-header-zone">
         <div id="header-image-user-facebook"></div>
@@ -40,15 +48,6 @@
 <section id="main-zone" class="row">
 
 <div id="map-zone" class="col-md-6">
-    <div id="map-buttons" class="btn-group" role="group" aria-label="...">
-        <button id="world-map-button" type="button" class="btn btn-default map-button active">World</button>
-        <button id="africa-map-button" type="button" class="btn btn-default map-button">Africa</button>
-        <button id="asia-map-button"    type="button" class="btn btn-default map-button">Asia</button>
-        <button id="europe-map-button" type="button" class="btn btn-default map-button">Europe</button>
-        <button id="north-america-map-button" type="button" class="btn btn-default map-button">North America</button>
-        <button id="oceania-map-button" type="button" class="btn btn-default map-button">Oceania</button>
-        <button id="south-america-map-button" type="button" class="btn btn-default map-button">South America</button>
-    </div>
     <div id="map"></div>
 </div>
 
@@ -103,7 +102,7 @@
                 </ol>
             </div>
 
-            <button type="button" class="btn btn-warning" class="orange_button" id="go-to-random-artist-button">Take me to a random artist!</button>
+            <button type="button" class="btn btn-warning orange_button" id="go-to-random-artist-button"><p>Take me to a random artist!</p></button>
 
             <div id='artist_addition_form_zone'>
                 <div id="alert_success_artist_submission" class="alert alert-success" role="alert">Artist submitted! :D</div>
@@ -113,7 +112,7 @@
                         <label>Artist name:</label>
                         <input class="form-control" id="input_artist_name">
                     </div>
-                    <button class="btn btn-default" id="add_artist_button">Add artist!</button>
+                    <button class="btn btn-default orange_button" id="add_artist_button"><p>Add artist!</p></button>
                 </form>
                 <div id="artist_addition_form_zone_spinner"></div>
             </div>
@@ -229,10 +228,25 @@
 </div>
 </section>
 
-<section id="vote_zone">
+<div id="feedback_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
 
-</section>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Should we have this artists on our app?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
 
+  </div>
+</div>
 
 </body>
 </html>
