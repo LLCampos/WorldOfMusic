@@ -45,16 +45,10 @@
 
 
 #map-buttons {
-    width: 50%;
 }
 
 #map {
-    position: absolute;
-    display: inline-block;
-    width: 50%;
-    /* height: 563px; */
-    right: 0;
-
+    margin-top: 1em;
 }
 
 

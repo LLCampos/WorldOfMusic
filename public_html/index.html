@@ -35,18 +35,23 @@
     </div>
 </header>
 
-<section id="map-zone">
+<section id="main-zone" class="row">
 
-<div id="map-buttons" class="btn-group" role="group" aria-label="...">
-    <button id="world-map-button" type="button" class="btn btn-default map-button active">World</button>
-    <button id="africa-map-button" type="button" class="btn btn-default map-button">Africa</button>
-    <button id="asia-map-button"    type="button" class="btn btn-default map-button">Asia</button>
-    <button id="europe-map-button" type="button" class="btn btn-default map-button">Europe</button>
-    <button id="north-america-map-button" type="button" class="btn btn-default map-button">North America</button>
-    <button id="oceania-map-button" type="button" class="btn btn-default map-button">Oceania</button>
-    <button id="south-america-map-button" type="button" class="btn btn-default map-button">South America</button>
+<div id="map-zone" class="col-md-6">
+    <div id="map-buttons" class="btn-group" role="group" aria-label="...">
+        <button id="world-map-button" type="button" class="btn btn-default map-button active">World</button>
+        <button id="africa-map-button" type="button" class="btn btn-default map-button">Africa</button>
+        <button id="asia-map-button"    type="button" class="btn btn-default map-button">Asia</button>
+        <button id="europe-map-button" type="button" class="btn btn-default map-button">Europe</button>
+        <button id="north-america-map-button" type="button" class="btn btn-default map-button">North America</button>
+        <button id="oceania-map-button" type="button" class="btn btn-default map-button">Oceania</button>
+        <button id="south-america-map-button" type="button" class="btn btn-default map-button">South America</button>
+    </div>
+    <div id="map"></div>
 </div>
-<div id="map"></div>
+
+<div id="general_stats" class="col-md-6"></div>
+
 </section>
 
 <section id="country-zone">
@@ -56,7 +61,7 @@
         </button>
     </div>
 
-    <div id="country" vocab="http://schema.org/" typeof="Country">
+    <div id="country" vocab="http://schema.org/" typeof="Country" class="">
         <div>
             <h2 id="country_name" vocab = "http://schema.org/" typeof = "Country" property="name"></h2>
         </div>
@@ -88,25 +93,29 @@
             <p id="country_zone_music_description" class="country_zone_description" property="country music"></p>
         </div>
 
-        <div id="country_artists_top">
-            <ol>
+        <div class="row">
 
-            </ol>
-        </div>
+            <div id="country_artists_top">
+                <ol>
 
-        <button type="button" class="btn btn-warning" id="go-to-random-artist-button">Take me to a random artist!</button>
+                </ol>
+            </div>
 
-        <div id='artist_addition_form_zone'>
-            <div id="alert_success_artist_submission" class="alert alert-success" role="alert">Artist submitted! :D</div>
-            <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert"></div>
-            <form id='artist_addition_form' role="form">
-                <div class="form-group">
-                    <label>Artist name:</label>
-                    <input class="form-control" id="input_artist_name">
-                </div>
-                <button class="btn btn-default" id="add_artist_button">Add artist!</button>
-            </form>
-            <div id="artist_addition_form_zone_spinner"></div>
+            <button type="button" class="btn btn-warning" id="go-to-random-artist-button">Take me to a random artist!</button>
+
+            <div id='artist_addition_form_zone'>
+                <div id="alert_success_artist_submission" class="alert alert-success" role="alert">Artist submitted! :D</div>
+                <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert"></div>
+                <form id='artist_addition_form' role="form">
+                    <div class="form-group">
+                        <label>Artist name:</label>
+                        <input class="form-control" id="input_artist_name">
+                    </div>
+                    <button class="btn btn-default" id="add_artist_button">Add artist!</button>
+                </form>
+                <div id="artist_addition_form_zone_spinner"></div>
+            </div>
+
         </div>
     </div>
 
