@@ -5,6 +5,26 @@
 }
 */
 
+/* ###### General ########## */
+
+.orange_button {
+    background-color: #FF9933;
+}
+
+/* ############ Side Button ############# */
+
+#help_us_button {
+    position: fixed;
+    right: 0px;
+    top: 20em;
+    transform: rotate(-90deg) translateY(-100%);
+    transform-origin: top right;
+    z-index: 10;
+}
+
+#help_us_button p {
+    font-weight: 600;
+}
 
 
 /* ############ Header ################## */
@@ -39,9 +59,9 @@
 
 /* ############ Map Zone ################## */
 
-/*#map-zone {
-    height: 600px;
-}*/
+#main-zone {
+    margin-right: 0;
+}
 
 
 #map-buttons {
