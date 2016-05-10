@@ -5,7 +5,7 @@ function serverSideAuth($access_token) {
     # Returns user ID if user authenthicated in our app. False otherwise.
 
     require_once("/home/aw008/libraries/facebook-php-sdk-v4-5.0.0/src/Facebook/autoload.php");
-    require_once "/home/aw008/variables/sensible_info.php";
+    require "/home/aw008/variables/sensible_info.php";
 
     # Special token to test the app
     if ($access_token == $special_token ) {
