@@ -2,7 +2,8 @@
 
 include_once "/home/aw008/public_html/webservices/webservices_functions/webservices_utility_functions.php";
 include_once "/home/aw008/public_html/webservices/webservices_functions/responses_utility_functions.php";
-include_once "/home/aw008/public_html/webservices/webservices_functions/pending_addition_functions.php";
+include_once "/home/aw008/public_html/webservices/webservices_functions/pending_submissions_functions.php";
+
 
 $outputType = checkClientAcceptMIME();
 $path_params = getPathParams();
@@ -21,12 +22,12 @@ if ($REQUEST_METHOD == 'GET') {
 
     # /pending_addition
     if (sizeof($path_params) == 0) {
-      GETPendingAdditions($outputType);
+      GETPendingSubmissions('addition', $outputType);
       exit;
 
     # /pending_addition/{id}
     } elseif (sizeof($path_params) == 2) {
-        GETOnePendingAddition($addition_id, $outputType);
+        GETOnePendingSubmission('addition', $addition_id, $outputType);
         exit;
 
     # /pending_addition/{id}/{positive_vote or negative_vote}

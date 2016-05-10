@@ -2,7 +2,8 @@
 
 include_once "/home/aw008/public_html/webservices/webservices_functions/webservices_utility_functions.php";
 include_once "/home/aw008/public_html/webservices/webservices_functions/responses_utility_functions.php";
-include_once "/home/aw008/public_html/webservices/webservices_functions/pending_deletion_functions.php";
+include_once "/home/aw008/public_html/webservices/webservices_functions/pending_submissions_functions.php";
+
 
 $outputType = checkClientAcceptMIME();
 $path_params = getPathParams();
@@ -21,12 +22,12 @@ if ($REQUEST_METHOD == 'GET') {
 
     # /pending_deletion
     if (sizeof($path_params) == 0) {
-      GETPendingDeletions($outputType);
+      GETPendingSubmissions('deletion', $outputType);
       exit;
 
     # /pending_deletion/{id}
     } elseif (sizeof($path_params) == 2) {
-        GETOnePendingDeletion($deletion_id, $outputType);
+        GETOnePendingSubmission('deletion', $deletion_id, $outputType);
         exit;
 
     # /pending_deletion/{id}/{positive_vote or negative_vote}
