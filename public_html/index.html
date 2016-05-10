@@ -41,11 +41,11 @@
     <h1 id='header-title'>World Of Music</h1>
     <div id="facebook-header-zone">
         <div id="header-image-user-facebook"></div>
-        <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div>
+        <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div>
     </div>
 </header>
 
-<section id="main-zone" class="row">
+<section id="main-zone" class="row container-fluid">
 
 <div id="map-zone" class="col-md-6">
     <div id="map"></div>
@@ -111,8 +111,8 @@
                     <div class="form-group">
                         <label>Artist name:</label>
                         <input class="form-control" id="input_artist_name">
+                        <button class="btn btn-default orange_button" id="add_artist_button"><p>Add artist!</p></button>
                     </div>
-                    <button class="btn btn-default orange_button" id="add_artist_button"><p>Add artist!</p></button>
                 </form>
                 <div id="artist_addition_form_zone_spinner"></div>
             </div>
@@ -235,10 +235,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Should we have this artists on our app?</h4>
+        <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

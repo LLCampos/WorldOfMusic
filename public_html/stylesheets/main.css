@@ -74,7 +74,7 @@ a:hover {
 #help_us_button {
     position: fixed;
     right: 0px;
-    top: 20em;
+    top: 20%;
     transform: rotate(-90deg) translateY(-100%);
     transform-origin: top right;
     z-index: 2;
@@ -110,6 +110,10 @@ a:hover {
 
 #header-image-user-facebook {
     display: inline-block;
+}
+
+#header-image-user-facebook img {
+    border-radius: 50%;
 }
 
 #map-buttons {
@@ -210,7 +214,7 @@ a:hover {
 
 #country_zone_flag {
     float: right;
-    margin: 1em;
+    margin: 0 1em 1em 1em;
     border: 0.1em solid white;
     border-radius: 0.3em;
     padding: 0.3em;
@@ -249,7 +253,6 @@ a:hover {
 #artist_addition_form_zone {
     position: absolute;
     right: 4.7em;
-    /* left: 64.5em; */
     bottom: 3em;
     width: 310px;
     height: 180px;
@@ -272,6 +275,19 @@ a:hover {
 #artist_addition_form {
     bottom: 0px;
     position: absolute;
+}
+
+#artist_addition_form label {
+    display: block;
+}
+
+#artist_addition_form input {
+    display: inline-block;
+}
+
+#add_artist_button {
+    position: relative;
+    bottom: 1.5px;
 }
 
 /* ########## Artist Zone ################ */
