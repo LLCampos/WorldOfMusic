@@ -266,6 +266,52 @@ var deleteCurrentArtist = function() {
     });
 };
 
+// #### Modal ####
+
+var onModalActivation = function() {
+
+    var types_of_change = ['addition', 'deletion'];
+    var type_of_change = types_of_change[Math.floor(Math.random()*types_of_change.length)];
+
+    $.ajax({
+        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_' + type_of_change + '/?limit=1',
+        beforeSend: function() {
+        },
+        success: function(content) {
+            if (type_of_change == 'addition') {
+                change_info = content.pending_additions[0];
+            } else {
+                change_info = content.pending_deletions[0];
+            }
+
+            var change_artist_name = change_info.artist_name;
+            var change_id = change_info.id;
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+        }
+    });
+
+
+    // if (type_of_change == 'addition' || type_of_change == 'deletion') {
+    //     fillModalDeletionOrAddition(type_of_change);
+    // }
+};
+
+var fillModalDeletionOrAddition = function(type_of_change) {
+    $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
+
+
+
+
+
+    // if (type_of_change == 'addition') {
+    //     fillModalAddition();
+    // } else {
+    //     fillModalDeletion();
+    // }
+};
+
 
 // #### General ####
 
@@ -326,5 +372,7 @@ $(function() {
     $('#add_artist_button').on('click', function(event) {userClickOnSubmitArtist(event);});
 
     $('#delete_artist_button').on('click', function() {deleteCurrentArtist();});
+
+    $('#help_us_button').on('click', function() {onModalActivation();});
 
 });
