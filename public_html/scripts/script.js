@@ -151,7 +151,7 @@ var clearArtistZone = function() {
     $('#number-of-facebook-likes').empty();
     // $('#number-of-twitters-followers').empty();
     $('#artist-biography-text').empty();
-    $('#profile-pic-artist-zone').attr('src', '');
+    $('#artist_picture').attr('src', '');
     $('#youtube_video_artist iframe').attr('src', '');
 };
 
@@ -168,7 +168,7 @@ var fillArtistZone = function(artist_object) {
     $('#number-of-lastfm-listeners').text(artist_object.number_of_lastfm_listeners);
     $('#number-of-facebook-likes').text(artist_object.number_of_facebook_likes);
     // $('#number-of-twitters-followers').text(artist_object.number_of_twitter_followers + 'followers');
-    $('#profile-pic-artist-zone').attr('src', artist_object.picture_url);
+    $('#artist_zone_artist_picture').attr('src', artist_object.picture_url);
     $('#youtube_video_artist iframe').attr('src', 'https://www.youtube.com/embed/' + artist_object.music_video);
 
     intact_bibliography = artist_object.bibliography;
@@ -274,9 +274,10 @@ var onModalActivation = function() {
     var type_of_change = types_of_change[Math.floor(Math.random()*types_of_change.length)];
 
     $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_' + type_of_change + '/?limit=1',
+        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_' + type_of_change + '/?limit=1&order=random',
         beforeSend: function() {
         },
+
         success: function(content) {
             if (type_of_change == 'addition') {
                 change_info = content.pending_additions[0];
@@ -287,7 +288,9 @@ var onModalActivation = function() {
             var change_artist_name = change_info.artist_name;
             var change_id = change_info.id;
 
+            fillModalDeletionOrAddition(type_of_change, change_artist_name, change_id);
         },
+
         error: function(jqXHR, textStatus, errorThrown) {
         }
     });
@@ -298,11 +301,20 @@ var onModalActivation = function() {
     // }
 };
 
-var fillModalDeletionOrAddition = function(type_of_change) {
+var fillModalDeletionOrAddition = function(type_of_change, artist_name, id) {
     $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
 
 
+    $.ajax({
+        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name,
 
+        success: function(response) {
+            createContentForModelDeletionOrAddition(response);
+        },
+
+        error: function(jqXHR, textStatus, errorThrown) {
+        }
+    });
 
 
     // if (type_of_change == 'addition') {
@@ -310,6 +322,20 @@ var fillModalDeletionOrAddition = function(type_of_change) {
     // } else {
     //     fillModalDeletion();
     // }
+};
+
+var createContentForModelDeletionOrAddition = function(response) {
+    var artist_country = response.country;
+    var artist_name = response.name;
+    var artist_genre = titleCaps(response.style);
+    var picture = response.picture_url;
+    var lastfm_url = response.lastfm_url;
+
+    $('#modal_artist_picture').attr('src', picture);
+    $('#modal_artist_name').text(artist_name);
+    $('#modal_country_name').text(artist_country);
+    $('#modal_genre').text(artist_genre);
+    $('#lastfm-modal-logo-link').attr('href', lastfm_url);
 };
 
 
