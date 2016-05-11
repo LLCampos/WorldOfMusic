@@ -1,30 +1,5 @@
 <?php
 
-
-function insertAdditionVoteFromArtistID($artist_id, $user_id) {
-    $addition_id = getAdditionIDFromArtistID($artist_id);
-    insertAdditionVote($addition_id, $user_id);
-}
-
-function getAdditionIDFromArtistID($artist_id) {
-
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("SELECT id FROM Addition WHERE artist_id = :artist_id");
-
-    try {
-        $query->execute(array(':artist_id' => $artist_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    $id = $query->fetch()[0];
-
-    return $id;
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
 function userAlreadyVoteAddition($user_id, $addition_id) {
 
     require "/home/aw008/database/connect_to_database.php";

@@ -75,7 +75,7 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
 
           # Cria um novo recurso pending deletion
           insertSubmission('deletion', $artist_id, $user_id);
-          insertDeletionVoteFromArtistID($artist_id, $user_id);
+          insertVoteFromArtistID('deletion', $artist_id, $user_id);
 
           # Adds one pending deletion to user
           addPendingDeletion($user_id);
@@ -182,8 +182,7 @@ function POSTArtist($artist_name, $outputType, $user_id, $request) {
             # Cria um novo recurso pending_addition
             $artist_id = artistNameToID($artist_name);
             insertSubmission('addition', $artist_id, $user_id);
-            insertAdditionVoteFromArtistID($artist_id, $user_id);
-
+            insertVoteFromArtistID('addition', $artist_id, $user_id);
             # Adds one pended addition to user
             addPendingAddition($user_id);
 

@@ -1,30 +1,6 @@
 <?php
 
 
-function insertDeletionVoteFromArtistID($artist_id, $user_id) {
-    $deletion_id = getDeletionIDFromArtistID($artist_id);
-    insertDeletionVote($deletion_id, $user_id);
-}
-
-function getDeletionIDFromArtistID($artist_id) {
-
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("SELECT id FROM Deletion WHERE artist_id = :artist_id");
-
-    try {
-        $query->execute(array(':artist_id' => $artist_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    $id = $query->fetch()[0];
-
-    return $id;
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
 function userAlreadyVoteDeletion($user_id, $deletion_id) {
 
     require "/home/aw008/database/connect_to_database.php";
