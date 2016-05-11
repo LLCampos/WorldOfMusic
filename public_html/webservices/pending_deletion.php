@@ -59,8 +59,9 @@ simpleResponse($response, $outputType, 400);
 * @apiGroup Pending Deletion
 * @apiVersion 0.0.1
 *
-* @apiParam {Number} [limit=20] Number of Pending Deletions to be Returned
+* @apiParam {Number} [limit=20] Number of Pending Deletions to be returned
 * @apiParam {String="date_asc", "date_desc", "random"} [order="date_asc"]
+* @apiParam {Number} [page=1] Page to be returned
 *
 * @apiSuccess (200 OK) {Number} id   ID of the Pending Deletion
 * @apiSuccess (200 OK) {String} artist_name Name of the Artist being deleted

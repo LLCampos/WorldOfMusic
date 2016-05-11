@@ -150,8 +150,9 @@ simpleResponse($response, $outputType, 400);
 * @apiVersion 0.0.1
 *
 * @apiParam {String} name_of_country Name of the Country
-* @apiParam {Number} [limit=20] Number of Artists/Group to be Returned
+* @apiParam {Number} [limit=20] Number of Artists/Group to be returned
 * @apiParam {String="likes", "random"} [order]
+* @apiParam {Number} [page=1] Page to be returned
 *
 * @apiSuccess (200 OK) {String} name Name of the Artist
 *

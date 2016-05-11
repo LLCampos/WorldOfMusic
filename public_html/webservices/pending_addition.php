@@ -59,8 +59,9 @@ simpleResponse($response, $outputType, 400);
 * @apiGroup Pending Addition
 * @apiVersion 0.0.1
 *
-* @apiParam {Number} [limit=20] Number of Pending Additions to be Returned
+* @apiParam {Number} [limit=20] Number of Pending Additions to be returned
 * @apiParam {String="date_asc", "date_desc", "random"} [order="date_asc"]
+* @apiParam {Number} [page=1] Page to be returned
 *
 * @apiSuccess (200 OK) {Number} id   ID of the Pending Addition
 * @apiSuccess (200 OK) {String} artist_name Name of the Artist being added
@@ -133,7 +134,7 @@ simpleResponse($response, $outputType, 400);
 *
 * @apiSuccess (200 OK) {Number} id   ID of the Pending Addition
 * @apiSuccess (200 OK) {String} artist_name Name of the Artist being added
-* @apiSuccess (200 OK) {String} country_name Country of the Artsit/Group being added
+* @apiSuccess (200 OK) {String} country_name Country of the Artist/Group being added
 * @apiSuccess (200 OK) {Number} positive_votes Number of votes in favor of adding the Artist
 * @apiSuccess (200 OK) {Number} negative_votes Number of votes against adding the Artist
 * @apiSuccess (200 OK) {String}  added_by  ID of the user who added the Artist
