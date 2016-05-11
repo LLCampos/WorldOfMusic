@@ -268,48 +268,162 @@ var deleteCurrentArtist = function() {
 
 // #### Modal ####
 
-var onModalActivation = function() {
+var submissionIDsUserAlreadyVoted = function(submission_type, user_id, callback) {
+    // Returns an array with the ids of the submissions of the type submission_type in which the user already voted
 
-    var types_of_change = ['addition', 'deletion'];
-    var type_of_change = types_of_change[Math.floor(Math.random()*types_of_change.length)];
+    var service_url = 'http://appserver.di.fc.ul.pt/~aw008/webservices/user/' + user_id + '/votes';
 
     $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_' + type_of_change + '/?limit=1&order=random',
-        beforeSend: function() {
-        },
+        url: service_url,
+        success: function(response) {
+            var list_of_votes = response[submission_type + '_votes'];
+            list_of_submissions_ids = [];
 
-        success: function(content) {
-            if (type_of_change == 'addition') {
-                change_info = content.pending_additions[0];
-            } else {
-                change_info = content.pending_deletions[0];
+            for (var i=0; i < list_of_votes.length; ++i) {
+                list_of_submissions_ids.push(list_of_votes[i][submission_type + '_id']);
             }
 
-            var change_artist_name = change_info.artist_name;
-            var change_id = change_info.id;
+            callback(submission_type, list_of_submissions_ids, 1);
+        }
+    });
+};
 
-            fillModalDeletionOrAddition(type_of_change, change_artist_name, change_id);
+
+// Displays message informing user that there are no submissions to vote on.
+var noSubmissionsToVoteOn = function() {
+    $('#motal_no_submissions_message').show();
+};
+
+var modalLoading = function(type) {
+    // Type if a boolean. true to activate the loading and false to deactivate it.
+
+    if (type) {
+        $('#modal_body_addition_deletion').hide();
+        $('#motal_no_submissions_message').hide();
+        $('.modal-body').spin();
+    } else if (type === false) {
+        $('.modal-body').spin(false);
+    }
+};
+
+var activateButtons = function(submission_type, submission_id) {
+
+    $('#modal_vote_buttons').on('click', 'button', function(event) {
+
+        // Gets id of the button pressed.
+        var button_id = event.target.id;
+
+
+        // If the button pressed was the positive or negative one, makes POST request. Otherwise, show another submission for the user to vote at.
+        if (button_id == 'vote_button_positive' || button_id == 'vote_button_negative') {
+
+            if (submission_type == 'addition') {
+                service_url = 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_addition/' + submission_id + '/';
+            } else if (submission_type == 'deletion') {
+                service_url = 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_deletion/' + submission_id + '/';
+            }
+
+            // What a positive or negative vote means depends on the type of submission (addition or deletion)
+            if (button_id == 'vote_button_positive') {
+                if (submission_type == 'addition') {
+                    service_url += 'positive_vote';
+                } else if (submission_type == 'deletion') {
+                    service_url += 'negative_vote';
+                }
+            } else {
+                if (submission_type == 'addition') {
+                    service_url += 'negative_vote';
+                } else if (submission_type == 'deletion') {
+                    service_url += 'positive_vote';
+                }
+            }
+
+            var access_token_param = getFBAccessTokenParam();
+            service_url += "?" + access_token_param;
+
+            $.ajax({
+                url: service_url,
+                method: 'POST',
+
+                success: function(response) {
+                    alert('Success!');
+                },
+
+                error: function(jqXHR, textStatus, errorThrown) {
+                    response_text = $.parseJSON(jqXHR.responseText).message;
+                    alert(response_text);
+                },
+            });
+        }
+
+        onModalActivation();
+    });
+};
+
+var deactivateButtons = function() {
+   $('#modal_vote_buttons').off();
+};
+
+var onModalActivation = function() {
+
+    modalLoading(true);
+
+    // Remove handlers from buttons that could be attached to them from the last call of this function.
+    deactivateButtons();
+
+    var types_of_submissions = ['addition', 'deletion'];
+    var submission_type = types_of_submissions[Math.floor(Math.random()*types_of_submissions.length)];
+
+    var user_id = FB.getUserID();
+
+    $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
+
+    // Gets a list of IDs of the submissions the user already voted and then calls getSubmissionVote with that list as one of the attributes.
+    // This list will be used to avoid that a submission in which the user already voted at appear again.
+    submissionIDsUserAlreadyVoted(submission_type, user_id, getSubmissionToVote);
+
+};
+
+var getSubmissionToVote = function(submission_type, list_of_submissions_ids, page) {
+
+    $.ajax({
+        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_' + submission_type + '/?limit=1&order=random',  // Get a random pending submission.
+        success: function(content) {
+
+            if ($.isEmptyObject(content)) {
+                modalLoading(false);
+                noSubmissionsToVoteOn();
+
+            } else {
+                if (submission_type == 'addition') {
+                    change_info = content.pending_additions[0];
+                } else {
+                    change_info = content.pending_deletions[0];
+                }
+
+                var change_artist_name = change_info.artist_name;
+                var change_id = change_info.id;
+
+                fillModalDeletionOrAddition(submission_type, change_artist_name, change_id);
+            }
         },
 
         error: function(jqXHR, textStatus, errorThrown) {
         }
     });
 
-
-    // if (type_of_change == 'addition' || type_of_change == 'deletion') {
-    //     fillModalDeletionOrAddition(type_of_change);
-    // }
 };
 
-var fillModalDeletionOrAddition = function(type_of_change, artist_name, id) {
-    $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
-
+var fillModalDeletionOrAddition = function(submission_type, artist_name, id) {
 
     $.ajax({
         url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name,
 
         success: function(response) {
-            createContentForModelDeletionOrAddition(response);
+            createContentForModalDeletionOrAddition(response);
+            modalLoading(false);
+            $('#modal_body_addition_deletion').show();
+            activateButtons(submission_type, id);
         },
 
         error: function(jqXHR, textStatus, errorThrown) {
@@ -317,14 +431,14 @@ var fillModalDeletionOrAddition = function(type_of_change, artist_name, id) {
     });
 
 
-    // if (type_of_change == 'addition') {
+    // if (submission_type == 'addition') {
     //     fillModalAddition();
     // } else {
     //     fillModalDeletion();
     // }
 };
 
-var createContentForModelDeletionOrAddition = function(response) {
+var createContentForModalDeletionOrAddition = function(response) {
     var artist_country = response.country;
     var artist_name = response.name;
     var artist_genre = titleCaps(response.style);
