@@ -7,12 +7,16 @@ function outPutListOfArtists($country, $outputType) {
     # Outputs a list of artists of the country $country
 
     require "/home/aw008/database/connect_to_database.php";
+    require '/home/aw008/variables/business_logic_variables.php';
+    include_once "/home/aw008/public_html/webservices/webservices_functions/webservices_utility_functions.php";
 
-    $legal_params = array('limit', 'order');
+    $legal_params = $legal_params_country_artists;
 
     checksLegalityOfParametersGiven($_GET, $legal_params);
 
-    $limit = checksLimitParameter();
+    $limit = checkLimitParameter($_GET);
+
+    $page = checkPageParameter($_GET);
 
     $query = "SELECT A.name
               FROM Artist A, Country C
@@ -32,11 +36,15 @@ function outPutListOfArtists($country, $outputType) {
         }
     }
 
-    $query = $query . " LIMIT :limit";
+    $query = $query . " LIMIT :beg, :limit";
+
+    $beg = 0 + (($page - 1) * $limit);
 
     $prepared_query = $conn->prepare($query);
 
     $prepared_query->bindValue(':country', $country);
+    $prepared_query->bindValue(':limit',  $limit);
+    $prepared_query->bindValue(':beg',  $beg);
     $prepared_query->bindValue(':limit',  $limit);
 
     $prepared_query->execute() or die("Query failed: " . $conn->errorInfo());

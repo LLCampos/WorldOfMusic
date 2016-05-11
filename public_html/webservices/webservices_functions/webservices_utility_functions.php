@@ -62,22 +62,35 @@ function checksLegalityOfParametersGiven($request_global_variable, $legal_params
     }
 }
 
-function checksLimitParameter() {
+function checksNumberParameter($parameter_name) {
+    // verifies if parameter value given is a number
 
-    # Checks if the client specifies the number o results to receive.
-    if (isset($_GET['limit'])) {
-        if (is_numeric($_GET['limit'])) {
-            return $_GET['limit'];
+    if (isset($_GET[$parameter_name])) {
+        if (is_numeric($_GET[$parameter_name])) {
+            return $_GET[$parameter_name];
         } else {
-            $response = "limit parameter has to be a number";
-
+            $response = $parameter_name . " parameter has to be a number";
             simpleResponse($response, $outputType, 400);
         }
-    } else {
-        require "/home/aw008/variables/business_logic_variables.php";
-        return $default_value_limit_param;
     }
+}
 
+function checkPageParameter($parameters) {
+    if (isset($_GET['page'])) {
+        return checksNumberParameter('page');
+    } else {
+        return 1;
+    }
+}
+
+function checkLimitParameter($parameters) {
+    require '/home/aw008/variables/business_logic_variables.php';
+
+    if (isset($_GET['limit'])) {
+       return checksNumberParameter('limit');
+    } else {
+       return $default_value_limit_param;
+    }
 }
 
 ?>

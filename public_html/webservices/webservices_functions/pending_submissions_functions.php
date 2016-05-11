@@ -11,22 +11,24 @@ function GETPendingSubmissions($submission_type, $outputType) {
 
     # $submission_type is "addition" or "deletion", $outputType must be "xml" or "json".
 
-    require_once '/home/aw008/variables/business_logic_variables.php';
+    require '/home/aw008/variables/business_logic_variables.php';
 
     $legal_params = $legal_params_pending_submission;
 
     checksLegalityOfParametersGiven($_GET, $legal_params);
 
-    $limit = checksLimitParameter();
+    $limit = checkLimitParameter($_GET);
+
+    $page = checkPageParameter($_GET);
 
     # Checks if client specified some specific order to receive the ouput.
     if (isset($_GET['order'])) {
         if ($_GET['order'] == 'random') {
             $order_sql_string = " ORDER BY RAND()";
         } elseif ($_GET['order'] == 'date_asc') {
-            $order_sql_string = " ORDER BY AD." . $submission_type . "_creation_date";
+            $order_sql_string = " ORDER BY S." . $submission_type . "_creation_date";
         } elseif ($_GET['order'] == 'date_desc') {
-            $order_sql_string = " ORDER BY AD." . $submission_type . "_creation_date DESC";
+            $order_sql_string = " ORDER BY S." . $submission_type . "_creation_date DESC";
         } else {
             $response = "You didn't use one of the mandatory values for order.";
             simpleResponse($response, $outputType, 400);
@@ -35,12 +37,7 @@ function GETPendingSubmissions($submission_type, $outputType) {
         $order_sql_string = ${'default_order_get_' . $submission_type . 's'};
     }
 
-
-    if ($submission_type == 'addition') {
-        $pending_submissions = getInformationAboutAllPendingAdditions($limit, $order_sql_string);
-    } elseif ($submission_type == 'deletion') {
-        $pending_submissions = getInformationAboutAllPendingDeletions($limit, $order_sql_string);
-    }
+    $pending_submissions = getInformationAboutPendingSubmissions($submission_type, $limit, $order_sql_string, $page);
 
     if ($outputType == "xml") {
         echo '<?xml version="1.0"?>';

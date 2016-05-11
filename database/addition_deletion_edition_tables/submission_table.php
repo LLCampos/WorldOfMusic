@@ -86,4 +86,42 @@ function insertSubmissionVote($submission_type, $submission_id, $user_id, $type_
     include "/home/aw008/database/disconnect_database.php";
 }
 
+function getInformationAboutPendingSubmissions($submission_type, $limit, $order_sql_string, $page) {
+
+    require "/home/aw008/database/connect_to_database.php";
+
+    $params = array();
+
+    $query_string = "SELECT S.id AS id, AR.name AS artist_name, C.name AS country_name, S.yes AS positive_votes, S.no as negative_votes, S.user_id as added_by, S." . $submission_type . "_creation_date as creation_time
+            FROM ". ucfirst($submission_type) . " S, Artist AR, Country C
+            WHERE AR.id = S.artist_id AND AR.country_fk = C.id AND S.pending = 1";
+
+    if ($order_sql_string) {
+        $query_string = $query_string . $order_sql_string;
+    }
+
+    $query_string = $query_string . " LIMIT :beg, :limit";
+
+    $beg = 0 + (($page - 1) * $limit);
+
+    $params[":beg"] = $beg;
+    $params[":limit"] = $limit;
+
+    $query = $conn->prepare($query_string);
+
+    try {
+        $query->execute($params);
+    } catch(PDOException $e) {
+        echo $query . " " . $e->getMessage() . "\n";
+    }
+
+    $array = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    require "/home/aw008/database/disconnect_database.php";
+
+    return $array;
+}
+
+// getInformationAboutPendingSubmissions('addition', '20', )
+
 ?>

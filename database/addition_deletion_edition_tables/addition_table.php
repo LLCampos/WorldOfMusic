@@ -173,39 +173,6 @@ function checkAdditionVotes($addition_id) {
 }
 
 
-function getInformationAboutAllPendingAdditions($limit, $order_sql_string = False) {
-
-    require "/home/aw008/database/connect_to_database.php";
-
-    $params = array();
-    $params[":limit"] = $limit;
-
-    $query_string = "SELECT AD.id AS id, AR.name AS artist_name, C.name AS country_name, AD.yes AS positive_votes, AD.no as negative_votes, AD.user_id as added_by, AD.addition_creation_date as creation_time
-            FROM Addition AD, Artist AR, Country C
-            WHERE AR.id = AD.artist_id AND AR.country_fk = C.id AND AD.pending = 1";
-
-    if ($order_sql_string) {
-        $query_string = $query_string . $order_sql_string;
-    }
-
-    $query_string = $query_string . " LIMIT :limit";
-
-    $query =$conn->prepare($query_string);
-
-    try {
-        $query->execute($params);
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    $array = $query->fetchAll(PDO::FETCH_ASSOC);
-
-    require "/home/aw008/database/disconnect_database.php";
-
-    return $array;
-}
-
-
 function getInformationAboutOnePendingAddition($addition_id) {
 
     require "/home/aw008/database/connect_to_database.php";
