@@ -27,6 +27,7 @@ a:hover {
     text-decoration: underline;
 }
 
+
 .modal-footer button,
 .orange_button {
     background-color: #FF9933;
@@ -62,11 +63,11 @@ a:hover {
 }
 
 .modal-header {
-    border-bottom-color: #282828;
+    border: none;
 }
 
 .modal-footer {
-     border-top-color: #282828;
+     border: none;
 }
 
 
@@ -336,21 +337,14 @@ a:hover {
     display: inline-block;
 }
 
+#facebook-logo-link,
 #lastfm-logo-link {
-}
-
-#lastfm-logo-pic {
+    display: inline-block;
 }
 
 #facebook-likes,
 #lastfm-listeners {
     display: inline-block;
-}
-
-#facebook-logo-link {
-}
-
-#facebook-logo-pic {
 }
 
 

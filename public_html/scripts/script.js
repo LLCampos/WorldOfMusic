@@ -291,7 +291,7 @@ var submissionIDsUserAlreadyVoted = function(submission_type, user_id, callback)
 
 // Displays message informing user that there are no submissions to vote on.
 var noSubmissionsToVoteOn = function() {
-    $('#motal_no_submissions_message').show();
+    $('#modal_no_submissions_message').show();
 };
 
 var modalLoading = function(type) {
@@ -299,7 +299,8 @@ var modalLoading = function(type) {
 
     if (type) {
         $('#modal_body_addition_deletion').hide();
-        $('#motal_no_submissions_message').hide();
+        $('#modal_no_submissions_message').hide();
+        $('#modal_no_auth').hide();
         $('.modal-body').spin();
     } else if (type === false) {
         $('.modal-body').spin(false);
@@ -371,23 +372,32 @@ var onModalActivation = function() {
     // Remove handlers from buttons that could be attached to them from the last call of this function.
     deactivateButtons();
 
-    var types_of_submissions = ['addition', 'deletion'];
-    var submission_type = types_of_submissions[Math.floor(Math.random()*types_of_submissions.length)];
+    FB.getLoginStatus(function(response) {
+        if (response.status != 'connected') {
 
-    var user_id = FB.getUserID();
+            modalLoading(false);
+            $('#modal_no_auth').show();
 
-    $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
+        } else {
 
-    // Gets a list of IDs of the submissions the user already voted and then calls getSubmissionVote with that list as one of the attributes.
-    // This list will be used to avoid that a submission in which the user already voted at appear again.
-    submissionIDsUserAlreadyVoted(submission_type, user_id, getSubmissionToVote);
+            var types_of_submissions = ['addition', 'deletion'];
+            var submission_type = types_of_submissions[Math.floor(Math.random()*types_of_submissions.length)];
 
+            var user_id = FB.getUserID();
+
+            $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
+
+            // Gets a list of IDs of the submissions the user already voted and then calls getSubmissionVote with that list as one of the attributes.
+            // This list will be used to avoid that a submission in which the user already voted at appear again.
+            submissionIDsUserAlreadyVoted(submission_type, user_id, getSubmissionToVote);
+        }
+    });
 };
 
 var getSubmissionToVote = function(submission_type, list_of_submissions_ids, page) {
 
     $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_' + submission_type + '/?limit=1&order=random',  // Get a random pending submission.
+        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_' + submission_type + '/?limit=1&page=' + page,  // Get a random pending submission.
         success: function(content) {
 
             if ($.isEmptyObject(content)) {
@@ -396,15 +406,20 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
 
             } else {
                 if (submission_type == 'addition') {
-                    change_info = content.pending_additions[0];
+                    submission_info = content.pending_additions[0];
                 } else {
-                    change_info = content.pending_deletions[0];
+                    submission_info = content.pending_deletions[0];
                 }
 
-                var change_artist_name = change_info.artist_name;
-                var change_id = change_info.id;
+                var submission_id = submission_info.id;
 
-                fillModalDeletionOrAddition(submission_type, change_artist_name, change_id);
+                if ($.inArray(submission_id, list_of_submissions_ids)) {
+                    // If user already voted on this submissions, try next one.
+                    getSubmissionToVote(submission_type, list_of_submissions_ids, page + 1);
+                } else {
+                    var change_artist_name = submission_info.artist_name;
+                    fillModalDeletionOrAddition(submission_type, change_artist_name, submission_id);
+                }
             }
         },
 
