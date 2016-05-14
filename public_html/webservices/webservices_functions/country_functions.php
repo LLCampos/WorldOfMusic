@@ -27,6 +27,8 @@ function outPutListOfArtists($country, $outputType) {
     if (isset($_GET['order'])) {
         if ($_GET['order'] == 'likes') {
             $query = $query . " ORDER BY A.number_of_facebook_likes DESC";
+        } elseif ($_GET['order'] == 'lastfm') {
+            $query = $query . " ORDER BY A.number_of_lastfm_listeners DESC";
         } elseif ($_GET['order'] == 'random'){
             $query = $query . " ORDER BY RAND()";
         } else {
