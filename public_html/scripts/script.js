@@ -144,15 +144,11 @@ var clearArtistZone = function() {
     $('#header-artist-zone-name').empty();
     $('#artist-genre-artist-zone').empty();
     $('#artist-country-artist-zone').empty();
-    $('#facebook-logo-link').attr('href', '');
-    $('#lastfm-logo-link').attr('href', '');
-    // $('#twitter-logo-link').attr('href', '');
-    $('#number-of-lastfm-listeners').empty();
-    $('#number-of-facebook-likes').empty();
-    // $('#number-of-twitters-followers').empty();
     $('#artist-biography-text').empty();
     $('#artist_picture').attr('src', '');
     $('#youtube_video_artist iframe').attr('src', '');
+
+    $('#artist_d3_circle_graphs').html('');
 };
 
 var fillArtistZone = function(artist_object) {
@@ -162,12 +158,6 @@ var fillArtistZone = function(artist_object) {
     $('#header-artist-zone-name').text(artist_object.name);
     $('#artist-genre-artist-zone').text(titleCaps(artist_object.style));
     $('#artist-country-artist-zone').text(artist_object.country);
-    $('#facebook-logo-link').attr('href', 'https://facebook.com/' + artist_object.facebook_id);
-    $('#lastfm-logo-link').attr('href', artist_object.lastfm_url);
-    // $('#twitter-logo-link').attr('href', artist_object.twitter_url);
-    $('#number-of-lastfm-listeners').text(artist_object.number_of_lastfm_listeners);
-    $('#number-of-facebook-likes').text(artist_object.number_of_facebook_likes);
-    // $('#number-of-twitters-followers').text(artist_object.number_of_twitter_followers + 'followers');
     $('#artist_zone_artist_picture').attr('src', artist_object.picture_url);
     $('#youtube_video_artist iframe').attr('src', 'https://www.youtube.com/embed/' + artist_object.music_video);
 
@@ -180,6 +170,33 @@ var fillArtistZone = function(artist_object) {
 
     $('#artist-biography-text').text(output_bibliography);
     $('#artist-biography-text').append(bibliography_end);
+
+    $.when(
+
+        $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + current_country_code + '/artists?order=likes&limit=1'),
+        $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + current_country_code + '/artists?order=lastfm&limit=1')
+
+    ).then(function(facebook_top_artist, lastfm_top_artist) {
+
+        var facebook_top_artist_name = facebook_top_artist[0].artist[0].name;
+        var lastfm_top_artist_name = lastfm_top_artist[0].artist[0].name;
+
+        $.when(
+            $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + facebook_top_artist_name),
+            $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + lastfm_top_artist_name)
+
+        ).then(function(facebook_top_artist, lastfm_top_artist) {
+
+            var facebook_top_artist_likes = facebook_top_artist[0].number_of_facebook_likes;
+            var lastfm_top_artist_lastfm = lastfm_top_artist[0].number_of_lastfm_listeners;
+
+            var facebook_url = 'https://facebook.com/' + artist_object.facebook_id;
+            var lastfm_url = artist_object.lastfm_url;
+
+            create_artist_circle_graphs(facebook_top_artist_likes, artist_object.number_of_facebook_likes, facebook_url,
+                                        lastfm_top_artist_lastfm, artist_object.number_of_lastfm_listeners, lastfm_url);
+        });
+    });
 };
 
 var goToAndFillArtistZone = function(artist_name) {

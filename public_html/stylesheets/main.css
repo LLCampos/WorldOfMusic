@@ -408,3 +408,25 @@ a:hover {
 
 #delete_artist_button {
 }
+
+#artist_d3_circle_graphs {
+    display: block;
+    margin: auto;
+}
+
+
+#artist_d3_circle_graphs g {
+    height: 200px;
+    width: 200px;
+}
+
+#artist_d3_circle_graphs a:hover {
+    text-decoration: none;
+    filter: brightness(130%);
+    opacity: .8;
+    cursor: pointer;
+}
+
+.circle_graphs_text_header {
+    font-weight: 700;
+}

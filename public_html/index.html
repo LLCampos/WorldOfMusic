@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script type='text/javascript' src="scripts/script.js"></script>
+    <script type='text/javascript' src="scripts/d3_script.js"></script>
     <script type='text/javascript' src="scripts/facebook.js"></script>
     <script type="text/javascript" src="scripts/jquery.shorten.js"></script>
     <script type="text/javascript" src="scripts/map_variables.js"></script>
@@ -20,6 +21,7 @@
     <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-north_america-mill.js"></script>
     <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-oceania-mill.js"></script>
     <script src="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-south_america-mill.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
     <link rel="stylesheet" type="text/css" href="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-2.0.3.css" type="text/css" media="screen">
@@ -147,7 +149,9 @@
                         <p><b><span>Country: </span></b><span id="artist-country-artist-zone" property='foundingLocation'></span></p>
                     </div>
 
+                    <!--
                     <div id="social-network-info-artist-zone">
+
                         <div id="lastfm_zone">
                             <a id="lastfm-logo-link" href=""> <img id="lastfm-logo-pic" src="resources/images/lastfm-logo.png"> </a>
                             <div property="interactionStatistic" typeof="InteractionCounter" id="lastfm-listeners">
@@ -159,14 +163,16 @@
                             </div>
                         </div>
 
-                        <!--<a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
+
+                        <a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
                             <p id="facebook-likes">
                                 <div property="interactionStatistic" typeof="http://schema.org/InteractionCounter">
                                     <meta property="interactionType" content="http://schema.org/LikeAction" />
                                     <span id="number-of-facebook-likes" property="userInteractionCount"></span>
                                 </div>
                             </p>
-                        -->
+
+
                         <div id="facebook-zone">
                             <a id="facebook-logo-link" href=""> <img id="facebook-logo-pic" src="resources/images/facebook-logo.png"> </a>
                             <p id="facebook-likes">
@@ -179,9 +185,9 @@
                                 </div>
                             </p>
                         </div>
-                        </div>
 
-                        <!--
+
+
                         <a id="twitter-logo-link" href=""> <img id="twitter-logo-pic" src="resources/images/twitter-logo.png"> </a>
                             <p id="twitters-followers">
                                 <div property="interactionStatistic" typeof="InteractionCounter">
@@ -192,12 +198,17 @@
                                     <span id='twitter-followers'><span id="number-of-twitters-followers" property="userInteractionCount" content="Twitter Count"></span> followers</span>
                                 </div>
                             </p>
-                        -->
-                        <!--
+
                         <div id ="twitters-zone" vocab="http://schema.org/" typeof="SocialMediaPosting" resource="LINK DO TWEET">
                             <p>Twitters</p>
                         </div>
+
+
+
+                        </div>
+
                         -->
+
                     </div>
                 </div>
 
@@ -208,20 +219,14 @@
                 <button type="button" class="btn btn-danger" id="delete_artist_button">Delete artist!</button>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div id="youtube_video_artist" typeof="VideoObject">
                     <iframe width="480" height="360" src="" frameborder="0" allowfullscreen property="video"></iframe>
                 </div>
             </div>
 
-            <div class="col-md-2">
-            <!--
-                <div id="artist_vote_zone">
-                    <p>Do you aprove this artist?</p>
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-                </div>
-            -->
+            <div class="col-md-3">
+                <div id="artist_d3_circle_graphs"></div>
             </div>
         </div>
     </div>
