@@ -42,7 +42,7 @@ if ($REQUEST_METHOD == 'GET') {
         $user_id = checkAuthentication($_REQUEST, $outputType);
         $addition_id = $path_params[1];
         $type_of_vote = $path_params[2];
-        POSTPendingAddition($addition_id, $user_id, $type_of_vote);
+        POSTPendingSubmission('addition', $addition_id, $user_id, $type_of_vote);
         exit;
     }
 }

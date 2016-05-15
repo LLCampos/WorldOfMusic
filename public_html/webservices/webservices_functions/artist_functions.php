@@ -50,7 +50,6 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
 
   function DELETEArtist($artist_name, $user_id, $outputType) {
     require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
-    require_once "/home/aw008/database/addition_deletion_edition_tables/deletion_table.php";
     require_once "/home/aw008/database/users/user_table_functions.php";
     require_once "/home/aw008/database/addition_deletion_edition_tables/submission_table.php";
 
@@ -64,7 +63,7 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
 
     } else {
 
-        if (isTherePendingDeletionOnArtist($artist_id)) {
+        if (isTherePendingSubmitionOnArtist('deletion', $artist_id)) {
 
           $response = "Someone has already tried to delete that artist. Check pending deletions.";
           simpleResponse($response, $outputType, 409);
@@ -81,7 +80,7 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
           insertVoteFromArtistID('deletion', $artist_id, $user_id);
 
           # Adds one pending deletion to user
-          addPendingDeletion($user_id);
+          addPendingSubmission("deletion", $user_id);
 
           $response = "Request submitted.";
           simpleResponse($response, $outputType, 200);
@@ -137,7 +136,6 @@ function POSTArtist($artist_name, $outputType, $user_id, $request) {
 
     require_once "/home/aw008/database/populate_tables/populate_artist_table.php";
     require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
-    require_once "/home/aw008/database/addition_deletion_edition_tables/addition_table.php";
     require_once "/home/aw008/database/addition_deletion_edition_tables/submission_table.php";
     require_once "/home/aw008/database/users/user_table_functions.php";
     require_once "/home/aw008/variables/business_logic_variables.php";
@@ -158,7 +156,7 @@ function POSTArtist($artist_name, $outputType, $user_id, $request) {
     }
 
 
-    if (getPendingAdditions($user_id) >= $maximum_submission_of_each_type) {
+    if (getNumberOfPendingSubmissions('addition', $user_id) >= $maximum_submission_of_each_type) {
         $response = "You reached the limit of additions submitted.";
         simpleResponse($response, $outputType, 403);
     }
@@ -186,7 +184,7 @@ function POSTArtist($artist_name, $outputType, $user_id, $request) {
             insertSubmission('addition', $artist_id, $user_id);
             insertVoteFromArtistID('addition', $artist_id, $user_id);
             # Adds one pended addition to user
-            addPendingAddition($user_id);
+            addPendingSubmission('addition', $user_id);
 
             $response = "Request submitted.";
             simpleResponse($response, $outputType, 200);

@@ -102,10 +102,10 @@ function selectUserByID($id) {
     return $user_row;
 }
 
-function getPendingAdditions($user_id) {
+function getNumberOfPendingSubmissions($submission_type, $user_id) {
     require "/home/aw008/database/connect_to_database.php";
 
-    $query = $conn->prepare("SELECT pending_additions FROM User WHERE id = :user_id");
+    $query = $conn->prepare("SELECT pending_" . $submission_type . "s FROM User WHERE id = :user_id");
 
     try {
         $query->execute(array(':user_id' => $user_id));
@@ -118,10 +118,11 @@ function getPendingAdditions($user_id) {
     return $query->fetch()[0];
 }
 
-function addPendingAddition($user_id) {
+function addPendingSubmission($submission_type, $user_id) {
+
     require "/home/aw008/database/connect_to_database.php";
 
-    $query = $conn->prepare("UPDATE User SET pending_additions = pending_additions + 1 WHERE id = :user_id");
+    $query = $conn->prepare("UPDATE User SET pending_" . $submission_type . "s = pending_" . $submission_type . "s + 1 WHERE id = :user_id");
 
     try {
         $query->execute(array(':user_id' => $user_id));
@@ -132,10 +133,10 @@ function addPendingAddition($user_id) {
     require "/home/aw008/database/disconnect_database.php";
 }
 
-function subtractPendingAddition($user_id) {
+function subtractPendingSubmission($submission_type, $user_id) {
     require "/home/aw008/database/connect_to_database.php";
 
-    $query = $conn->prepare("UPDATE User SET pending_additions = pending_additions - 1 WHERE id = :user_id");
+    $query = $conn->prepare("UPDATE User SET pending_" . $submission_type . "s = pending_" . $submission_type . "s - 1 WHERE id = :user_id");
 
     try {
         $query->execute(array(':user_id' => $user_id));
@@ -146,10 +147,11 @@ function subtractPendingAddition($user_id) {
     require "/home/aw008/database/disconnect_database.php";
 }
 
-function addSuccessfulAddition($user_id) {
+
+function addSuccessfulSubmission($submission_type, $user_id) {
     require "/home/aw008/database/connect_to_database.php";
 
-    $query = $conn->prepare("UPDATE User SET successful_additions = successful_additions + 1 WHERE id = :user_id");
+    $query = $conn->prepare("UPDATE User SET successful_" . $submission_type . "s = successful_" . $submission_type . "s + 1 WHERE id = :user_id");
 
     try {
         $query->execute(array(':user_id' => $user_id));
@@ -160,10 +162,10 @@ function addSuccessfulAddition($user_id) {
     require "/home/aw008/database/disconnect_database.php";
 }
 
-function addUnsuccessfulAddition($user_id) {
+function addUnsuccessfulSubmission($submission_type, $user_id) {
     require "/home/aw008/database/connect_to_database.php";
 
-    $query = $conn->prepare("UPDATE User SET unsuccessful_additions = unsuccessful_additions + 1 WHERE id = :user_id");
+    $query = $conn->prepare("UPDATE User SET unsuccessful_" . $submission_type . "s = unsuccessful_" . $submission_type . "s + 1 WHERE id = :user_id");
 
     try {
         $query->execute(array(':user_id' => $user_id));
@@ -174,77 +176,8 @@ function addUnsuccessfulAddition($user_id) {
     require "/home/aw008/database/disconnect_database.php";
 }
 
-function getPendingDeletions($user_id) {
-    require "/home/aw008/database/connect_to_database.php";
 
-    $query = $conn->prepare("SELECT pending_deletions FROM User WHERE id = :user_id");
 
-    try {
-        $query->execute(array(':user_id' => $user_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    require "/home/aw008/database/disconnect_database.php";
-
-    return $query->fetch()[0];
-}
-
-function addPendingDeletion($user_id) {
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("UPDATE User SET pending_deletions = pending_deletions + 1 WHERE id = :user_id");
-
-    try {
-        $query->execute(array(':user_id' => $user_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
-function subtractPendingDeletion($user_id) {
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("UPDATE User SET pending_deletions = pending_deletions - 1 WHERE id = :user_id");
-
-    try {
-        $query->execute(array(':user_id' => $user_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
-function addSuccessfulDeletion($user_id) {
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("UPDATE User SET successful_deletions = successful_deletions + 1 WHERE id = :user_id");
-
-    try {
-        $query->execute(array(':user_id' => $user_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
-function addUnsuccessfulDeletion($user_id) {
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("UPDATE User SET unsuccessful_deletions = unsuccessful_deletions + 1 WHERE id = :user_id");
-
-    try {
-        $query->execute(array(':user_id' => $user_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    require "/home/aw008/database/disconnect_database.php";
-}
 
 # addNewUserToUserTable(2, 'afdadf', 'afasdf', 'asdfsadf', 'asdfsadf', 'asdfsadf', 12, 1, '1000-01-01 00:00:00')
 

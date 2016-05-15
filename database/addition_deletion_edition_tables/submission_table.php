@@ -109,6 +109,22 @@ function addSubmissionNegativeVote($submission_type, $submission_id) {
     require "/home/aw008/database/disconnect_database.php";
 }
 
+function makeSubmissionNonPending($submission_type, $submission_id) {
+
+    require "/home/aw008/database/connect_to_database.php";
+
+    $query = $conn->prepare("UPDATE ". ucfirst($submission_type) . " SET pending = 0 WHERE id = :submission_id");
+
+    try {
+        $query->execute(array(':submission_id' => $submission_id));
+    } catch(PDOException $e) {
+        echo $query . " " . $e->getMessage() . "\n";
+    }
+
+    require "/home/aw008/database/disconnect_database.php";
+}
+
+
 ############################  Table Insertion ###################################################
 
 function insertSubmission($submition_type, $artist_id, $user_id) {
@@ -258,7 +274,7 @@ function userAlreadyVotedInSubmission($submission_type, $user_id, $submission_id
 }
 
 
-function countPositiveSubmssionVotes($submission_type, $submission_id) {
+function countPositiveSubmissionVotes($submission_type, $submission_id) {
 
     require "/home/aw008/database/connect_to_database.php";
 
@@ -396,6 +412,85 @@ function submissionIDExists($submission_type, $submission_id) {
     $list_of_submissions_ids = arrayOfAllPendingSubmissionsIDs($submission_type);
 
     return in_array($submission_id, $list_of_submissions_ids);
+}
+
+
+function isTherePendingSubmitionOnArtist($submission_type, $artist_id) {
+
+    require "/home/aw008/database/connect_to_database.php";
+
+    $query = $conn->prepare("SELECT artist_id FROM " . ucfirst($submission_type) . " WHERE artist_id = :artist_id AND pending = 1");
+
+    try {
+        $query->execute(array(':artist_id' => $artist_id));
+    } catch(PDOException $e) {
+        echo $query . " " . $e->getMessage() . "\n";
+    }
+
+    if ($query->rowCount()) {
+        require "/home/aw008/database/disconnect_database.php";
+        return true;
+    } else {
+        require "/home/aw008/database/disconnect_database.php";
+        return false;
+    }
+}
+
+
+function didUserAlreadyTriedToDeleteArtist($artist_id, $user_id) {
+    require "/home/aw008/database/connect_to_database.php";
+
+    $query = $conn->prepare("SELECT user_id, artist_id FROM Deletion WHERE artist_id = :artist_id AND user_id = :user_id");
+
+    try {
+        $query->execute(array(':artist_id' => $artist_id, ':user_id' => $user_id));
+    } catch(PDOException $e) {
+        echo $query . " " . $e->getMessage() . "\n";
+    }
+
+    if ($query->rowCount()) {
+        require "/home/aw008/database/disconnect_database.php";
+        return true;
+    } else {
+        require "/home/aw008/database/disconnect_database.php";
+        return false;
+    }
+}
+
+
+############## Others ####################################
+
+
+
+function checkSubmissionVotes($submission_type, $submission_id) {
+
+    if (countPositiveSubmissionVotes($submission_type, $submission_id) > 4) {
+        require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
+        require_once "/home/aw008/database/users/user_table_functions.php";
+
+
+        $artist_id = getArtistIDFromSubmissionID($submission_type, $submission_id);
+
+        if ($submission_type == 'deletion') {
+            makeArtistInvisible($artist_id);
+        } else if ($submission_type == 'addition') {
+            makeArtistVisible($artist_id);
+        }
+
+        $user_id = getUserIDFromSubmissionID($submission_type, $submission_id);
+        subtractPendingSubmission($submission_type, $user_id);
+        addSuccessfulSubmission($submission_type, $user_id);
+        makeSubmissionNonPending($submission_type, $submission_id);
+
+    } elseif (countNegativeSubmissionVotes($submission_type, $submission_id) > 4) {
+        require_once "/home/aw008/database/users/user_table_functions.php";
+
+
+        $user_id = getUserIDFromSubmissionID($submission_type, $submission_id);
+        subtractPendingSubmission($submission_type, $user_id);
+        addUnsuccessfulSubmission($submission_type, $user_id);
+        makeSubmissionNonPending($submission_type, $submission_id);
+    }
 }
 
 ?>
