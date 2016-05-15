@@ -293,14 +293,22 @@ var submissionIDsUserAlreadyVoted = function(submission_type, user_id, callback)
     $.ajax({
         url: service_url,
         success: function(response) {
-            var list_of_votes = response[submission_type + '_votes'];
-            list_of_submissions_ids = [];
 
-            for (var i=0; i < list_of_votes.length; ++i) {
-                list_of_submissions_ids.push(list_of_votes[i][submission_type + '_id']);
+            // If user as any votes of type submission_type
+            if (response[submission_type + '_votes']) {
+
+                var list_of_votes = response[submission_type + '_votes'];
+                list_of_submissions_ids = [];
+
+                for (var i=0; i < list_of_votes.length; ++i) {
+                    list_of_submissions_ids.push(list_of_votes[i][submission_type + '_id']);
+                }
+
+                callback(submission_type, list_of_submissions_ids, 1);
+
+            } else {
+                callback(submission_type, [], 1);
             }
-
-            callback(submission_type, list_of_submissions_ids, 1);
         }
     });
 };
@@ -430,7 +438,7 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
 
                 var submission_id = submission_info.id;
 
-                if ($.inArray(submission_id, list_of_submissions_ids)) {
+                if ($.inArray(submission_id, list_of_submissions_ids) != -1) {
                     // If user already voted on this submissions, try next one.
                     getSubmissionToVote(submission_type, list_of_submissions_ids, page + 1);
                 } else {
