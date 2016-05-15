@@ -375,7 +375,7 @@ var activateButtons = function(submission_type, submission_id) {
                 method: 'POST',
 
                 success: function(response) {
-                    alert('Success!');
+                    onModalActivation();
                 },
 
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -385,9 +385,8 @@ var activateButtons = function(submission_type, submission_id) {
             });
         } else if (button_id == 'vote_button_neutral') {
             global_submissions_user_not_want_to_vote[submission_type].push(submission_id);
+            onModalActivation();
         }
-
-        onModalActivation();
     });
 };
 

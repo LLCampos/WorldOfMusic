@@ -76,9 +76,13 @@ function POSTPendingSubmission($submission_type, $submission_id, $user_id, $type
         if ($type_of_vote == 'positive_vote') {
             insertSubmissionVote($submission_type, $submission_id, $user_id, 'positive');
             addSubmissionPositiveVote($submission_type, $submission_id);
+            $response = 'Vote accepted!';
+            simpleResponse($response, $outputType, 200);
         } elseif ($type_of_vote == 'negative_vote') {
             insertSubmissionVote($submission_type, $submission_id, $user_id, 'negative');
             addSubmissionNegativeVote($submission_type, $submission_id);
+            $response = 'Vote accepted!';
+            simpleResponse($response, $outputType, 200);
         } else {
             $response = "Type of vote must be 'positive_vote' or 'negative_vote'";
             simpleResponse($response, $outputType, 400);
