@@ -285,6 +285,9 @@ var deleteCurrentArtist = function() {
 
 // #### Modal ####
 
+global_submissions_user_not_want_to_vote = {addition: [], deletion: []};
+global_submission_types_without_votes = [];
+
 var submissionIDsUserAlreadyVoted = function(submission_type, user_id, callback) {
     // Returns an array with the ids of the submissions of the type submission_type in which the user already voted
 
@@ -380,6 +383,8 @@ var activateButtons = function(submission_type, submission_id) {
                     alert(response_text);
                 },
             });
+        } else if (button_id == 'vote_button_neutral') {
+            global_submissions_user_not_want_to_vote[submission_type].push(submission_id);
         }
 
         onModalActivation();
@@ -406,15 +411,24 @@ var onModalActivation = function() {
         } else {
 
             var types_of_submissions = ['addition', 'deletion'];
-            var submission_type = types_of_submissions[Math.floor(Math.random()*types_of_submissions.length)];
 
-            var user_id = FB.getUserID();
+            var types_of_submissions_left = $(types_of_submissions).not(global_submission_types_without_votes).get();
 
-            $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
+            if (types_of_submissions_left.length === 0) {
+                modalLoading(false);
+                noSubmissionsToVoteOn();
+            } else {
 
-            // Gets a list of IDs of the submissions the user already voted and then calls getSubmissionVote with that list as one of the attributes.
-            // This list will be used to avoid that a submission in which the user already voted at appear again.
-            submissionIDsUserAlreadyVoted(submission_type, user_id, getSubmissionToVote);
+                var submission_type = types_of_submissions_left[Math.floor(Math.random()*types_of_submissions_left.length)];
+
+                var user_id = FB.getUserID();
+
+                $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
+
+                // Gets a list of IDs of the submissions the user already voted and then calls getSubmissionVote with that list as one of the attributes.
+                // This list will be used to avoid that a submission in which the user already voted at appear again.
+                submissionIDsUserAlreadyVoted(submission_type, user_id, getSubmissionToVote);
+            }
         }
     });
 };
@@ -427,8 +441,8 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
 
             if ($.isEmptyObject(content)) {
                 modalLoading(false);
-                noSubmissionsToVoteOn();
-
+                global_submission_types_without_votes.push(submission_type);
+                onModalActivation();
             } else {
                 if (submission_type == 'addition') {
                     submission_info = content.pending_additions[0];
@@ -438,8 +452,8 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
 
                 var submission_id = submission_info.id;
 
-                if ($.inArray(submission_id, list_of_submissions_ids) != -1) {
-                    // If user already voted on this submissions, try next one.
+                if (($.inArray(submission_id, list_of_submissions_ids) != -1) || ($.inArray(submission_id, global_submissions_user_not_want_to_vote[submission_type])) != -1 ) {
+                    // If user already voted on this submissions or skipped it, try next one.
                     getSubmissionToVote(submission_type, list_of_submissions_ids, page + 1);
                 } else {
                     var change_artist_name = submission_info.artist_name;
@@ -469,13 +483,6 @@ var fillModalDeletionOrAddition = function(submission_type, artist_name, id) {
         error: function(jqXHR, textStatus, errorThrown) {
         }
     });
-
-
-    // if (submission_type == 'addition') {
-    //     fillModalAddition();
-    // } else {
-    //     fillModalDeletion();
-    // }
 };
 
 var createContentForModalDeletionOrAddition = function(response) {
