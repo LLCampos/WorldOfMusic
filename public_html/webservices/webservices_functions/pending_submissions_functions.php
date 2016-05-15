@@ -58,7 +58,7 @@ function GETPendingSubmissions($submission_type, $outputType) {
 
 function GETOnePendingSubmission($submission_type, $submission_id, $outputType) {
 
-    $pending_submission = getInformationAboutOnePendingSubmission($submission_type, $submission_id);
+    $pending_submission = getInformationAboutOnePendingSubmissionPrettyArray($submission_type, $submission_id);
 
     if ($outputType == "xml") {
         buildSimpleXMLOutput('pending_' . $submission_type, $pending_submission);

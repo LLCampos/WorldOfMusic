@@ -35,17 +35,45 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
     }
   }
 
-  function PUTArtist($artist_name, $request) {
+  function PUTArtist($artist_name, $request, $user_id, $outputType) {
+
+    require_once "/home/aw008/database/populate_tables/populate_artist_table.php";
+    require_once "/home/aw008/database/addition_deletion_edition_tables/submission_table.php";
+    require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
+    require_once "/home/aw008/database/users/user_table_functions.php";
 
     $editable_params = array('country', 'style', 'bibliography', 'facebook_id', 'twitter_url');
 
-    # Por cada node do node principal, faz um update
-    foreach ($request as $param_to_edit => $new_data) {
-      if (in_array($param_to_edit, $editable_params)) {
-        updateParam($artist_name, $param_to_edit, $new_data);
+    foreach ($request as $key => $value) {
+      if (in_array($key, $editable_params)) {
+        $attribute_to_change = $key;
+        $new_value = $value;
+        break;
       }
     }
 
+    if (!isset($attribute_to_change)) {
+      $response = "You did not send all the information needed for the edition. Check the documentation for more information.";
+      simpleResponse($response, $outputType, 404);
+    }
+
+    $current_artist_record_id = artistNameToID($artist_name);
+
+    if (isTherePendingSubmitionOnArtist('edition', $current_artist_record_id)) {
+      $response = "There is already a pending edition on that artist.";
+      simpleResponse($response, $outputType, 409);
+    }
+
+    $new_artist_record_id = addEditedArtist($current_artist_record_id, $attribute_to_change, $new_value);
+
+    $edition_id = insertEdition($current_artist_record_id, $new_artist_record_id, $user_id, $attribute_to_change);
+    insertSubmissionVote('edition', $edition_id, $user_id);
+
+    # Adds one pending edition to user
+    addPendingSubmission("edition", $user_id);
+
+    $response = "Request submitted.";
+    simpleResponse($response, $outputType, 200);
   }
 
   function DELETEArtist($artist_name, $user_id, $outputType) {

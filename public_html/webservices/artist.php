@@ -28,7 +28,7 @@ if ($REQUEST_METHOD == 'GET') {
     # Se o url tiver o formato (...)/artist.php/{name_of_artist}
     if (sizeof($path_params) == 2) {
         $id = checkAuthentication($_REQUEST, $outputType);
-        PUTArtist($artist_name, $_REQUEST);
+        PUTArtist($artist_name, $_REQUEST, $id, $outputType);
         exit;
     } elseif (sizeof($path_params) == 0) {
         http_response_code(405);

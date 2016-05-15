@@ -145,6 +145,7 @@ function insertSubmission($submition_type, $artist_id, $user_id) {
     include "/home/aw008/database/disconnect_database.php";
 }
 
+
 function insertEdition($old_artist_id, $new_artist_id, $user_id, $attribute_changing) {
 
     include "/home/aw008/database/connect_to_database.php";
@@ -159,11 +160,12 @@ function insertEdition($old_artist_id, $new_artist_id, $user_id, $attribute_chan
 
     try {
         $sql->execute();
+        $id = $conn->lastInsertId();
+        include "/home/aw008/database/disconnect_database.php";
+        return $id;
     } catch(PDOException $e) {
         echo $e->getMessage();
     }
-
-    include "/home/aw008/database/disconnect_database.php";
 }
 
 
@@ -352,9 +354,7 @@ function getInformationAboutOnePendingSubmission($submission_type, $submission_i
 
     require "/home/aw008/database/connect_to_database.php";
 
-    $query =$conn->prepare("SELECT AD.id AS id, AR.name AS artist_name, C.name AS country_name, AD.yes AS positive_votes, AD.no as negative_votes, AD.user_id as added_by, AD." . $submission_type . "_creation_date as creation_time
-            FROM " . ucfirst($submission_type) . " AD, Artist AR, Country C
-            WHERE AR.id = AD.artist_id AND AR.country_fk = C.id AND AD.pending = 1 AND AD.id = :submission_id");
+    $query = $conn->prepare("SELECT * FROM " . ucfirst($submission_type) . " WHERE id = :submission_id");
 
     try {
         $query->execute(array(':submission_id' => $submission_id));
@@ -364,10 +364,45 @@ function getInformationAboutOnePendingSubmission($submission_type, $submission_i
 
     $array = $query->fetch(PDO::FETCH_ASSOC);
 
+    require "/home/aw008/database/disconnect_database.php";
+
     return $array;
 
-    require "/home/aw008/database/disconnect_database.php";
 }
+
+function getInformationAboutOnePendingSubmissionPrettyArray($submission_type, $submission_id) {
+
+    require "/home/aw008/database/connect_to_database.php";
+
+    if ($submission_type == 'edition') {
+
+        $attribute_changing = getInformationAboutOnePendingSubmission($submission_type, $submission_id)['attribute_changing'];
+
+        $query = $conn->prepare("SELECT S.id AS id, AR1.name AS artist_name, S.attribute_changing, AR1." . $attribute_changing . " AS old_value, AR2." . $attribute_changing . " AS new_value, S.yes AS positive_votes, S.no as negative_votes, S.user_id as added_by, S." . $submission_type . "_creation_date as creation_time
+        FROM " . ucfirst($submission_type) . " S, Artist AR1, Artist AR2, Country C
+        WHERE AR1.id = S.old_artist_id AND AR2.id = S.new_artist_id AND S.pending = 1 AND S.id = :submission_id");
+
+    } else {
+
+        $query = $conn->prepare("SELECT AD.id AS id, AR.name AS artist_name, C.name AS country_name, AD.yes AS positive_votes, AD.no as negative_votes, AD.user_id as added_by, AD." . $submission_type . "_creation_date as creation_time
+                FROM " . ucfirst($submission_type) . " AD, Artist AR, Country C
+                WHERE AR.id = AD.artist_id AND AR.country_fk = C.id AND AD.pending = 1 AND AD.id = :submission_id");
+    }
+
+    try {
+        $query->execute(array(':submission_id' => $submission_id));
+    } catch(PDOException $e) {
+        echo $query . " " . $e->getMessage() . "\n";
+    }
+
+    $array = $query->fetch(PDO::FETCH_ASSOC);
+
+    require "/home/aw008/database/disconnect_database.php";
+
+    return $array;
+
+}
+
 
 function getSubmissionVotesFromUser($submission_type, $user_id) {
     require "/home/aw008/database/connect_to_database.php";
@@ -419,7 +454,11 @@ function isTherePendingSubmitionOnArtist($submission_type, $artist_id) {
 
     require "/home/aw008/database/connect_to_database.php";
 
-    $query = $conn->prepare("SELECT artist_id FROM " . ucfirst($submission_type) . " WHERE artist_id = :artist_id AND pending = 1");
+    if ($submission_type == 'edition') {
+        $query = $conn->prepare("SELECT old_artist_id FROM " . ucfirst($submission_type) . " WHERE old_artist_id = :artist_id AND pending = 1");
+    } else {
+        $query = $conn->prepare("SELECT artist_id FROM " . ucfirst($submission_type) . " WHERE artist_id = :artist_id AND pending = 1");
+    }
 
     try {
         $query->execute(array(':artist_id' => $artist_id));
@@ -435,6 +474,8 @@ function isTherePendingSubmitionOnArtist($submission_type, $artist_id) {
         return false;
     }
 }
+
+isTherePendingSubmitionOnArtist('edition', 10210);
 
 
 function didUserAlreadyTriedToDeleteArtist($artist_id, $user_id) {
@@ -461,20 +502,31 @@ function didUserAlreadyTriedToDeleteArtist($artist_id, $user_id) {
 ############## Others ####################################
 
 
-
 function checkSubmissionVotes($submission_type, $submission_id) {
 
     if (countPositiveSubmissionVotes($submission_type, $submission_id) > 4) {
         require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
         require_once "/home/aw008/database/users/user_table_functions.php";
 
+        if ($submission_type == 'edition') {
 
-        $artist_id = getArtistIDFromSubmissionID($submission_type, $submission_id);
+            // NOT TESTED //
 
-        if ($submission_type == 'deletion') {
-            makeArtistInvisible($artist_id);
-        } else if ($submission_type == 'addition') {
-            makeArtistVisible($artist_id);
+            $info = getInformationAboutOnePendingSubmission($submission_type, $submission_id);
+            $old_artist_record_id = $info['old_artist_id'];
+            $new_artist_record_id = $info['new_artist_id'];
+
+            makeArtistInvisible($old_artist_record_id);
+            makeArtistVisible($new_artist_record_id);
+
+        } else {
+            $artist_id = getArtistIDFromSubmissionID($submission_type, $submission_id);
+
+            if ($submission_type == 'deletion') {
+                makeArtistInvisible($artist_id);
+            } else if ($submission_type == 'addition') {
+                makeArtistVisible($artist_id);
+            }
         }
 
         $user_id = getUserIDFromSubmissionID($submission_type, $submission_id);
@@ -484,7 +536,6 @@ function checkSubmissionVotes($submission_type, $submission_id) {
 
     } elseif (countNegativeSubmissionVotes($submission_type, $submission_id) > 4) {
         require_once "/home/aw008/database/users/user_table_functions.php";
-
 
         $user_id = getUserIDFromSubmissionID($submission_type, $submission_id);
         subtractPendingSubmission($submission_type, $user_id);
