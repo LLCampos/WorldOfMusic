@@ -51,14 +51,14 @@ function addInfoToArtist($artist_array) {
             $artist_array['name'] = $name;
         } elseif (!array_key_exists('mbid', $artist_array)) {
             $mbid = $artist_obj->mbid;
-            $artist_array["mbid"] = $mbid;
+            $artist_array["musicbrainz_id"] = $mbid;
         }
 
-        $artist_array['url'] = $url;
-        $artist_array['tag'] = $tag;
-        $artist_array['listeners'] = $listeners;
-        $artist_array['image_big'] = $image_big;
-        $artist_array['bio'] = $bio;
+        $artist_array['lastfm_url'] = $url;
+        $artist_array['style'] = $tag;
+        $artist_array['number_of_lastfm_listeners'] = $listeners;
+        $artist_array['picture_url'] = $image_big;
+        $artist_array['bibliography'] = $bio;
 
         include_once "/home/aw008/database/facebook_api/facebook_api_functions.php";
 
@@ -102,41 +102,54 @@ function getListOfArtists($list_of_countries, $number_of_artists_per_country) {
     return $list_of_artists;
 }
 
-function populateArtistsTable($artist_array) {
+function populateArtistsTable($artist_array, $deleted = 0) {
     /* Inserts artist in Artist table.
 
-    $artist_array is an array with info about the artist.*/
+    $artist_array is an array with info about the artist.
+    $deleted can be 1 or 0. 1 if the artist is to be visible to the public, 0 otherwise.
+
+    Returns the id of que insertion line if insertion is successful. */
 
     include "/home/aw008/database/connect_to_database.php";
 
     $sql = $conn->prepare("insert into Artist (name, country_fk, picture_url, bibliography, style, music_video, lastfm_url, number_of_lastfm_listeners, musicbrainz_id, facebook_id, number_of_facebook_likes, Deleted)
-    values (:name, :country_fk, :picture_url, :bibliography, :style, :music_video, :lastfm_url, :number_of_lastfm_listeners, :musicbrainz_id, :facebook_id, :number_of_facebook_likes, 0);");
+    values (:name, :country_fk, :picture_url, :bibliography, :style, :music_video, :lastfm_url, :number_of_lastfm_listeners, :musicbrainz_id, :facebook_id, :number_of_facebook_likes, :deleted);");
 
     $sql->bindParam(':name', $artist_array['name']);
-    $sql->bindParam(':picture_url', $artist_array['image_big']);
-    $sql->bindParam(':bibliography', $artist_array['bio']);
-    $sql->bindParam(':style', $artist_array['tag']);
+    $sql->bindParam(':picture_url', $artist_array['picture_url']);
+    $sql->bindParam(':bibliography', $artist_array['bibliography']);
+    $sql->bindParam(':style', $artist_array['style']);
     $sql->bindParam(':music_video', $artist_array['music_video']);
-    $sql->bindParam(':lastfm_url', $artist_array['url']);
-    $sql->bindParam(':number_of_lastfm_listeners', $artist_array['listeners']);
-    $sql->bindParam(':musicbrainz_id', $artist_array['mbid']);
+    $sql->bindParam(':lastfm_url', $artist_array['lastfm_url']);
+    $sql->bindParam(':number_of_lastfm_listeners', $artist_array['number_of_lastfm_listeners']);
+    $sql->bindParam(':musicbrainz_id', $artist_array['musicbrainz_id']);
     $sql->bindParam(':facebook_id', $artist_array['facebook_id']);
     $sql->bindParam(':number_of_facebook_likes', $artist_array['number_of_facebook_likes']);
+    $sql->bindParam(':deleted', $deleted);
 
-    include_once "/home/aw008/database/utility_functions/country_utility_functions.php";
-    $country = $artist_array['country'];
-    $country_id = getIDFromCountryCode($country);
-    $sql->bindParam(':country_fk', $country_id);
+    if (isset($artist_array['country'])) {
+
+        include_once "/home/aw008/database/utility_functions/country_utility_functions.php";
+        $country = $artist_array['country'];
+        $country_id = getIDFromCountryCode($country);
+        $sql->bindParam(':country_fk', $country_id);
+
+    } elseif (isset($artist_array['country_fk'])) {
+        $sql->bindParam(':country_fk', $artist_array['country_fk']);
+    }
 
     try {
         $sql->execute();
-        return true;
-    } catch(PDOException $e) {
-        echo $sql . " " . $e->getMessage() . "\n";
-    }
+        $id = $conn->lastInsertId();
+        include "/home/aw008/database/disconnect_database.php";
+        return $id;
 
-    include "/home/aw008/database/disconnect_database.php";
+    } catch(PDOException $e) {
+        include "/home/aw008/database/disconnect_database.php";
+        echo $e->getMessage() . "\n";
+    }
 }
+
 
 function populateArtistTableFromListOfCountries($list_of_countries, $number_of_artists_per_country) {
     /* Inserts $number_of_artists_per_country artists by each country in $list_of_countries array in the Artist table. */
@@ -162,13 +175,13 @@ function populateArtistTableFromListOfCountries($list_of_countries, $number_of_a
 }
 
 
-function insertArtistInTable($artist_name, $country_code) {
+function insertArtistInTable($artist_name, $country_code, $deleted = 0) {
     /* Inserts artist in the Artist table.
 
     Requires: $artist_name is a string representing the name of a artist,
     $country_code is a string representing the name of a country.
-    Ensures: if $artist_name is a valid lastfm artist, inserts artist in Artist table. If not,
-    returns false. */
+    Ensures: if $artist_name is a valid lastfm artist, inserts artist in Artist table and returns the id of the insertion.
+    If not, returns false. */
 
     $artist_array = array("name" => $artist_name,
                           "country" => $country_code);
@@ -176,12 +189,12 @@ function insertArtistInTable($artist_name, $country_code) {
     $artist_array = addInfoToArtist($artist_array);
 
     if ($artist_array) {
-        populateArtistsTable($artist_array);
-        return true;
+        return populateArtistsTable($artist_array, $deleted);
     } else {
         return false;
     }
 }
+
 
 function fillDatabaseWithArtistsFromDBPedia($list_of_countries) {
 
@@ -204,59 +217,18 @@ function fillDatabaseWithArtistsFromDBPedia($list_of_countries) {
     }
 }
 
+function addEditedArtist($artist_id, $attribute_being_edited, $new_value_for_attribute) {
+    # Inserts a new hidden line in the Artist table with the same information as the line with id $artist_id, with just one attribute changed.
 
-# function insertArtistInTableByMID($mid, $country) {
-#     /* Inserts artist in the Artist table.
-#
-#     Requires: $mid is a string representing the musicbrainz id of the artist,
-#     $country is a string representing the name of a country.
-#     Ensures: if $mid is a valid lastfm artist, inserts artist in Artist table. If not,
-#     returns false. */
-#
-#
-#     $artist_array = array("musicbrainz_id" => $mid,
-#                           "country" => $country);
-#
-#     $artist_array = addInfoToArtist($artist_array);
-#
-#     if ($artist_array) {
-#         populateArtistsTable($artist_array);
-#         return true;
-#     } else {
-#         return false;
-#     }
-# }
+    include_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
+    include_once "/home/aw008/database/utility_functions/country_utility_functions.php";
 
-    #function populateArtistTableFromMusicbrainz() {
-    #    // Fills the database with all the artists in the Musicbrainz database. TAKES TOO LONG
-#
-    #    include "/home/aw008/database/musicbrainz_api/musicbrainz_functions.php";
-    #    include "/home/aw008/database/utility_functions/country_utility_functions.php";
-    #    include "/home/aw008/database/utility_functions/artist_utility_functions.php";
-#
-    #    $list_of_countrycodes = outPutCountryCodesList();
-#
-    #    foreach ($list_of_countrycodes as $country_code) {
-    #        $list_of_artists = getAllMusicbrainzArtistFromCountry($country_code);
-#
-    #        foreach ($list_of_artists as $artist_array) {
-#
-    #            $artist_array = addInfoToArtist($artist_array);
-#
-    #            # To control number of calls/minute.
-    #            # sleep(1);
-#
-    #            if ($artist_array) {
-    #                if (!alreadyInTable($artist_array['name'])) {
-    #                    populateArtistsTable($artist_array);
-    #                } else {
-    #                    echo "Already in table";
-    #                }
-    #            }
-#
-    #        }
-    #    }
-    #}
+    $artist_info = getArtistInfoFromID($artist_id);
+
+    $artist_info[$attribute_being_edited] = $new_value_for_attribute;
+
+    return populateArtistsTable($artist_info, 1);
+}
 
 ?>
 

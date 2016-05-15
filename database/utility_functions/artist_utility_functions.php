@@ -1,9 +1,11 @@
 <?php
 
 function artistNameToID($artist_name) {
+    # Returns the ID of the non-deleted line of the artist table which has the value $artist_name in the 'name' attribute.
+
     require "/home/aw008/database/connect_to_database.php";
 
-    $query = $conn->prepare("SELECT id FROM Artist WHERE name = :artist_name");
+    $query = $conn->prepare("SELECT id FROM Artist WHERE name = :artist_name AND Deleted = 0");
 
     try {
         $query->execute(array(':artist_name' => $artist_name));
@@ -13,9 +15,9 @@ function artistNameToID($artist_name) {
 
     $id = $query->fetch()[0];
 
-    return $id;
-
     require "/home/aw008/database/disconnect_database.php";
+
+    return $id;
 }
 
 function arrayOfAllArtist() {
@@ -117,18 +119,19 @@ function makeArtistInvisible($id) {
     include "/home/aw008/database/disconnect_database.php";
 }
 
-function insertArtistInTableByUser($artist_name, $country_code) {
-    # Inserts artist in table, but makes it invisible to users.
+function getArtistInfoFromID($artist_id) {
 
-    require_once "/home/aw008/database/populate_tables/populate_artist_table.php";
+    include "/home/aw008/database/connect_to_database.php";
 
-    if (insertArtistInTable($artist_name, $country_code)) {
-        $id = artistNameToID($artist_name);
-        makeArtistInvisible($id);
-        return true;
-    } else {
-        return false;
-    }
+    $query = $conn->prepare("SELECT * FROM Artist WHERE id = :id");
+
+    $query->execute(array(':id' => $artist_id));
+
+    $line = $query->fetch(PDO::FETCH_ASSOC);
+
+    include "/home/aw008/database/disconnect_database.php";
+
+    return $line;
 }
 
 

@@ -1,54 +1,5 @@
 <?php
 
-function userAlreadyVoteAddition($user_id, $addition_id) {
-
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("SELECT user_id, addition_id FROM AdditionVote WHERE user_id = :user_id AND addition_id = :addition_id");
-
-    try {
-        $query->execute(array(':addition_id' => $addition_id, ':user_id' => $user_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    if ($query->rowCount()) {
-        require "/home/aw008/database/disconnect_database.php";
-        return true;
-    } else {
-        require "/home/aw008/database/disconnect_database.php";
-        return false;
-    }
-}
-
-function addAdditionPositiveVote($addition_id) {
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("UPDATE Addition SET yes = yes + 1 WHERE id = :addition_id");
-
-    try {
-        $query->execute(array(':addition_id' => $addition_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
-function addAdditionNegativeVote($addition_id) {
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query = $conn->prepare("UPDATE Addition SET no = no + 1 WHERE id = :addition_id");
-
-    try {
-        $query->execute(array(':addition_id' => $addition_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
 function countPositiveAdditionVotes($addition_id) {
 
     require "/home/aw008/database/connect_to_database.php";
@@ -147,53 +98,6 @@ function checkAdditionVotes($addition_id) {
     }
 }
 
-
-function getInformationAboutOnePendingAddition($addition_id) {
-
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query =$conn->prepare("SELECT AD.id AS id, AR.name AS artist_name, C.name AS country_name, AD.yes AS positive_votes, AD.no as negative_votes, AD.user_id as added_by, AD.addition_creation_date as creation_time
-            FROM Addition AD, Artist AR, Country C
-            WHERE AR.id = AD.artist_id AND AR.country_fk = C.id AND AD.pending = 1 AND AD.id = :addition_id");
-
-    try {
-        $query->execute(array(':addition_id' => $addition_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    $array = $query->fetch(PDO::FETCH_ASSOC);
-
-    return $array;
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
-function arrayOfAllPendingAdditionsIDs() {
-
-    include "/home/aw008/database/connect_to_database.php";
-
-    $sql = "SELECT id
-            FROM Addition
-            WHERE pending = 1;";
-
-    $query_result = $conn->query($sql);
-
-    $list_of_ids = $query_result->fetchAll(PDO::FETCH_COLUMN);
-
-    include "/home/aw008/database/disconnect_database.php";
-
-    return $list_of_ids;
-}
-
-function additionIDExists($addition_id) {
-    # Returns true if $addition_id is an id of a pending addition. False otherwise.
-
-    $list_of_additions_ids = arrayOfAllPendingAdditionsIDs();
-
-    return in_array($addition_id, $list_of_additions_ids);
-}
-
 function makeAdditionNonPending($addition_id) {
 
     require "/home/aw008/database/connect_to_database.php";
@@ -205,26 +109,6 @@ function makeAdditionNonPending($addition_id) {
     } catch(PDOException $e) {
         echo $query . " " . $e->getMessage() . "\n";
     }
-
-    require "/home/aw008/database/disconnect_database.php";
-}
-
-function getAdditionVotesFromUser($user_id) {
-    require "/home/aw008/database/connect_to_database.php";
-
-    $query =$conn->prepare("SELECT AV.addition_id, AV.type_of_vote
-                            FROM AdditionVote AV
-                            WHERE user_id = :user_id");
-
-    try {
-        $query->execute(array(':user_id' => $user_id));
-    } catch(PDOException $e) {
-        echo $query . " " . $e->getMessage() . "\n";
-    }
-
-    $array = $query->fetchAll(PDO::FETCH_ASSOC);
-
-    return $array;
 
     require "/home/aw008/database/disconnect_database.php";
 }
