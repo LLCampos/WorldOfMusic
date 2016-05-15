@@ -60,11 +60,7 @@ function GETPendingSubmissions($submission_type, $outputType) {
 
 function GETOnePendingSubmission($submission_type, $submission_id, $outputType) {
 
-    if ($submission_type == 'addition') {
-        $pending_submission = getInformationAboutOnePendingAddition($submission_id);
-    } elseif ($submission_type == 'deletion') {
-        $pending_submission = getInformationAboutOnePendingDeletion($submission_id);
-    }
+    $pending_submission = getInformationAboutOnePendingSubmission($submission_type, $submission_id);
 
     if ($outputType == "xml") {
         buildSimpleXMLOutput('pending_' . $submission_type, $pending_submission);
@@ -75,16 +71,16 @@ function GETOnePendingSubmission($submission_type, $submission_id, $outputType) 
 
 function POSTPendingAddition($addition_id, $user_id, $type_of_vote) {
 
-    if (userAlreadyVoteAddition($user_id, $addition_id)) {
+    if (userAlreadyVotedInSubmission('addition', $user_id, $addition_id)) {
         $response = "You already voted on this artist/music group.";
         simpleResponse($response, $outputType, 403);
     } else {
         if ($type_of_vote == 'positive_vote') {
             insertSubmissionVote('addition', $addition_id, $user_id, 'positive');
-            addAdditionPositiveVote($addition_id);
+            addSubmissionPositiveVote('addition', $addition_id);
         } elseif ($type_of_vote == 'negative_vote') {
             insertSubmissionVote('addition', $addition_id, $user_id, 'negative');
-            addAdditionNegativeVote($addition_id);
+            addSubmissionNegativeVote('addition', $addition_id);
         } else {
             $response = "Type of vote must be 'positive_vote' or 'negative_vote'";
             simpleResponse($response, $outputType, 400);
@@ -95,16 +91,16 @@ function POSTPendingAddition($addition_id, $user_id, $type_of_vote) {
 
 function POSTPendingDeletion($deletion_id, $user_id, $type_of_vote) {
 
-    if (userAlreadyVoteDeletion($user_id, $deletion_id)) {
+    if (userAlreadyVotedInSubmission('deletion', $user_id, $deletion_id)) {
         $response = "You already voted on this artist/music group.";
         simpleResponse($response, $outputType, 403);
     } else {
         if ($type_of_vote == 'positive_vote') {
             insertSubmissionVote('deletion', $deletion_id, $user_id, 'positive');
-            addDeletionPositiveVote($deletion_id);
+            addSubmissionPositiveVote('deletion', $deletion_id);
         } elseif ($type_of_vote == 'negative_vote') {
             insertSubmissionVote('deletion', $deletion_id, $user_id, 'negative');
-            addDeletionNegativeVote($deletion_id);
+            addSubmissionNegativeVote('deletion', $deletion_id);
         } else {
             $response = "Type of vote must be 'positive_vote' or 'negative_vote'";
             simpleResponse($response, $outputType, 400);

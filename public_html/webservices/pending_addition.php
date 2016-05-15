@@ -11,7 +11,7 @@ $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
 
 if (sizeof($path_params) > 1) {
     $addition_id = $path_params[1];
-    if (!additionIDExists($addition_id)) {
+    if (!submissionIDExists('addition', $addition_id)) {
         $response = "There's no Pending Addition with that ID!";
         simpleResponse($response, $outputType, 404);
     }

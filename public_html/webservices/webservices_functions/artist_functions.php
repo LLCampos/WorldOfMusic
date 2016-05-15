@@ -56,9 +56,12 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
 
     $artist_id = artistNameToID($artist_name);
 
-    if (!alreadyInTable($artist_name) OR !isArtistVisible($artist_id)) {
+    # If there isn't a non-deleted artist with the name $artist_name on our database.
+    if (!$artist_id) {
+
       $response = 'There is no such artist in our database.';
       simpleResponse($response, $outputType, 404);
+
     } else {
 
         if (isTherePendingDeletionOnArtist($artist_id)) {
@@ -165,7 +168,7 @@ function POSTArtist($artist_name, $outputType, $user_id, $request) {
 
         $artist_id = artistNameToID($artist_name);
 
-        if (isArtistVisible($artist_id)) {
+        if ($artist_id) {
             $response = "Artist is already in database.";
         } else {
             $response = "Someone has already tried to add that artist.";
@@ -175,12 +178,11 @@ function POSTArtist($artist_name, $outputType, $user_id, $request) {
 
     # If not, inserts Artist in table.
     } else {
-        $output = insertArtistInTableByUser($artist_name, $country_code);
+        $artist_id = insertArtistInTable($artist_name, $country_code, 1);
 
-        if ($output) {
+        if ($artist_id) {
 
             # Cria um novo recurso pending_addition
-            $artist_id = artistNameToID($artist_name);
             insertSubmission('addition', $artist_id, $user_id);
             insertVoteFromArtistID('addition', $artist_id, $user_id);
             # Adds one pended addition to user

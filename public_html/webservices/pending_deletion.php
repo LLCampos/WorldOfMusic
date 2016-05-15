@@ -11,7 +11,7 @@ $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
 
 if (sizeof($path_params) > 1) {
     $deletion_id = $path_params[1];
-    if (!deletionIDExists($deletion_id)) {
+    if (!submissionIDExists('deletion', $deletion_id)) {
         $response = "There's no Pending Deletion with that ID!";
         simpleResponse($response, $outputType, 404);
     }

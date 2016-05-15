@@ -44,11 +44,10 @@ function GETUser($id, $outputType) {
 }
 
 function GETUserVotes($user_id, $outputType) {
-    require_once "/home/aw008/database/addition_deletion_edition_tables/addition_table.php";
-    require_once "/home/aw008/database/addition_deletion_edition_tables/deletion_table.php";
+    require_once "/home/aw008/database/addition_deletion_edition_tables/submission_table.php";
 
-    $additions = getAdditionVotesFromUser($user_id);
-    $deletions = getDeletionVotesFromUser($user_id);
+    $additions = getSubmissionVotesFromUser('addition', $user_id);
+    $deletions = getSubmissionVotesFromUser('deletion', $user_id);
     #$editions = getEditionVotesFromUser($user_id);
 
 
