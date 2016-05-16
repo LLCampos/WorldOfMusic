@@ -204,9 +204,19 @@ function getInformationAboutPendingSubmissions($submission_type, $limit, $order_
 
     $params = array();
 
-    $query_string = "SELECT S.id AS id, AR.name AS artist_name, C.name AS country_name, S.yes AS positive_votes, S.no as negative_votes, S.user_id as added_by, S." . $submission_type . "_creation_date as creation_time
-            FROM ". ucfirst($submission_type) . " S, Artist AR, Country C
-            WHERE AR.id = S.artist_id AND AR.country_fk = C.id AND S.pending = 1";
+    if ($submission_type == 'edition') {
+
+        $query_string = "SELECT S.id AS id, AR1.name AS artist_name, S.attribute_changing, S.yes AS positive_votes, S.no as negative_votes, S.user_id as added_by, S.edition_creation_date as creation_time
+        FROM Edition S, Artist AR1
+        WHERE AR1.id = S.old_artist_id AND S.pending = 1";
+
+    } else {
+
+        $query_string = "SELECT S.id AS id, AR.name AS artist_name, S.yes AS positive_votes, S.no as negative_votes, S.user_id as added_by, S." . $submission_type . "_creation_date as creation_time
+            FROM ". ucfirst($submission_type) . " S, Artist AR
+            WHERE AR.id = S.artist_id AND S.pending = 1";
+    }
+
 
     if ($order_sql_string) {
         $query_string = $query_string . $order_sql_string;
@@ -384,9 +394,9 @@ function getInformationAboutOnePendingSubmissionPrettyArray($submission_type, $s
 
     } else {
 
-        $query = $conn->prepare("SELECT AD.id AS id, AR.name AS artist_name, C.name AS country_name, AD.yes AS positive_votes, AD.no as negative_votes, AD.user_id as added_by, AD." . $submission_type . "_creation_date as creation_time
-                FROM " . ucfirst($submission_type) . " AD, Artist AR, Country C
-                WHERE AR.id = AD.artist_id AND AR.country_fk = C.id AND AD.pending = 1 AND AD.id = :submission_id");
+        $query = $conn->prepare("SELECT AD.id AS id, AR.name AS artist_name, AD.yes AS positive_votes, AD.no as negative_votes, AD.user_id as added_by, AD." . $submission_type . "_creation_date as creation_time
+                FROM " . ucfirst($submission_type) . " AD, Artist AR
+                WHERE AR.id = AD.artist_id AND AD.pending = 1 AND AD.id = :submission_id");
     }
 
     try {
