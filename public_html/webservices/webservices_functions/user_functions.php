@@ -48,7 +48,7 @@ function GETUserVotes($user_id, $outputType) {
 
     $additions = getSubmissionVotesFromUser('addition', $user_id);
     $deletions = getSubmissionVotesFromUser('deletion', $user_id);
-    #$editions = getEditionVotesFromUser($user_id);
+    $editions = getSubmissionVotesFromUser('edition', $user_id);
 
 
     if ($outputType == "xml") {
