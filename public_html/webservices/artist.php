@@ -95,10 +95,8 @@ simpleResponse($response, $outputType, 400);
 *
 * @apiParam {String} name_of_artist Name of Artist of which information you want to edit
 * @apiParam {String} [style] New music genre played by Artist
-* @apiParam {String} [country] New country of Artist
-* @apiParam {String} [bibliography] New short bibliography Artist
+* @apiParam {String} [country_code] New ISO 3166-1 alpha-2 country code of Artist
 * @apiParam {Number} [facebook_url] New artist Facebook page URL
-* @apiParam {String} [twitter_url] New URL to Artist Twitter Page
 *
 * @apiExample Example of changing the style of Metallica to Thrash Metal:
 *             PUT /artist/Metallica?style=Thrash Metal
