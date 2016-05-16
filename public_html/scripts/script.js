@@ -520,8 +520,6 @@ var cleanAlerts = function() {
 
 var setHeights = function() {
     $('#map-zone').css('height', function() {return $(window).height() - parseInt($('#header').css('height'), 10);});
-    $('#country-zone').css('height', $(window).height());
-    $('#artist-zone').css('height', $(window).height());
 };
 
 var onPageResize = function() {
