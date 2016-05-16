@@ -65,10 +65,9 @@ simpleResponse($response, $outputType, 400);
 *
 * @apiSuccess (200 OK) {Number} id   ID of the Pending Addition
 * @apiSuccess (200 OK) {String} artist_name Name of the Artist being added
-* @apiSuccess (200 OK) {String} country_name Country of the Artist being added
 * @apiSuccess (200 OK) {Number} positive_votes Number of votes in favor of adding the Artist
 * @apiSuccess (200 OK) {Number} negative_votes Number of votes against adding the Artist
-* @apiSuccess (200 OK) {String}  added_by  ID of the user who added the Artist
+* @apiSuccess (200 OK) {String} added_by  ID of the user who added the Artist
 *
 *
 * @apiExample Getting the more recent Pedding Addition:
@@ -81,7 +80,6 @@ simpleResponse($response, $outputType, 400);
 *         {
 *             "id": ​6,
 *             "artist_name": "Megadeth",
-*             "country_name": "Afghanistan",
 *             "positive_votes": ​0,
 *             "negative_votes": ​0,
 *             "added_by": "10201440175723123",
@@ -90,7 +88,6 @@ simpleResponse($response, $outputType, 400);
 *         {
 *             "id": ​8,
 *             "artist_name": "Slayer",
-*             "country_name": "United States",
 *             "positive_votes": ​0,
 *             "negative_votes": ​0,
 *             "added_by": "10201440175723123",
@@ -105,7 +102,6 @@ simpleResponse($response, $outputType, 400);
 *     <pending_addition>
 *         <id>6</id>
 *         <artist_name>Megadeth</artist_name>
-*         <country_name>Afghanistan</country_name>
 *         <positive_votes>0</positive_votes>
 *         <negative_votes>0</negative_votes>
 *         <added_by>10201440175723123</added_by>
@@ -114,7 +110,6 @@ simpleResponse($response, $outputType, 400);
 *     <pending_addition>
 *         <id>8</id>
 *         <artist_name>Slayer</artist_name>
-*         <country_name>United States</country_name>
 *         <positive_votes>0</positive_votes>
 *         <negative_votes>0</negative_votes>
 *         <added_by>10201440175723123</added_by>
@@ -134,7 +129,6 @@ simpleResponse($response, $outputType, 400);
 *
 * @apiSuccess (200 OK) {Number} id   ID of the Pending Addition
 * @apiSuccess (200 OK) {String} artist_name Name of the Artist being added
-* @apiSuccess (200 OK) {String} country_name Country of the Artist/Group being added
 * @apiSuccess (200 OK) {Number} positive_votes Number of votes in favor of adding the Artist
 * @apiSuccess (200 OK) {Number} negative_votes Number of votes against adding the Artist
 * @apiSuccess (200 OK) {String}  added_by  ID of the user who added the Artist
@@ -144,7 +138,6 @@ simpleResponse($response, $outputType, 400);
 *   {
 *       "id": ​6,
 *       "artist_name": "Megadeth",
-*       "country_name": "Afghanistan",
 *       "positive_votes": ​0,
 *       "negative_votes": ​0,
 *       "added_by": "10201440175723123",
@@ -155,7 +148,6 @@ simpleResponse($response, $outputType, 400);
 *   <pending_addition>
 *       <id>6</id>
 *       <artist_name>Megadeth</artist_name>
-*       <country_name>Afghanistan</country_name>
 *       <positive_votes>0</positive_votes>
 *       <negative_votes>0</negative_votes>
 *       <added_by>10201440175723123</added_by>

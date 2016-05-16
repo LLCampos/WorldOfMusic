@@ -6,7 +6,7 @@ define({ "api": [
     "name": "AddArtist",
     "group": "Artist",
     "version": "0.0.1",
-    "description": "<p>Submits a new Artist to approval by other users. In practise, this method creates a new pending addition. The Artist will be added if it receive 5 positive votes. If it receives 5 negatives votes it will not be added.</p>",
+    "description": "<p>Submits a new Artist to approval by other users. In practise, this method creates a new Pending Addition. The Artist will be added if it receive 5 positive votes. If it receives 5 negatives votes it will not.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -41,7 +41,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/artist.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/artist.php",
     "groupTitle": "Artist",
     "sampleRequest": [
       {
@@ -56,7 +56,7 @@ define({ "api": [
     "name": "DeleteArtist",
     "group": "Artist",
     "version": "0.0.1",
-    "description": "<p>Submits a deletion of Artist to approval by other users. In practise, this method creates a new pending deletion. The Artist will be deleted if it receive 5 positive votes. If it receives 5 negatives votes it will not be added.</p>",
+    "description": "<p>Submits a deletion of Artist to approval by other users. In practise, this method creates a new Pending Deletion. The Artist will be deleted if it receive 5 positive votes. If it receives 5 negatives votes it will not.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -84,7 +84,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/artist.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/artist.php",
     "groupTitle": "Artist",
     "sampleRequest": [
       {
@@ -99,6 +99,7 @@ define({ "api": [
     "name": "EditArtist",
     "group": "Artist",
     "version": "0.0.1",
+    "description": "<p>Submits a new edition to approval by other users. In practise, this method creates a new Pending Addition. The edition will be accepted if it receive 5 positive votes. If it receives 5 negatives votes it will not.</p> <p>You can only request edition of one parameter.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -120,15 +121,8 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": true,
-            "field": "country",
-            "description": "<p>New country of Artist</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": true,
-            "field": "bibliography",
-            "description": "<p>New short bibliography Artist</p>"
+            "field": "country_code",
+            "description": "<p>New ISO 3166-1 alpha-2 country code of Artist</p>"
           },
           {
             "group": "Parameter",
@@ -136,13 +130,6 @@ define({ "api": [
             "optional": true,
             "field": "facebook_url",
             "description": "<p>New artist Facebook page URL</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": true,
-            "field": "twitter_url",
-            "description": "<p>New URL to Artist Twitter Page</p>"
           }
         ]
       }
@@ -154,7 +141,7 @@ define({ "api": [
         "type": "json"
       }
     ],
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/artist.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/artist.php",
     "groupTitle": "Artist",
     "sampleRequest": [
       {
@@ -291,7 +278,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/artist.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/artist.php",
     "groupTitle": "Artist",
     "sampleRequest": [
       {
@@ -322,9 +309,9 @@ define({ "api": [
     "type": "",
     "url": "",
     "version": "0.0.0",
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/doc/main.js",
-    "group": "C__Users_Luis_SkyDrive_Mestrado_2_Semeste_AW_Projecto_Site_aw008_public_html_webservices_doc_main_js",
-    "groupTitle": "C__Users_Luis_SkyDrive_Mestrado_2_Semeste_AW_Projecto_Site_aw008_public_html_webservices_doc_main_js",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/doc/main.js",
+    "group": "C__Users_Luis_Google_Drive_Mestrado_2_Semeste_AW_Projecto_WorldOfMusic_public_html_webservices_doc_main_js",
+    "groupTitle": "C__Users_Luis_Google_Drive_Mestrado_2_Semeste_AW_Projecto_WorldOfMusic_public_html_webservices_doc_main_js",
     "name": ""
   },
   {
@@ -366,7 +353,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/country.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/country.php",
     "groupTitle": "Country",
     "sampleRequest": [
       {
@@ -468,7 +455,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/country.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/country.php",
     "groupTitle": "Country",
     "sampleRequest": [
       {
@@ -499,18 +486,27 @@ define({ "api": [
             "optional": true,
             "field": "limit",
             "defaultValue": "20",
-            "description": "<p>Number of Artists/Group to be Returned</p>"
+            "description": "<p>Number of Artists/Group to be returned</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "allowedValues": [
               "\"likes\"",
-              "\"random\""
+              "\"random\"",
+              "\"lastfm\""
             ],
             "optional": true,
             "field": "order",
             "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Page to be returned</p>"
           }
         ]
       }
@@ -547,7 +543,7 @@ define({ "api": [
         "type": "json"
       }
     ],
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/country.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/country.php",
     "groupTitle": "Country",
     "sampleRequest": [
       {
@@ -594,13 +590,6 @@ define({ "api": [
           },
           {
             "group": "200 OK",
-            "type": "String",
-            "optional": false,
-            "field": "country_name",
-            "description": "<p>Country of the Artsit/Group being added</p>"
-          },
-          {
-            "group": "200 OK",
             "type": "Number",
             "optional": false,
             "field": "positive_votes",
@@ -625,17 +614,17 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response (JSON):",
-          "content": "{\n    \"id\": ​6,\n    \"artist_name\": \"Megadeth\",\n    \"country_name\": \"Afghanistan\",\n    \"positive_votes\": ​0,\n    \"negative_votes\": ​0,\n    \"added_by\": \"10201440175723123\",\n    \"creation_time\": \"2016-05-02 20:43:28\"\n}",
+          "content": "{\n    \"id\": ​6,\n    \"artist_name\": \"Megadeth\",\n    \"positive_votes\": ​0,\n    \"negative_votes\": ​0,\n    \"added_by\": \"10201440175723123\",\n    \"creation_time\": \"2016-05-02 20:43:28\"\n}",
           "type": "json"
         },
         {
           "title": "Success Response (XML)",
-          "content": "<pending_addition>\n    <id>6</id>\n    <artist_name>Megadeth</artist_name>\n    <country_name>Afghanistan</country_name>\n    <positive_votes>0</positive_votes>\n    <negative_votes>0</negative_votes>\n    <added_by>10201440175723123</added_by>\n    <creation_time>2016-05-02 20:43:28</creation_time>\n</pending_addition>",
+          "content": "<pending_addition>\n    <id>6</id>\n    <artist_name>Megadeth</artist_name>\n    <positive_votes>0</positive_votes>\n    <negative_votes>0</negative_votes>\n    <added_by>10201440175723123</added_by>\n    <creation_time>2016-05-02 20:43:28</creation_time>\n</pending_addition>",
           "type": "xml"
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/pending_addition.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_addition.php",
     "groupTitle": "Pending_Addition",
     "sampleRequest": [
       {
@@ -659,7 +648,7 @@ define({ "api": [
             "optional": true,
             "field": "limit",
             "defaultValue": "20",
-            "description": "<p>Number of Pending Additions to be Returned</p>"
+            "description": "<p>Number of Pending Additions to be returned</p>"
           },
           {
             "group": "Parameter",
@@ -673,6 +662,14 @@ define({ "api": [
             "field": "order",
             "defaultValue": "date_asc",
             "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Page to be returned</p>"
           }
         ]
       }
@@ -693,13 +690,6 @@ define({ "api": [
             "optional": false,
             "field": "artist_name",
             "description": "<p>Name of the Artist being added</p>"
-          },
-          {
-            "group": "200 OK",
-            "type": "String",
-            "optional": false,
-            "field": "country_name",
-            "description": "<p>Country of the Artist being added</p>"
           },
           {
             "group": "200 OK",
@@ -727,12 +717,12 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response (JSON):",
-          "content": "{\n    \"pending_additions\": [\n        {\n            \"id\": ​6,\n            \"artist_name\": \"Megadeth\",\n            \"country_name\": \"Afghanistan\",\n            \"positive_votes\": ​0,\n            \"negative_votes\": ​0,\n            \"added_by\": \"10201440175723123\",\n            \"creation_time\": \"2016-05-02 20:43:28\"\n        },\n        {\n            \"id\": ​8,\n            \"artist_name\": \"Slayer\",\n            \"country_name\": \"United States\",\n            \"positive_votes\": ​0,\n            \"negative_votes\": ​0,\n            \"added_by\": \"10201440175723123\",\n            \"creation_time\": \"2016-05-03 14:27:07\"\n        },\n        (...)\n    ]\n}",
+          "content": "{\n    \"pending_additions\": [\n        {\n            \"id\": ​6,\n            \"artist_name\": \"Megadeth\",\n            \"positive_votes\": ​0,\n            \"negative_votes\": ​0,\n            \"added_by\": \"10201440175723123\",\n            \"creation_time\": \"2016-05-02 20:43:28\"\n        },\n        {\n            \"id\": ​8,\n            \"artist_name\": \"Slayer\",\n            \"positive_votes\": ​0,\n            \"negative_votes\": ​0,\n            \"added_by\": \"10201440175723123\",\n            \"creation_time\": \"2016-05-03 14:27:07\"\n        },\n        (...)\n    ]\n}",
           "type": "json"
         },
         {
           "title": "Success Response (XML)",
-          "content": "<pending_additions>\n    <pending_addition>\n        <id>6</id>\n        <artist_name>Megadeth</artist_name>\n        <country_name>Afghanistan</country_name>\n        <positive_votes>0</positive_votes>\n        <negative_votes>0</negative_votes>\n        <added_by>10201440175723123</added_by>\n        <creation_time>2016-05-02 20:43:28</creation_time>\n    </pending_addition>\n    <pending_addition>\n        <id>8</id>\n        <artist_name>Slayer</artist_name>\n        <country_name>United States</country_name>\n        <positive_votes>0</positive_votes>\n        <negative_votes>0</negative_votes>\n        <added_by>10201440175723123</added_by>\n        <creation_time>2016-05-03 14:27:07</creation_time>\n    </pending_addition>\n    (...)\n</pending_additions>",
+          "content": "<pending_additions>\n    <pending_addition>\n        <id>6</id>\n        <artist_name>Megadeth</artist_name>\n        <positive_votes>0</positive_votes>\n        <negative_votes>0</negative_votes>\n        <added_by>10201440175723123</added_by>\n        <creation_time>2016-05-02 20:43:28</creation_time>\n    </pending_addition>\n    <pending_addition>\n        <id>8</id>\n        <artist_name>Slayer</artist_name>\n        <positive_votes>0</positive_votes>\n        <negative_votes>0</negative_votes>\n        <added_by>10201440175723123</added_by>\n        <creation_time>2016-05-03 14:27:07</creation_time>\n    </pending_addition>\n    (...)\n</pending_additions>",
           "type": "xml"
         }
       ]
@@ -744,7 +734,7 @@ define({ "api": [
         "type": "json"
       }
     ],
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/pending_addition.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_addition.php",
     "groupTitle": "Pending_Addition",
     "sampleRequest": [
       {
@@ -783,7 +773,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/pending_addition.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_addition.php",
     "groupTitle": "Pending_Addition",
     "sampleRequest": [
       {
@@ -826,14 +816,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "artist_name",
-            "description": "<p>Name of the Artist being added</p>"
-          },
-          {
-            "group": "200 OK",
-            "type": "String",
-            "optional": false,
-            "field": "country_name",
-            "description": "<p>Country of the Artist being added</p>"
+            "description": "<p>Name of the Artist being deleted</p>"
           },
           {
             "group": "200 OK",
@@ -854,24 +837,24 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "added_by",
-            "description": "<p>ID of the user who added the Artist</p>"
+            "description": "<p>ID of the user who asked for the deletion of the Artist</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success Response (JSON):",
-          "content": "{\n   \"id\": ​9,\n   \"artist_name\": \"Gabriel Fliflet\",\n   \"country_name\": \"Åland Islands\",\n   \"positive_votes\": ​0,\n   \"negative_votes\": ​1,\n   \"added_by\": \"102503863489106\",\n   \"creation_time\": \"2016-05-03 14:29:34\"\n}",
+          "content": "{\n   \"id\": ​9,\n   \"artist_name\": \"Gabriel Fliflet\",\n   \"positive_votes\": ​0,\n   \"negative_votes\": ​1,\n   \"added_by\": \"102503863489106\",\n   \"creation_time\": \"2016-05-03 14:29:34\"\n}",
           "type": "json"
         },
         {
           "title": "Success Response (XML)",
-          "content": "<pending_deletion>\n    <id>​9</id>\n    <artist_name>Gabriel Fliflet</artist_name>\n    <country_name>Åland Islands</country_name>\n    <positive_votes>0</positive_votes>\n    <negative_votes>1</negative_votes>\n    <added_by>10201440175723123</added_by>\n    <creation_time>2016-05-03 14:29:34</creation_time>\n</pending_deletion>",
+          "content": "<pending_deletion>\n    <id>​9</id>\n    <artist_name>Gabriel Fliflet</artist_name>\n    <positive_votes>0</positive_votes>\n    <negative_votes>1</negative_votes>\n    <added_by>10201440175723123</added_by>\n    <creation_time>2016-05-03 14:29:34</creation_time>\n</pending_deletion>",
           "type": "xml"
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/pending_deletion.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_deletion.php",
     "groupTitle": "Pending_Deletion",
     "sampleRequest": [
       {
@@ -895,7 +878,7 @@ define({ "api": [
             "optional": true,
             "field": "limit",
             "defaultValue": "20",
-            "description": "<p>Number of Pending Deletions to be Returned</p>"
+            "description": "<p>Number of Pending Deletions to be returned</p>"
           },
           {
             "group": "Parameter",
@@ -909,6 +892,14 @@ define({ "api": [
             "field": "order",
             "defaultValue": "date_asc",
             "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Page to be returned</p>"
           }
         ]
       }
@@ -929,13 +920,6 @@ define({ "api": [
             "optional": false,
             "field": "artist_name",
             "description": "<p>Name of the Artist being deleted</p>"
-          },
-          {
-            "group": "200 OK",
-            "type": "String",
-            "optional": false,
-            "field": "country_name",
-            "description": "<p>Country of the Artist being deleted</p>"
           },
           {
             "group": "200 OK",
@@ -963,12 +947,12 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response (JSON):",
-          "content": "{\n    \"pending_deletions\": [\n        {\n            id\": ​8,\n            \"artist_name\": \"Brazen Abbot\",\n            \"country_name\": \"Åland Islands\",\n            \"positive_votes\": ​1,\n            \"negative_votes\": ​0,\n            \"added_by\": \"102503863489106\",\n            \"creation_time\": \"2016-05-03 14:29:34\"\n        },\n        {\n            \"id\": ​9,\n            \"artist_name\": \"Gabriel Fliflet\",\n            \"country_name\": \"Åland Islands\",\n            \"positive_votes\": ​0,\n            \"negative_votes\": ​1,\n            \"added_by\": \"102503863489106\",\n            \"creation_time\": \"2016-05-02 12:59:18\"\n        },\n        (...)\n    ]\n}",
+          "content": "{\n    \"pending_deletions\": [\n        {\n            id\": ​8,\n            \"artist_name\": \"Brazen Abbot\",\n            \"positive_votes\": ​1,\n            \"negative_votes\": ​0,\n            \"added_by\": \"102503863489106\",\n            \"creation_time\": \"2016-05-03 14:29:34\"\n        },\n        {\n            \"id\": ​9,\n            \"artist_name\": \"Gabriel Fliflet\",\n            \"positive_votes\": ​0,\n            \"negative_votes\": ​1,\n            \"added_by\": \"102503863489106\",\n            \"creation_time\": \"2016-05-02 12:59:18\"\n        },\n        (...)\n    ]\n}",
           "type": "json"
         },
         {
           "title": "Success Response (XML)",
-          "content": "<pending_deletions>\n    <pending_deletion>\n        <id>8</id>\n        <artist_name>Brazen Abbot</artist_name>\n        <country_name>Åland Islands</country_name>\n        <positive_votes>1</positive_votes>\n        <negative_votes>0</negative_votes>\n        <added_by>10201440175723123</added_by>\n        <creation_time>2016-05-03 14:29:34</creation_time>\n    </pending_deletion>\n    <pending_deletion>\n        <id>​9</id>\n        <artist_name>Gabriel Fliflet</artist_name>\n        <country_name>Åland Islands</country_name>\n        <positive_votes>0</positive_votes>\n        <negative_votes>1</negative_votes>\n        <added_by>10201440175723123</added_by>\n        <creation_time>2016-05-02 12:59:18</creation_time>\n    </pending_deletion>\n    (...)\n</pending_deletions>",
+          "content": "<pending_deletions>\n    <pending_deletion>\n        <id>8</id>\n        <artist_name>Brazen Abbot</artist_name>\n        <positive_votes>1</positive_votes>\n        <negative_votes>0</negative_votes>\n        <added_by>10201440175723123</added_by>\n        <creation_time>2016-05-03 14:29:34</creation_time>\n    </pending_deletion>\n    <pending_deletion>\n        <id>​9</id>\n        <artist_name>Gabriel Fliflet</artist_name>\n        <positive_votes>0</positive_votes>\n        <negative_votes>1</negative_votes>\n        <added_by>10201440175723123</added_by>\n        <creation_time>2016-05-02 12:59:18</creation_time>\n    </pending_deletion>\n    (...)\n</pending_deletions>",
           "type": "xml"
         }
       ]
@@ -980,7 +964,7 @@ define({ "api": [
         "type": "json"
       }
     ],
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/pending_deletion.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_deletion.php",
     "groupTitle": "Pending_Deletion",
     "sampleRequest": [
       {
@@ -1019,11 +1003,269 @@ define({ "api": [
         ]
       }
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/pending_deletion.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_deletion.php",
     "groupTitle": "Pending_Deletion",
     "sampleRequest": [
       {
         "url": "http://appserver.di.fc.ul.pt/~aw008/webservices/pending_deletion/:pending_deletion_id/:type_of_vote"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "/pending_edition/:pending_edition_id",
+    "title": "Get information about Pending Edition",
+    "name": "GetPendingEdition",
+    "group": "Pending_Edition",
+    "version": "0.0.1",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "pending_edition_id",
+            "description": "<p>ID of the Pending Edition</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200 OK": [
+          {
+            "group": "200 OK",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Pending Edition</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "String",
+            "optional": false,
+            "field": "artist_name",
+            "description": "<p>Name of the Artist being edited</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "String",
+            "optional": false,
+            "field": "attribute_changing",
+            "description": "<p>Attribute of which an edition was requested</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "String",
+            "optional": false,
+            "field": "old_value",
+            "description": "<p>The value of the attribute that is being replaced</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "String",
+            "optional": false,
+            "field": "new_value",
+            "description": "<p>The new proposal for the value of the attribute</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "Number",
+            "optional": false,
+            "field": "positive_votes",
+            "description": "<p>Number of votes in favor of adding the Artist</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "Number",
+            "optional": false,
+            "field": "negative_votes",
+            "description": "<p>Number of votes against adding the Artist</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "String",
+            "optional": false,
+            "field": "added_by",
+            "description": "<p>ID of the user who edited the Artist</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success Response (JSON):",
+          "content": "{\n    \"id\": ​7,\n    \"artist_name\": \"Megadeth\",\n    \"attribute_changing\": \"style\",\n    \"old_value\": \"thrash metal\",\n    \"new_value\": \"heavy metal\",\n    \"positive_votes\": ​0,\n    \"negative_votes\": ​0,\n    \"added_by\": \"42\",\n    \"creation_time\": \"2016-05-16 16:39:16\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Success Response (XML)",
+          "content": "<pending_edition>\n    <id>7</id>\n    <artist_name>Megadeth</artist_name>\n    <attribute_changing>style</attribute_changing>\n    <old_value>thrash metal</old_value>\n    <new_value>heavy metal</new_value>\n    <positive_votes>0</positive_votes>\n    <negative_votes>0</negative_votes>\n    <added_by>42</added_by>\n    <creation_time>2016-05-16 16:39:16</creation_time>\n</pending_edition>",
+          "type": "xml"
+        }
+      ]
+    },
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_edition.php",
+    "groupTitle": "Pending_Edition",
+    "sampleRequest": [
+      {
+        "url": "http://appserver.di.fc.ul.pt/~aw008/webservices/pending_edition/:pending_edition_id"
+      }
+    ]
+  },
+  {
+    "type": "get",
+    "url": "/pending_edition",
+    "title": "Get list of Pending Editions",
+    "name": "GetPendingEditions",
+    "group": "Pending_Edition",
+    "version": "0.0.1",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "limit",
+            "defaultValue": "20",
+            "description": "<p>Number of Pending Editions to be returned</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"date_asc\"",
+              "\"date_desc\"",
+              "\"random\""
+            ],
+            "optional": true,
+            "field": "order",
+            "defaultValue": "date_asc",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Page to be returned</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "200 OK": [
+          {
+            "group": "200 OK",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Pending Edition</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "String",
+            "optional": false,
+            "field": "artist_name",
+            "description": "<p>Name of the Artist being edited</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "String",
+            "optional": false,
+            "field": "attribute_changing",
+            "description": "<p>Attribute of which an edition was requested</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "Number",
+            "optional": false,
+            "field": "positive_votes",
+            "description": "<p>Number of votes in favor of adding the Artist</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "Number",
+            "optional": false,
+            "field": "negative_votes",
+            "description": "<p>Number of votes against adding the Artist</p>"
+          },
+          {
+            "group": "200 OK",
+            "type": "String",
+            "optional": false,
+            "field": "added_by",
+            "description": "<p>ID of the user who edited the Artist</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success Response (JSON):",
+          "content": "{\n    \"pending_editions\": [\n        {\n          \"id\": ​7,\n          \"artist_name\": \"Megadeth\",\n          \"attribute_changing\": \"style\",\n          \"positive_votes\": ​0,\n          \"negative_votes\": ​0,\n          \"added_by\": \"42\",\n          \"creation_time\": \"2016-05-16 16:39:16\"\n        },\n        {\n          \"id\": ​8,\n          \"artist_name\": \"Elena Roger\",\n          \"attribute_changing\": \"facebook_url\",\n          \"positive_votes\": ​0,\n          \"negative_votes\": ​0,\n          \"added_by\": \"42\",\n          \"creation_time\": \"2016-05-16 16:48:10\"\n        },\n        (...)\n    ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "Success Response (XML)",
+          "content": "<?xml version=\"1.0\"?>\n<pending_editions>\n    <pending_edition>\n        <id>7</id>\n        <artist_name>Megadeth</artist_name>\n        <attribute_changing>style</attribute_changing>\n        <positive_votes>0</positive_votes>\n        <negative_votes>0</negative_votes>\n        <added_by>42</added_by>\n        <creation_time>2016-05-16 16:39:16</creation_time>\n    </pending_edition>\n    <pending_edition>\n        <id>8</id>\n        <artist_name>Elena Roger</artist_name>\n        <attribute_changing>facebook_url</attribute_changing>\n        <positive_votes>0</positive_votes>\n        <negative_votes>0</negative_votes>\n        <added_by>42</added_by>\n        <creation_time>2016-05-16 16:48:10</creation_time>\n    </pending_edition>\n</pending_editions>",
+          "type": "xml"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Getting the more recent Pedding Edition:",
+        "content": "GET /pending_edition/limit=1&order=data_desc",
+        "type": "json"
+      }
+    ],
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_edition.php",
+    "groupTitle": "Pending_Edition",
+    "sampleRequest": [
+      {
+        "url": "http://appserver.di.fc.ul.pt/~aw008/webservices/pending_edition"
+      }
+    ]
+  },
+  {
+    "type": "post",
+    "url": "/pending_edition/:pending_edition_id/:type_of_vote",
+    "title": "Vote on one Pending Edition",
+    "name": "VotePendingEdition",
+    "group": "Pending_Edition",
+    "version": "0.0.1",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "pending_edition_id",
+            "description": "<p>ID of the Pending Edition</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"positive_vote\"",
+              "\"negative_vote\""
+            ],
+            "optional": false,
+            "field": "type_of_vote",
+            "description": "<p>Type of vote you want to add</p>"
+          }
+        ]
+      }
+    },
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/pending_edition.php",
+    "groupTitle": "Pending_Edition",
+    "sampleRequest": [
+      {
+        "url": "http://appserver.di.fc.ul.pt/~aw008/webservices/pending_edition/:pending_edition_id/:type_of_vote"
       }
     ]
   },
@@ -1135,7 +1377,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/user.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/user.php",
     "groupTitle": "User",
     "sampleRequest": [
       {
@@ -1195,7 +1437,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "C:/Users/Luis/SkyDrive/Mestrado/2_Semeste/AW/Projecto/Site/aw008/public_html/webservices/user.php",
+    "filename": "Mestrado/2_Semeste/AW/Projecto/WorldOfMusic/public_html/webservices/user.php",
     "groupTitle": "User",
     "sampleRequest": [
       {

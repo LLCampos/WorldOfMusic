@@ -54,24 +54,24 @@ simpleResponse($response, $outputType, 400);
 ################# DOCUMENTATION ################################
 
 /**
-* @api {get} /pending_edition Get list of Pending Additions
-* @apiName GetPendingAdditions
-* @apiGroup Pending Addition
+* @api {get} /pending_edition Get list of Pending Editions
+* @apiName GetPendingEditions
+* @apiGroup Pending Edition
 * @apiVersion 0.0.1
 *
-* @apiParam {Number} [limit=20] Number of Pending Additions to be returned
+* @apiParam {Number} [limit=20] Number of Pending Editions to be returned
 * @apiParam {String="date_asc", "date_desc", "random"} [order="date_asc"]
 * @apiParam {Number} [page=1] Page to be returned
 *
-* @apiSuccess (200 OK) {Number} id   ID of the Pending Addition
-* @apiSuccess (200 OK) {String} artist_name Name of the Artist being added
-* @apiSuccess (200 OK) {String} country_name Country of the Artist being added
+* @apiSuccess (200 OK) {Number} id   ID of the Pending Edition
+* @apiSuccess (200 OK) {String} artist_name Name of the Artist being edited
+* @apiSuccess (200 OK) {String} attribute_changing Attribute of which an edition was requested
 * @apiSuccess (200 OK) {Number} positive_votes Number of votes in favor of adding the Artist
 * @apiSuccess (200 OK) {Number} negative_votes Number of votes against adding the Artist
-* @apiSuccess (200 OK) {String}  added_by  ID of the user who added the Artist
+* @apiSuccess (200 OK) {String} added_by  ID of the user who edited the Artist
 *
 *
-* @apiExample Getting the more recent Pedding Addition:
+* @apiExample Getting the more recent Pedding Edition:
 *             GET /pending_edition/limit=1&order=data_desc
 *
 *
@@ -79,97 +79,103 @@ simpleResponse($response, $outputType, 400);
 * {
 *     "pending_editions": [
 *         {
-*             "id": ​6,
-*             "artist_name": "Megadeth",
-*             "country_name": "Afghanistan",
-*             "positive_votes": ​0,
-*             "negative_votes": ​0,
-*             "added_by": "10201440175723123",
-*             "creation_time": "2016-05-02 20:43:28"
+*           "id": ​7,
+*           "artist_name": "Megadeth",
+*           "attribute_changing": "style",
+*           "positive_votes": ​0,
+*           "negative_votes": ​0,
+*           "added_by": "42",
+*           "creation_time": "2016-05-16 16:39:16"
 *         },
 *         {
-*             "id": ​8,
-*             "artist_name": "Slayer",
-*             "country_name": "United States",
-*             "positive_votes": ​0,
-*             "negative_votes": ​0,
-*             "added_by": "10201440175723123",
-*             "creation_time": "2016-05-03 14:27:07"
+*           "id": ​8,
+*           "artist_name": "Elena Roger",
+*           "attribute_changing": "facebook_url",
+*           "positive_votes": ​0,
+*           "negative_votes": ​0,
+*           "added_by": "42",
+*           "creation_time": "2016-05-16 16:48:10"
 *         },
 *         (...)
 *     ]
 * }
 *
 * @apiSuccessExample {xml} Success Response (XML)
+* <?xml version="1.0"?>
 * <pending_editions>
 *     <pending_edition>
-*         <id>6</id>
+*         <id>7</id>
 *         <artist_name>Megadeth</artist_name>
-*         <country_name>Afghanistan</country_name>
+*         <attribute_changing>style</attribute_changing>
 *         <positive_votes>0</positive_votes>
 *         <negative_votes>0</negative_votes>
-*         <added_by>10201440175723123</added_by>
-*         <creation_time>2016-05-02 20:43:28</creation_time>
+*         <added_by>42</added_by>
+*         <creation_time>2016-05-16 16:39:16</creation_time>
 *     </pending_edition>
 *     <pending_edition>
 *         <id>8</id>
-*         <artist_name>Slayer</artist_name>
-*         <country_name>United States</country_name>
+*         <artist_name>Elena Roger</artist_name>
+*         <attribute_changing>facebook_url</attribute_changing>
 *         <positive_votes>0</positive_votes>
 *         <negative_votes>0</negative_votes>
-*         <added_by>10201440175723123</added_by>
-*         <creation_time>2016-05-03 14:27:07</creation_time>
+*         <added_by>42</added_by>
+*         <creation_time>2016-05-16 16:48:10</creation_time>
 *     </pending_edition>
-*     (...)
 * </pending_editions>
 */
 
 /**
-* @api {get} /pending_edition/:pending_edition_id Get information about Pending Addition
-* @apiName GetPendingAddition
-* @apiGroup Pending Addition
+* @api {get} /pending_edition/:pending_edition_id Get information about Pending Edition
+* @apiName GetPendingEdition
+* @apiGroup Pending Edition
 * @apiVersion 0.0.1
 *
-* @apiParam {String} pending_edition_id ID of the Pending Addition
+* @apiParam {String} pending_edition_id ID of the Pending Edition
 *
-* @apiSuccess (200 OK) {Number} id   ID of the Pending Addition
-* @apiSuccess (200 OK) {String} artist_name Name of the Artist being added
-* @apiSuccess (200 OK) {String} country_name Country of the Artist/Group being added
+* @apiSuccess (200 OK) {Number} id   ID of the Pending Edition
+* @apiSuccess (200 OK) {String} artist_name Name of the Artist being edited
+* @apiSuccess (200 OK) {String} attribute_changing Attribute of which an edition was requested
+* @apiSuccess (200 OK) {String} old_value The value of the attribute that is being replaced
+* @apiSuccess (200 OK) {String} new_value The new proposal for the value of the attribute
 * @apiSuccess (200 OK) {Number} positive_votes Number of votes in favor of adding the Artist
 * @apiSuccess (200 OK) {Number} negative_votes Number of votes against adding the Artist
-* @apiSuccess (200 OK) {String}  added_by  ID of the user who added the Artist
+* @apiSuccess (200 OK) {String} added_by  ID of the user who edited the Artist
 *
 *
 * @apiSuccessExample {json} Success Response (JSON):
-*   {
-*       "id": ​6,
-*       "artist_name": "Megadeth",
-*       "country_name": "Afghanistan",
-*       "positive_votes": ​0,
-*       "negative_votes": ​0,
-*       "added_by": "10201440175723123",
-*       "creation_time": "2016-05-02 20:43:28"
-*   }
+* {
+*     "id": ​7,
+*     "artist_name": "Megadeth",
+*     "attribute_changing": "style",
+*     "old_value": "thrash metal",
+*     "new_value": "heavy metal",
+*     "positive_votes": ​0,
+*     "negative_votes": ​0,
+*     "added_by": "42",
+*     "creation_time": "2016-05-16 16:39:16"
+* }
 *
 * @apiSuccessExample {xml} Success Response (XML)
-*   <pending_edition>
-*       <id>6</id>
-*       <artist_name>Megadeth</artist_name>
-*       <country_name>Afghanistan</country_name>
-*       <positive_votes>0</positive_votes>
-*       <negative_votes>0</negative_votes>
-*       <added_by>10201440175723123</added_by>
-*       <creation_time>2016-05-02 20:43:28</creation_time>
-*   </pending_edition>
+* <pending_edition>
+*     <id>7</id>
+*     <artist_name>Megadeth</artist_name>
+*     <attribute_changing>style</attribute_changing>
+*     <old_value>thrash metal</old_value>
+*     <new_value>heavy metal</new_value>
+*     <positive_votes>0</positive_votes>
+*     <negative_votes>0</negative_votes>
+*     <added_by>42</added_by>
+*     <creation_time>2016-05-16 16:39:16</creation_time>
+* </pending_edition>
 */
 
 /**
-* @api {post} /pending_edition/:pending_edition_id/:type_of_vote Vote on one Pending Addition
-* @apiName VotePendingAddition
-* @apiGroup Pending Addition
+* @api {post} /pending_edition/:pending_edition_id/:type_of_vote Vote on one Pending Edition
+* @apiName VotePendingEdition
+* @apiGroup Pending Edition
 * @apiVersion 0.0.1
 *
-* @apiParam {String} pending_edition_id ID of the Pending Addition
+* @apiParam {String} pending_edition_id ID of the Pending Edition
 * @apiParam {String = "positive_vote", "negative_vote"} type_of_vote Type of vote you want to add
 *
 */

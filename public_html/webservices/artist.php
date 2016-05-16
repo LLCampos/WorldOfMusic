@@ -71,7 +71,7 @@ simpleResponse($response, $outputType, 400);
 * @apiName AddArtist
 * @apiGroup Artist
 * @apiVersion 0.0.1
-* @apiDescription Submits a new Artist to approval by other users. In practise, this method creates a new pending addition. The Artist will be added if it receive 5 positive votes. If it receives 5 negatives votes it will not be added.
+* @apiDescription Submits a new Artist to approval by other users. In practise, this method creates a new Pending Addition. The Artist will be added if it receive 5 positive votes. If it receives 5 negatives votes it will not.
 *
 * @apiParam {String} name_of_artist Name of musical Artist to add
 * @apiParam {String} country ISO 3166-1 alpha-2 code of the Country
@@ -91,6 +91,9 @@ simpleResponse($response, $outputType, 400);
 * @apiName EditArtist
 * @apiGroup Artist
 * @apiVersion 0.0.1
+* @apiDescription Submits a new edition to approval by other users. In practise, this method creates a new Pending Addition. The edition will be accepted if it receive 5 positive votes. If it receives 5 negatives votes it will not.
+
+You can only request edition of one parameter.
 *
 *
 * @apiParam {String} name_of_artist Name of Artist of which information you want to edit
@@ -109,7 +112,7 @@ simpleResponse($response, $outputType, 400);
 * @apiName DeleteArtist
 * @apiGroup Artist
 * @apiVersion 0.0.1
-* @apiDescription Submits a deletion of Artist to approval by other users. In practise, this method creates a new pending deletion. The Artist will be deleted if it receive 5 positive votes. If it receives 5 negatives votes it will not be added.
+* @apiDescription Submits a deletion of Artist to approval by other users. In practise, this method creates a new Pending Deletion. The Artist will be deleted if it receive 5 positive votes. If it receives 5 negatives votes it will not.
 *
 * @apiParam {String} name_of_artist Name of musical Artist to delete
 *

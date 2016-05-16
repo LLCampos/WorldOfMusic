@@ -65,7 +65,6 @@ simpleResponse($response, $outputType, 400);
 *
 * @apiSuccess (200 OK) {Number} id   ID of the Pending Deletion
 * @apiSuccess (200 OK) {String} artist_name Name of the Artist being deleted
-* @apiSuccess (200 OK) {String} country_name Country of the Artist being deleted
 * @apiSuccess (200 OK) {Number} positive_votes Number of votes in favor of deletion the Artist
 * @apiSuccess (200 OK) {Number} negative_votes Number of votes against deleting the Artist
 * @apiSuccess (200 OK) {String}  added_by  ID of the user who deleted the Artist
@@ -80,7 +79,6 @@ simpleResponse($response, $outputType, 400);
 *         {
 *             id": ​8,
 *             "artist_name": "Brazen Abbot",
-*             "country_name": "Åland Islands",
 *             "positive_votes": ​1,
 *             "negative_votes": ​0,
 *             "added_by": "102503863489106",
@@ -89,7 +87,6 @@ simpleResponse($response, $outputType, 400);
 *         {
 *             "id": ​9,
 *             "artist_name": "Gabriel Fliflet",
-*             "country_name": "Åland Islands",
 *             "positive_votes": ​0,
 *             "negative_votes": ​1,
 *             "added_by": "102503863489106",
@@ -104,7 +101,6 @@ simpleResponse($response, $outputType, 400);
 *     <pending_deletion>
 *         <id>8</id>
 *         <artist_name>Brazen Abbot</artist_name>
-*         <country_name>Åland Islands</country_name>
 *         <positive_votes>1</positive_votes>
 *         <negative_votes>0</negative_votes>
 *         <added_by>10201440175723123</added_by>
@@ -113,7 +109,6 @@ simpleResponse($response, $outputType, 400);
 *     <pending_deletion>
 *         <id>​9</id>
 *         <artist_name>Gabriel Fliflet</artist_name>
-*         <country_name>Åland Islands</country_name>
 *         <positive_votes>0</positive_votes>
 *         <negative_votes>1</negative_votes>
 *         <added_by>10201440175723123</added_by>
@@ -132,18 +127,16 @@ simpleResponse($response, $outputType, 400);
 * @apiParam {String} pending_deletion_id ID of the Pending Deletion
 *
 * @apiSuccess (200 OK) {Number} id   ID of the Pending Deletion
-* @apiSuccess (200 OK) {String} artist_name Name of the Artist being added
-* @apiSuccess (200 OK) {String} country_name Country of the Artist being added
+* @apiSuccess (200 OK) {String} artist_name Name of the Artist being deleted
 * @apiSuccess (200 OK) {Number} positive_votes Number of votes in favor of deletion the Artist
 * @apiSuccess (200 OK) {Number} negative_votes Number of votes against deletion the Artist
-* @apiSuccess (200 OK) {String}  added_by  ID of the user who added the Artist
+* @apiSuccess (200 OK) {String}  added_by  ID of the user who asked for the deletion of the Artist
 *
 *
 * @apiSuccessExample {json} Success Response (JSON):
 * {
 *    "id": ​9,
 *    "artist_name": "Gabriel Fliflet",
-*    "country_name": "Åland Islands",
 *    "positive_votes": ​0,
 *    "negative_votes": ​1,
 *    "added_by": "102503863489106",
@@ -154,7 +147,6 @@ simpleResponse($response, $outputType, 400);
 *     <pending_deletion>
 *         <id>​9</id>
 *         <artist_name>Gabriel Fliflet</artist_name>
-*         <country_name>Åland Islands</country_name>
 *         <positive_votes>0</positive_votes>
 *         <negative_votes>1</negative_votes>
 *         <added_by>10201440175723123</added_by>
