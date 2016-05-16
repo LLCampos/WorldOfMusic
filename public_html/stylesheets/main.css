@@ -164,7 +164,6 @@ a:hover {
 #country-zone {
     width: 100%;
     display: inline-block;
-    margin-bottom: 70px;
     position: relative;
 }
 
@@ -173,10 +172,8 @@ a:hover {
     font-family:'Open Sans', sans-serif;
     font-size: 100%;
     font-weight:400;
-    border: 0.3em solid #FF9933;
+    /* border: 0.3em solid #FF9933; */
     padding: 1em 4em;
-    width: 90%;
-    border-radius: 5em;
     margin: auto;
     background-color: #202020;
     color: white;
@@ -191,7 +188,7 @@ a:hover {
     color: white;
     margin: 1em;
     border: 0.1em solid #FF9933;
-    border-radius: 2em;
+    border-radius: 0.2em;
     padding: 0.1em;
     background-color: #FF9933;
 }
