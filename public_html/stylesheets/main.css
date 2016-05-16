@@ -299,7 +299,6 @@ a:hover {
 }
 
 #header-artist-zone-name {
-    display: inline-block;
     font-size: 40px;
     color: #FF9933;
     line-height: 100%;
@@ -309,7 +308,14 @@ a:hover {
 #artist-info-artist-zone {
     width: 90%;
     margin-top: 30px;
-    /* height: 600px; */
+}
+
+#artist_id_card_first_column {
+
+}
+
+#artist_id_card_second_column {
+
 }
 
 
