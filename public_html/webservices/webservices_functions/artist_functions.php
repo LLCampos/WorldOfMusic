@@ -42,12 +42,17 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
     require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
     require_once "/home/aw008/database/users/user_table_functions.php";
 
-    $editable_params = array('country', 'style', 'bibliography', 'facebook_id', 'twitter_url');
+    $editable_params = array('facebook_url');
 
     foreach ($request as $key => $value) {
       if (in_array($key, $editable_params)) {
-        $attribute_to_change = $key;
-        $new_value = $value;
+
+        if ($key == 'facebook_url') {
+            $attribute_to_change = 'facebook_id';
+            include "/home/aw008/database/facebook_api/facebook_api_functions.php";
+            $new_value = getIDFromURL($value);
+        }
+
         break;
       }
     }
@@ -75,6 +80,7 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
     $response = "Request submitted.";
     simpleResponse($response, $outputType, 200);
   }
+
 
   function DELETEArtist($artist_name, $user_id, $outputType) {
     require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";

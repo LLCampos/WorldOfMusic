@@ -227,8 +227,14 @@ function addEditedArtist($artist_id, $attribute_being_edited, $new_value_for_att
 
     $artist_info[$attribute_being_edited] = $new_value_for_attribute;
 
+    if ($attribute_being_edited == 'facebook_id') {
+        include_once "/home/aw008/database/facebook_api/facebook_api_functions.php";
+        $artist_info['number_of_facebook_likes'] = numberofFacebookLikes($new_value_for_attribute);
+    }
+
     return populateArtistsTable($artist_info, 1);
 }
+
 
 ?>
 
