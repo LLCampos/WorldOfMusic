@@ -73,7 +73,8 @@ var fillCountryTopArtistsChart = function(list_of_artists) {
 
 var goToCountryZone = function(event, country_code) {
     $('#country-zone').show();
-    scrollWindowTo($(window).height());
+    // $('#country-zone').css('height', $(window).height());
+    scrollWindowTo($('#map-zone').height() + $('#header').height());
 };
 
 cleanCountryZone = function() {
@@ -136,7 +137,7 @@ var getRandomArtistFromCountryAndGoToAndFillArtistZone = function(country_code) 
 
 var goToArtistZone = function() {
     $('#artist-zone').show();
-    scrollWindowTo($(document).height());
+    scrollWindowTo($('#map-zone').height() + $('#header').height() + $('#country-zone').outerHeight(true) + parseInt($('#artist-zone').css('margin-top'), 10));
 };
 
 var clearArtistZone = function() {
@@ -522,13 +523,20 @@ var cleanAlerts = function() {
     cleanArtistSubmissionAlerts();
 };
 
+var setHeights = function() {
+    $('#map-zone').css('height', function() {return $(window).height() - parseInt($('#header').css('height'), 10);});
+    $('#country-zone').css('height', $(window).height());
+    $('#artist-zone').css('height', $(window).height());
+};
+
 // ###### ONLOAD ####
 
 $(function() {
 
-    $('#map-zone').css('height', function() {return $(window).height() - parseInt($('#header').css('height'), 10);});
-    $('#country-zone').css('height', $(window).height());
-    $('#artist-zone').css('height', $(window).height());
+    setHeights();
+
+    // Resize divs when user resizes window
+    $(window).resize(function () {setHeights();});
 
     cleanInputs();
 
