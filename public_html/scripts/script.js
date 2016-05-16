@@ -7,10 +7,6 @@ var scrollWindowTo= function(value) {
 
 // ######### Map Zone Functions ############# //
 
-var goToMapZone = function() {
-    scrollWindowTo(0);
-};
-
 var insertMap = function(map) {
     $('#map').empty();
 
@@ -558,10 +554,6 @@ $(function() {
         button_pressed = button_pressed.replace(' ', '_');
         insertMap(button_pressed + '_mill');
     });
-
-    $('#button-to-map').on('click', 'button', function() {goToMapZone();});
-
-    $('#button-to-country').on('click', 'button', function() {goToCountryZone();});
 
     $('#go-to-random-artist-button').on('click', function() {getRandomArtistFromCountryAndGoToAndFillArtistZone(current_country_code);});
 
