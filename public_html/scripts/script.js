@@ -142,7 +142,7 @@ var clearArtistZone = function() {
     $('#artist-country-artist-zone').empty();
     $('#artist-biography-text').empty();
     $('#artist_picture').attr('src', '');
-    $('#youtube_video_artist iframe').attr('src', '');
+    $('#youtube_video_artist').attr('src', '');
 
     $('#artist_d3_circle_graphs').html('');
 };
@@ -155,7 +155,7 @@ var fillArtistZone = function(artist_object) {
     $('#artist-genre-artist-zone').text(titleCaps(artist_object.style));
     $('#artist-country-artist-zone').text(artist_object.country);
     $('#artist_zone_artist_picture').attr('src', artist_object.picture_url);
-    $('#youtube_video_artist iframe').attr('src', 'https://www.youtube.com/embed/' + artist_object.music_video);
+    $('#youtube_video_artist').attr('src', 'https://www.youtube.com/embed/' + artist_object.music_video);
 
     intact_bibliography = artist_object.bibliography;
     bibliography_end_start = intact_bibliography.search('<a href');

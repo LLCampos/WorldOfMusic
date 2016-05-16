@@ -352,6 +352,8 @@ a:hover {
 }
 
 #youtube_video_artist {
+    display: block;
+    margin: auto;
 }
 
 /*
