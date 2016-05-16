@@ -57,66 +57,62 @@
 
 </section>
 
-<section id="country-zone">
-    <div id="country" vocab="http://schema.org/" typeof="Country" class="">
+<section id="country-zone" vocab="http://schema.org/" typeof="Country" class="">
+    <div>
+        <h2 id="country_name" vocab = "http://schema.org/" typeof = "Country" property="name"></h2>
+    </div>
+    <div>
+        <img id="country_zone_flag" src="" class="img-responsive" alt="country flag" width="304" height="236" property="dbo:flag" vocab="http://dbpeorg">
+    </div>
+
+    <div id="country_general_info">
         <div>
-            <h2 id="country_name" vocab = "http://schema.org/" typeof = "Country" property="name"></h2>
+            <h5 class="country_zone_title">Capital: </h5>
+            <p id="country_zone_capital" class="country_zone_description" property="dbo:capital" vocab="http://dbpedia.org"></p>
         </div>
         <div>
-            <img id="country_zone_flag" src="" class="img-responsive" alt="country flag" width="304" height="236" property="dbo:flag" vocab="http://dbpeorg">
+            <h5 class="country_zone_title">Population: </h5>
+            <p id="country_zone_population" class="country_zone_description" property="dbo:populationTotal" vocab="http://dbpedia.org"></p>
         </div>
-
-        <div id="country_general_info">
-            <div>
-                <h5 class="country_zone_title">Capital: </h5>
-                <p id="country_zone_capital" class="country_zone_description" property="dbo:capital" vocab="http://dbpedia.org"></p>
-            </div>
-            <div>
-                <h5 class="country_zone_title">Population: </h5>
-                <p id="country_zone_population" class="country_zone_description" property="dbo:populationTotal" vocab="http://dbpedia.org"></p>
-            </div>
-            <div>
-                <h5 class="country_zone_title">Region: </h5>
-                <p id="country_zone_region" class="country_zone_description" property="region" ></p>
-            </div>
-            <div>
-                <h5 class="country_zone_title">Sub-Region: </h5>
-                <p id="country_zone_subregion" class="country_zone_description" property="subregion"></p>
-            </div>
-        </div>
-
         <div>
-            <h5 class="country_zone_title">Music: </h5>
-            <p id="country_zone_music_description" class="country_zone_description" property="country music"></p>
+            <h5 class="country_zone_title">Region: </h5>
+            <p id="country_zone_region" class="country_zone_description" property="region" ></p>
         </div>
-
-        <div class="row">
-
-            <div id="country_artists_top">
-                <ol>
-
-                </ol>
-            </div>
-
-            <button type="button" class="btn btn-warning orange_button" id="go-to-random-artist-button"><p>Take me to a random artist!</p></button>
-
-            <div id='artist_addition_form_zone'>
-                <div id="alert_success_artist_submission" class="alert alert-success" role="alert">Artist submitted! :D</div>
-                <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert"></div>
-                <form id='artist_addition_form' role="form">
-                    <div class="form-group">
-                        <label>Artist name:</label>
-                        <input class="form-control" id="input_artist_name">
-                        <button class="btn btn-default orange_button" id="add_artist_button"><p>Add artist!</p></button>
-                    </div>
-                </form>
-                <div id="artist_addition_form_zone_spinner"></div>
-            </div>
-
+        <div>
+            <h5 class="country_zone_title">Sub-Region: </h5>
+            <p id="country_zone_subregion" class="country_zone_description" property="subregion"></p>
         </div>
     </div>
 
+    <div>
+        <h5 class="country_zone_title">Music: </h5>
+        <p id="country_zone_music_description" class="country_zone_description" property="country music"></p>
+    </div>
 
+    <div class="row">
+
+        <div id="country_artists_top">
+            <ol>
+
+            </ol>
+        </div>
+
+        <button type="button" class="btn btn-warning orange_button" id="go-to-random-artist-button"><p>Take me to a random artist!</p></button>
+
+        <div id='artist_addition_form_zone'>
+            <div id="alert_success_artist_submission" class="alert alert-success" role="alert">Artist submitted! :D</div>
+            <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert"></div>
+            <form id='artist_addition_form' role="form">
+                <div class="form-group">
+                    <label>Artist name:</label>
+                    <input class="form-control" id="input_artist_name">
+                    <button class="btn btn-default orange_button" id="add_artist_button"><p>Add artist!</p></button>
+                </div>
+            </form>
+            <div id="artist_addition_form_zone_spinner"></div>
+        </div>
+
+    </div>
 </section>
 
 <section id="artist-zone">

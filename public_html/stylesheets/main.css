@@ -162,24 +162,19 @@ a:hover {
 /* ########## Country Zone ############### */
 
 #country-zone {
+    position: relative;
     width: 100%;
     display: inline-block;
-    position: relative;
-}
-
-#country {
-    position: relative;
     font-family:'Open Sans', sans-serif;
     font-size: 100%;
     font-weight:400;
-    /* border: 0.3em solid #FF9933; */
     padding: 1em 4em;
     margin: auto;
     background-color: #202020;
     color: white;
     font-family:'Open Sans', sans-serif;
-    font-size:1em;
-    font-weight:400em;
+    font-size: 1em;
+    font-weight: 400em;
     text-align: justify;
 }
 
