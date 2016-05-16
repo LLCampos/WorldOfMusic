@@ -14,7 +14,7 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
                        a.bibliography, a.music_video, a.facebook_id, a.number_of_facebook_likes, a.twitter_url,
                        a.number_of_twitter_followers, a.musicbrainz_id
                 FROM Artist as a, Country as c
-                WHERE a.name = :artist_name AND c.id = a.country_fk");
+                WHERE a.name = :artist_name AND c.id = a.country_fk AND Deleted = 0");
 
       $query->execute(array(':artist_name' => $artist_name)) or die("Query failed: " . $query->errorInfo());
 
