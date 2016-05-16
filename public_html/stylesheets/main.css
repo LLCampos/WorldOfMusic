@@ -301,15 +301,6 @@ a:hover {
 #artist-zone {
     width: 100%;
     height: 700px;
-    margin-top: 5em;
-}
-
-#header-artist-zone {
-    position: relative;
-    width: 100%;
-    height: 70px; /*mudar para 100% no fim*/
-    /*border-bottom: 1px solid #33334d;*/
-    background-color: #282828;
 }
 
 #header-artist-zone-name {
@@ -317,10 +308,7 @@ a:hover {
     font-size: 40px;
     color: #FF9933;
     line-height: 100%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    padding-bottom: 0.2em;
 }
 
 #artist-info-artist-zone {
@@ -387,6 +375,8 @@ a:hover {
 }
 
 .artist_picture {
+    display: block;
+    margin: auto;
     width: 150px;
     border-radius: 50%;
 }
