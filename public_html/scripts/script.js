@@ -8,15 +8,14 @@ var scrollWindowTo= function(value) {
 // ######### Map Zone Functions ############# //
 
 var goToMapZone = function() {
-    // $('#country-zone').hide(1000);
-    // $('#artist-zone').hide(1000);
     scrollWindowTo(0);
 };
 
 var insertMap = function(map) {
     $('#map').empty();
 
-    var header_height = parseInt($('#header').css('height'), 10);
+    var header_height = $('#header').height();
+
     $('#map').css('height', $(window).height() - header_height);
 
     $('#map').vectorMap({map: map,
@@ -529,6 +528,11 @@ var setHeights = function() {
     $('#artist-zone').css('height', $(window).height());
 };
 
+var onPageResize = function() {
+    setHeights();
+    $('#map-buttons').trigger('click');
+};
+
 // ###### ONLOAD ####
 
 $(function() {
@@ -536,7 +540,7 @@ $(function() {
     setHeights();
 
     // Resize divs when user resizes window
-    $(window).resize(function () {setHeights();});
+    $(window).resize(function () {onPageResize();});
 
     cleanInputs();
 
