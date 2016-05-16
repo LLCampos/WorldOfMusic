@@ -42,15 +42,24 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
     require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
     require_once "/home/aw008/database/users/user_table_functions.php";
 
-    $editable_params = array('facebook_url');
+    $editable_params = array('facebook_url', 'style', 'country_code');
 
     foreach ($request as $key => $value) {
       if (in_array($key, $editable_params)) {
 
         if ($key == 'facebook_url') {
             $attribute_to_change = 'facebook_id';
-            include "/home/aw008/database/facebook_api/facebook_api_functions.php";
+            include_once "/home/aw008/database/facebook_api/facebook_api_functions.php";
             $new_value = getIDFromURL($value);
+
+        } else if ($key == 'country_code') {
+            $attribute_to_change = 'country_fk';
+            require_once "/home/aw008/database/utility_functions/country_utility_functions.php";
+            $new_value = getIDFromCountryCode($value);
+
+        } else {
+            $attribute_to_change = $key;
+            $new_value = $value;
         }
 
         break;
