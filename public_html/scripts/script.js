@@ -279,7 +279,7 @@ var deleteCurrentArtist = function() {
     });
 };
 
-// #### Modal ####
+// #### Votes Modal ####
 
 global_submissions_user_not_want_to_vote = {addition: [], deletion: []};
 global_submission_types_without_votes = [];
@@ -315,25 +315,25 @@ var submissionIDsUserAlreadyVoted = function(submission_type, user_id, callback)
 
 // Displays message informing user that there are no submissions to vote on.
 var noSubmissionsToVoteOn = function() {
-    $('#modal_no_submissions_message').show();
+    $('#feedback_modal_no_submissions_message').show();
 };
 
-var modalLoading = function(type) {
+var feedbackModalLoading = function(type) {
     // Type if a boolean. true to activate the loading and false to deactivate it.
 
     if (type) {
-        $('#modal_body_addition_deletion').hide();
-        $('#modal_no_submissions_message').hide();
-        $('#modal_no_auth').hide();
-        $('.modal-body').spin();
+        $('#feedback_modal_body_addition_deletion').hide();
+        $('#feedback_modal_no_submissions_message').hide();
+        $('#feedback_modal_no_auth').hide();
+        $('#feedback_modal .modal-body').spin();
     } else if (type === false) {
-        $('.modal-body').spin(false);
+        $('#feedback_modal .modal-body').spin(false);
     }
 };
 
 var activateButtons = function(submission_type, submission_id) {
 
-    $('#modal_vote_buttons').on('click', 'button', function(event) {
+    $('#feedback_modal_vote_buttons').on('click', 'button', function(event) {
 
         // Gets id of the button pressed.
         var button_id = event.target.id;
@@ -371,7 +371,7 @@ var activateButtons = function(submission_type, submission_id) {
                 method: 'POST',
 
                 success: function(response) {
-                    onModalActivation();
+                    onFeedbackModalActivation();
                 },
 
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -381,18 +381,18 @@ var activateButtons = function(submission_type, submission_id) {
             });
         } else if (button_id == 'vote_button_neutral') {
             global_submissions_user_not_want_to_vote[submission_type].push(submission_id);
-            onModalActivation();
+            onFeedbackModalActivation();
         }
     });
 };
 
 var deactivateButtons = function() {
-   $('#modal_vote_buttons').off();
+   $('#feedback_modal_vote_buttons').off();
 };
 
-var onModalActivation = function() {
+var onFeedbackModalActivation = function() {
 
-    modalLoading(true);
+    feedbackModalLoading(true);
 
     // Remove handlers from buttons that could be attached to them from the last call of this function.
     deactivateButtons();
@@ -400,8 +400,8 @@ var onModalActivation = function() {
     FB.getLoginStatus(function(response) {
         if (response.status != 'connected') {
 
-            modalLoading(false);
-            $('#modal_no_auth').show();
+            feedbackModalLoading(false);
+            $('#feedback_modal_no_auth').show();
 
         } else {
 
@@ -410,7 +410,7 @@ var onModalActivation = function() {
             var types_of_submissions_left = $(types_of_submissions).not(global_submission_types_without_votes).get();
 
             if (types_of_submissions_left.length === 0) {
-                modalLoading(false);
+                feedbackModalLoading(false);
                 noSubmissionsToVoteOn();
             } else {
 
@@ -435,9 +435,9 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
         success: function(content) {
 
             if ($.isEmptyObject(content)) {
-                modalLoading(false);
+                feedbackModalLoading(false);
                 global_submission_types_without_votes.push(submission_type);
-                onModalActivation();
+                onFeedbackModalActivation();
             } else {
                 if (submission_type == 'addition') {
                     submission_info = content.pending_additions[0];
@@ -470,8 +470,8 @@ var fillModalDeletionOrAddition = function(submission_type, artist_name, id) {
 
         success: function(response) {
             createContentForModalDeletionOrAddition(response);
-            modalLoading(false);
-            $('#modal_body_addition_deletion').show();
+            feedbackModalLoading(false);
+            $('#feedback_modal_body_addition_deletion').show();
             activateButtons(submission_type, id);
         },
 
@@ -487,11 +487,29 @@ var createContentForModalDeletionOrAddition = function(response) {
     var picture = response.picture_url;
     var lastfm_url = response.lastfm_url;
 
-    $('#modal_artist_picture').attr('src', picture);
-    $('#modal_artist_name').text(artist_name);
-    $('#modal_country_name').text(artist_country);
-    $('#modal_genre').text(artist_genre);
-    $('#lastfm-modal-logo-link').attr('href', lastfm_url);
+    $('#feedback_modal_artist_picture').attr('src', picture);
+    $('#feedback_modal_artist_name').text(artist_name);
+    $('#feedback_modal_country_name').text(artist_country);
+    $('#feedback_modal_genre').text(artist_genre);
+    $('#feedback_modal_lastfm_logo_link').attr('href', lastfm_url);
+};
+
+
+// #### Edition Modal ####
+
+var onEditionModalActivation = function(btn_pressed) {
+    $('#edition_modal').modal();
+    var id_btn_pressed = $(btn_pressed).attr('id');
+
+    if (id_btn_pressed == 'country_edition_btn') {
+        text_to_show_on_header = 'country';
+    } else if (id_btn_pressed == 'facebook_edition_btn') {
+        text_to_show_on_header = 'Facebook URL';
+    } else if (id_btn_pressed == 'genre_edition_btn') {
+        text_to_show_on_header = 'genre';
+    }
+
+    $('#attribute_being_edited_edition_modal_header').text(text_to_show_on_header);
 };
 
 
@@ -561,6 +579,8 @@ $(function() {
 
     $('#delete_artist_button').on('click', function() {deleteCurrentArtist();});
 
-    $('#help_us_button').on('click', function() {onModalActivation();});
+    $('#help_us_button').on('click', function() {onFeedbackModalActivation();});
+
+    $('#edition-btns-group').on('click', 'button', function() {onEditionModalActivation(this);});
 
 });
