@@ -37,6 +37,15 @@ function GETPendingSubmissions($submission_type, $outputType) {
 
     $pending_submissions = getInformationAboutPendingSubmissions($submission_type, $limit, $order_sql_string, $page);
 
+    # Changes what is presented in the output
+    if ($submission_type == 'edition') {
+        foreach ($pending_submissions as $key => $pending_submission) {
+            if ($pending_submission['attribute_changing'] == "country_fk" ) {
+                $pending_submissions[$key]['attribute_changing'] = "country";
+            }
+        }
+    }
+
     if ($outputType == "xml") {
         echo '<?xml version="1.0"?>';
         echo '<pending_' . $submission_type . 's>';
@@ -59,6 +68,10 @@ function GETPendingSubmissions($submission_type, $outputType) {
 function GETOnePendingSubmission($submission_type, $submission_id, $outputType) {
 
     $pending_submission = getInformationAboutOnePendingSubmissionPrettyArray($submission_type, $submission_id);
+
+    if ($pending_submission['attribute_changing'] == "country_fk" ) {
+        $pending_submission['attribute_changing'] = "country";
+    }
 
     if ($outputType == "xml") {
         buildSimpleXMLOutput('pending_' . $submission_type, $pending_submission);
