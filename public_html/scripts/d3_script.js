@@ -17,32 +17,35 @@ var create_artist_circle_graphs = function(max_facebook, current_facebook, faceb
 
     svg = d3.select('#artist_d3_circle_graphs')
             .append('svg')
-            .attr('id', "artist_d3_circle_graphs")
+            // .attr('id', "artist_d3_circle_graphs")
             .attr('height', svg_height)
             .attr('width', svg_width);
 
-    svg.selectAll("g")
+    svg.selectAll("a")
        .data(data)
        .enter()
-       .append('g')
+       // .append('g')
        .append('a')
-       .attr('width', max_circle_radius * 2)
-       .attr('height', max_circle_radius * 2)
        .each(function(d, i) {
-
-            var a = d3.select(this);
 
             var scale = d3.scale.log().range([0, max_circle_radius]).domain([0.00001, d.max_size]);
 
-            a.attr('xlink:href', d.url)
-              .append('circle')
-              .attr('cx', max_circle_radius)
-              .attr('class', 'artist_circle_graph')
-              .attr('cy', max_circle_radius + (max_circle_radius * 2 * i) + (i * margin.top))
-              .attr('r', scale(d.current_size))
-              .attr('fill', d.color);
+            var a = d3.select(this);
 
-            a.append('text')
+            a.attr('xlink:href', d.url);
+
+            a.append('g').attr('width', max_circle_radius * 2)
+                         .attr('height', max_circle_radius * 2)
+                         .append('circle')
+                         .attr('cx', max_circle_radius)
+                         .attr('class', 'artist_circle_graph')
+                         .attr('cy', max_circle_radius + (max_circle_radius * 2 * i) + (i * margin.top))
+                         .attr('r', scale(d.current_size))
+                         .attr('fill', d.color);
+
+            var g = a.select('g');
+
+            g.append('text')
               .attr("text-anchor", "middle")
               .attr('x', max_circle_radius)
               .attr('y', max_circle_radius + (max_circle_radius * 2 * i))
@@ -51,7 +54,7 @@ var create_artist_circle_graphs = function(max_facebook, current_facebook, faceb
               .attr('class', 'circle_graphs_text_header')
               .text(d.name);
 
-            a.append('text')
+            g.append('text')
               .attr("text-anchor", "middle")
               .attr('x', max_circle_radius)
               .attr('y', max_circle_radius + (max_circle_radius * 2 * i) + 20)
