@@ -279,7 +279,7 @@ var deleteCurrentArtist = function() {
     });
 };
 
-// #### Modal ####
+// #### Votes Modal ####
 
 global_submissions_user_not_want_to_vote = {addition: [], deletion: []};
 global_submission_types_without_votes = [];
@@ -322,7 +322,7 @@ var modalLoading = function(type) {
     // Type if a boolean. true to activate the loading and false to deactivate it.
 
     if (type) {
-        $('#modal_body_addition_deletion').hide();
+        $('#feedback_modal_body_addition_deletion').hide();
         $('#modal_no_submissions_message').hide();
         $('#modal_no_auth').hide();
         $('.modal-body').spin();
@@ -371,7 +371,7 @@ var activateButtons = function(submission_type, submission_id) {
                 method: 'POST',
 
                 success: function(response) {
-                    onModalActivation();
+                    onFeedbackModalActivation();
                 },
 
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -381,7 +381,7 @@ var activateButtons = function(submission_type, submission_id) {
             });
         } else if (button_id == 'vote_button_neutral') {
             global_submissions_user_not_want_to_vote[submission_type].push(submission_id);
-            onModalActivation();
+            onFeedbackModalActivation();
         }
     });
 };
@@ -390,7 +390,7 @@ var deactivateButtons = function() {
    $('#modal_vote_buttons').off();
 };
 
-var onModalActivation = function() {
+var onVotesModalActivation = function() {
 
     modalLoading(true);
 
@@ -437,7 +437,7 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
             if ($.isEmptyObject(content)) {
                 modalLoading(false);
                 global_submission_types_without_votes.push(submission_type);
-                onModalActivation();
+                onFeedbackModalActivation();
             } else {
                 if (submission_type == 'addition') {
                     submission_info = content.pending_additions[0];
@@ -471,7 +471,7 @@ var fillModalDeletionOrAddition = function(submission_type, artist_name, id) {
         success: function(response) {
             createContentForModalDeletionOrAddition(response);
             modalLoading(false);
-            $('#modal_body_addition_deletion').show();
+            $('#feedback_modal_body_addition_deletion').show();
             activateButtons(submission_type, id);
         },
 
@@ -487,7 +487,7 @@ var createContentForModalDeletionOrAddition = function(response) {
     var picture = response.picture_url;
     var lastfm_url = response.lastfm_url;
 
-    $('#modal_artist_picture').attr('src', picture);
+    $('#feedback_modal_artist_picture').attr('src', picture);
     $('#modal_artist_name').text(artist_name);
     $('#modal_country_name').text(artist_country);
     $('#modal_genre').text(artist_genre);
@@ -561,6 +561,6 @@ $(function() {
 
     $('#delete_artist_button').on('click', function() {deleteCurrentArtist();});
 
-    $('#help_us_button').on('click', function() {onModalActivation();});
+    $('#help_us_button').on('click', function() {onFeedbackModalActivation();});
 
 });
