@@ -24,11 +24,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
-    <link rel="stylesheet" type="text/css" href="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-2.0.3.css" type="text/css" media="screen">
+    <link rel="stylesheet" type="text/css" href="resources/jquery-jvectormap-2.0.3/jquery-jvectormap-2.0.3.css" media="screen">
 </head>
 <body>
 
-<button type="button" class="btn btn-warning orange_button" data-toggle="modal" data-target="#feedback_modal" id="help_us_button"><p>Help Us Improve Our App!</p></button>
+<button type="button" class="btn btn-warning orange_button" data-toggle="modal" data-target="#feedback_modal" id="help_us_button"><span>Help Us Improve Our App!</span></button>
 
 <header id='header'>
     <div id="map-buttons" class="btn-group" role="group" aria-label="...">
@@ -43,7 +43,14 @@
     <h1 id='header-title'>World Of Music</h1>
     <div id="facebook-header-zone">
         <div id="header-image-user-facebook"></div>
-        <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div>
+        <script type="text/javascript">
+
+        //<![CDATA[
+
+        document.write('<div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div>');
+        //]]>
+
+        </script>
     </div>
 </header>
 
@@ -62,7 +69,7 @@
         <h2 id="country_name" vocab = "http://schema.org/" typeof = "Country" property="name"></h2>
     </div>
     <div>
-        <img id="country_zone_flag" src="" class="img-responsive" alt="country flag" width="304" height="236" property="dbo:flag" vocab="http://dbpeorg">
+        <img id="country_zone_flag" src="#" class="img-responsive" alt="country flag" width="304" height="236" property="dbo:flag" vocab="http://dbpeorg">
     </div>
 
     <div id="country_general_info">
@@ -97,16 +104,16 @@
             </ol>
         </div>
 
-        <button type="button" class="btn btn-warning orange_button" id="go-to-random-artist-button"><p>Take me to a random artist!</p></button>
+        <button type="button" class="btn btn-warning orange_button" id="go-to-random-artist-button"><span>Take me to a random artist!</span></button>
 
         <div id='artist_addition_form_zone'>
             <div id="alert_success_artist_submission" class="alert alert-success" role="alert">Artist submitted! :D</div>
             <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert"></div>
-            <form id='artist_addition_form' role="form">
+            <form id='artist_addition_form'>
                 <div class="form-group">
                     <label>Artist name:</label>
                     <input class="form-control" id="input_artist_name">
-                    <button class="btn btn-default orange_button" id="add_artist_button"><p>Add artist!</p></button>
+                    <button class="btn btn-default orange_button" id="add_artist_button"><span>Add artist!</span></button>
                 </div>
             </form>
             <div id="artist_addition_form_zone_spinner"></div>
@@ -117,10 +124,6 @@
 
 <section id="artist-zone">
 <div id = "artist-page" vocab = "http://schema.org/" typeof = "MusicGroup">
-    <!-- <header id="header-artist-zone">
-
-    </header> -->
-
 
     <div id="artist-info-artist-zone" class="container-fluid">
         <div class="row">
@@ -128,10 +131,10 @@
             <div class="col-md-4" id="artist_main_info">
                 <div id="artist_id_card" class="row">
                     <div class="col-md-6 col-sm-6 col-xs-6" id="artist_id_card_first_column">
-                        <img class="artist_picture" id="artist_zone_artist_picture" property="image" src="">
+                        <img class="artist_picture" id="artist_zone_artist_picture" property="image" src="#" alt="picture of the artist">
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6" id="artist_id_card_second_column">
-                        <div id="header-artist-zone-name" property="name"></div>
+                        <header id="header-artist-zone-name" property="name"></header>
                         <div id="style-country-zone">
                             <p><b><span>Genre: </span></b><span id="artist-genre-artist-zone" property='genre'></span></p>
                             <p><b><span>Country: </span></b><span id="artist-country-artist-zone" property='foundingLocation'></span></p>
@@ -209,7 +212,7 @@
 
             <div class="col-md-5">
                 <div typeof="VideoObject">
-                    <iframe  id="youtube_video_artist" width="480" height="360" src="" frameborder="0" allowfullscreen property="video"></iframe>
+                    <iframe  id="youtube_video_artist" width="480" height="360" src="#" allowfullscreen property="video"></iframe>
                 </div>
             </div>
 
@@ -234,12 +237,12 @@
       <div class="modal-body">
 
         <div class="row" id="modal_body_addition_deletion">
-            <img class="artist_picture col-md-4" id="modal_artist_picture" src=''>
+            <img class="artist_picture col-md-4" id="modal_artist_picture" src='#' alt="picture of the artist">
             <div id="modal_artist_info" class="col-md-4">
                 <h4 id="modal_artist_name"></h4>
                 <p><strong>Country:</strong> <span id="modal_country_name"></span></p>
                 <p><strong>Genre:</strong> <span id="modal_genre"></span></p>
-                <a id="lastfm-modal-logo-link" href=""><img id="lastfm-logo-pic" src="resources/images/lastfm-logo.png"></a>
+                <a id="lastfm-modal-logo-link" href=""><img id="lastfm-logo-pic" src="resources/images/lastfm-logo.png" alt="last-fm logo"></a>
             </div>
             <div id="modal_vote_buttons" class="btn-group-vertical col-md-4" role="group">
                 <button type="button" id="vote_button_positive" class="btn btn-success">Yes!</button>

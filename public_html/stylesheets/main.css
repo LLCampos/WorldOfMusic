@@ -42,7 +42,7 @@ a:hover {
 }
 
 .modal-footer button,
-.orange_button p {
+.orange_button span {
     font-weight: 600;
     margin: 0;
 }
@@ -360,6 +360,7 @@ a:hover {
 #youtube_video_artist {
     display: block;
     margin: auto;
+    border-width: 0;
 }
 
 /*

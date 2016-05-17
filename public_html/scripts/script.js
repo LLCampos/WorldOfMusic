@@ -81,7 +81,7 @@ cleanCountryZone = function() {
     $('#country_zone_subregion').empty();
     $('#country_zone_music_description').empty();
     $('#country_zone_music_description').removeData();
-    $('#country_zone_flag').attr('src', '');
+    $('#country_zone_flag').attr('src', '#');
     $('#country_artists_top ol').empty();
 };
 
@@ -141,8 +141,8 @@ var clearArtistZone = function() {
     $('#artist-genre-artist-zone').empty();
     $('#artist-country-artist-zone').empty();
     $('#artist-biography-text').empty();
-    $('#artist_picture').attr('src', '');
-    $('#youtube_video_artist').attr('src', '');
+    $('#artist_picture').attr('src', '#');
+    $('#youtube_video_artist').attr('src', '#');
 
     $('#artist_d3_circle_graphs').html('');
 };
