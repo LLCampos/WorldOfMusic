@@ -88,10 +88,10 @@ function getCodeFromNameOfCountry($name_of_country) {
     require "/home/aw008/database/disconnect_database.php";
 }
 
-function countryExists($country) {
+function countryExists($country_code) {
     $countries_list = outPutCountryCodesList();
 
-    return in_array($country, $countries_list);
+    return in_array($country_code, $countries_list);
 }
 
 
