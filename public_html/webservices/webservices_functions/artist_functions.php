@@ -48,6 +48,12 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
       if (in_array($key, $editable_params)) {
 
         if ($key == 'facebook_url') {
+
+            if (!filter_var($value, FILTER_VALIDATE_URL)) {
+              $response = 'Facebook URL given is not valid!';
+              simpleResponse($response, $outputType, 400);
+            }
+
             $attribute_to_change = 'facebook_id';
             include_once "/home/aw008/database/facebook_api/facebook_api_functions.php";
             $new_value = getIDFromURL($value);
