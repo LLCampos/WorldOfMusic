@@ -498,8 +498,14 @@ var createContentForModalDeletionOrAddition = function(response) {
 // #### Edition Modal ####
 
 var onEditionModalClosure = function() {
+    console.log('done');
     $('#edition_modal_submit_button').off();
     $('#edition_modal').off();
+
+    $('#edition_modal_input').autocomplete('destroy');
+
+    $('#edition_modal_input').removeAttr('name type');
+
     $('#edition_modal_form').spin(false);
 };
 
@@ -526,7 +532,9 @@ var onEditionModalActivation = function(btn_pressed) {
         text_to_show_on_header = 'country';
         edition_input_name = 'country';
         edition_input_type = 'text';
-        param_changing = 'country_code';
+        param_changing = 'country';
+
+        activateCountriesAutocomplete();
 
     } else if (id_btn_pressed == 'facebook_edition_btn') {
         text_to_show_on_header = 'Facebook URL';
@@ -609,6 +617,22 @@ var setHeights = function() {
 var onPageResize = function() {
     setHeights();
     $('#map-buttons').trigger('click');
+};
+
+var activateCountriesAutocomplete = function() {
+    $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country', function(data) {
+        var countries_list = [];
+
+        for (var i in data.countries) {
+            countries_list.push(data.countries[i].name);
+        }
+
+        $('#edition_modal_input').autocomplete({
+           source: countries_list,
+           appendTo: "#edition_modal_form"
+        });
+
+    });
 };
 
 // ###### ONLOAD ####
