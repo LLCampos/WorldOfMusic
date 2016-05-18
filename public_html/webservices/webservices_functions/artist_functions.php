@@ -42,7 +42,7 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
     require_once "/home/aw008/database/utility_functions/artist_utility_functions.php";
     require_once "/home/aw008/database/users/user_table_functions.php";
 
-    $editable_params = array('facebook_url', 'style', 'country_code');
+    $editable_params = array('facebook_url', 'style', 'country');
 
     foreach ($request as $key => $value) {
       if (in_array($key, $editable_params)) {
@@ -52,9 +52,20 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
             include_once "/home/aw008/database/facebook_api/facebook_api_functions.php";
             $new_value = getIDFromURL($value);
 
-        } else if ($key == 'country_code') {
+        } else if ($key == 'country') {
             $attribute_to_change = 'country_fk';
             require_once "/home/aw008/database/utility_functions/country_utility_functions.php";
+
+            // If the input size is bigger than two, it is the name of the country
+            if (sizeof($new_value) != 2) {
+              $value = getCodeFromNameOfCountry($value);
+            }
+
+            if (!countryExists($value)) {
+              $response = 'Country does not exist';
+              simpleResponse($response, $outputType, 404);
+            }
+
             $new_value = getIDFromCountryCode($value);
 
         } else {
