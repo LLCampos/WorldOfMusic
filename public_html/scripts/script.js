@@ -573,6 +573,7 @@ var ajaxCallPUTArtist = function(artist_name, param_changing, value) {
             $('#edition_modal_form').spin();
         },
         success: function(response) {
+            $('#edition_modal_form').spin(false);
             $('#edition_modal_form').hide();
             $('#edition_modal_submitted_screen').show();
         },
