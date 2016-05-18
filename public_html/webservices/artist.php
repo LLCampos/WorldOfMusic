@@ -98,7 +98,7 @@ You can only request edition of one parameter.
 *
 * @apiParam {String} name_of_artist Name of Artist of which information you want to edit
 * @apiParam {String} [style] New music genre played by Artist
-* @apiParam {String} [country_code] New ISO 3166-1 alpha-2 country code of Artist
+* @apiParam {String} [country] New country name or ISO 3166-1 alpha-2 country code of Artist
 * @apiParam {Number} [facebook_url] New artist Facebook page URL
 *
 * @apiExample Example of changing the style of Metallica to Thrash Metal:
