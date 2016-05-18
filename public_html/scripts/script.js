@@ -88,6 +88,8 @@ cleanCountryZone = function() {
 
 var fillCountryZone = function(country_info, country_code) {
 
+    $('#country-zone').css('minHeight', $(window).height());
+
     cleanCountryZone();
 
     $('#country_name').text(country_info.name);
@@ -613,6 +615,7 @@ var cleanAlerts = function() {
 
 var setHeights = function() {
     $('#map-zone').css('height', function() {return $(window).height() - parseInt($('#header').css('height'), 10);});
+    $('#country-zone').css('minHeight', $(window).height());
 };
 
 var onPageResize = function() {
