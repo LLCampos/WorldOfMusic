@@ -497,19 +497,85 @@ var createContentForModalDeletionOrAddition = function(response) {
 
 // #### Edition Modal ####
 
+var onEditionModalClosure = function() {
+    $('#edition_modal_submit_button').off();
+    $('#edition_modal').off();
+    $('#edition_modal_form').spin(false);
+};
+
 var onEditionModalActivation = function(btn_pressed) {
+    $('#edition_modal_input').val('');
+
+    $('#edition_modal_form').show();
+    $('#edition_modal_submitted_screen').hide();
+
     $('#edition_modal').modal();
+
+    $('#edition_modal').on('hidden.bs.modal', function(){
+         onEditionModalClosure();
+    });
+
     var id_btn_pressed = $(btn_pressed).attr('id');
+
+    var text_to_show_on_header;
+    var edition_input_id;
+    var edition_input_type;
+    var param_changing;
 
     if (id_btn_pressed == 'country_edition_btn') {
         text_to_show_on_header = 'country';
+        edition_input_name = 'country';
+        edition_input_type = 'text';
+        param_changing = 'country_code';
+
     } else if (id_btn_pressed == 'facebook_edition_btn') {
         text_to_show_on_header = 'Facebook URL';
+        edition_input_name = 'facebook';
+        edition_input_type = 'url';
+        param_changing = 'facebook_url';
+
     } else if (id_btn_pressed == 'genre_edition_btn') {
         text_to_show_on_header = 'genre';
+        edition_input_name = 'genre';
+        edition_input_type = 'text';
+        param_changing = 'style';
     }
 
     $('#attribute_being_edited_edition_modal_header').text(text_to_show_on_header);
+    $('#edition_modal_input').attr('name', edition_input_name);
+    $('#edition_modal_input').attr('type', edition_input_type);
+
+    $('#edition_modal_submit_button').on('click', function(e) {
+        var user_input = $('#edition_modal_input').val();
+        var artist_name = $("#header-artist-zone-name").text();
+
+        ajaxCallPUTArtist(artist_name, param_changing, user_input);
+        e.preventDefault();
+    });
+};
+
+var ajaxCallPUTArtist = function(artist_name, param_changing, value) {
+
+    access_token_param = getFBAccessTokenParam();
+
+    $.ajax({
+        url: "http://appserver.di.fc.ul.pt/~aw008/webservices/artist/" + artist_name + '?' + param_changing + '=' + value + '&' + access_token_param,
+        method: "PUT",
+        beforeSend: function() {
+            $('#edition_modal_form').spin();
+        },
+        success: function(response) {
+            $('#edition_modal_form').hide();
+            $('#edition_modal_submitted_screen').show();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var response_text = $.parseJSON(jqXHR.responseText).message;
+
+            $('#edition_modal_form').spin(false);
+            alert(response_text);
+            $('#edition_modal').modal('hide');
+        }
+    });
 };
 
 

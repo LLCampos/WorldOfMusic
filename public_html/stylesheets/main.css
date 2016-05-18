@@ -70,6 +70,14 @@ a:hover {
      border: none;
 }
 
+#edition_modal_form {
+    color: black;
+}
+
+#edition_modal_form,
+#edition_modal_submitted_screen {
+    display: none;
+}
 
 /* ############ Side Button ############# */
 
