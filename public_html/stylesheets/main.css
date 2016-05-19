@@ -95,6 +95,10 @@ a:hover {
     transform: rotate(-90deg) translateY(-100%);
     transform-origin: top right;
     z-index: 2;
+    border: 1px solid #666666;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 
@@ -151,6 +155,7 @@ a:hover {
 
 #main-zone {
     margin-right: 0;
+    padding-right: 0;
 }
 
 
