@@ -97,6 +97,23 @@
             <p id="country_zone_subregion" class="country_zone_description" property="subregion"></p>
         </div>
     </div>
+    <div id='artist_addition_form_zone'>
+        <form id='artist_addition_form'>
+            <div class="form-group">
+                <input class="form-control" id="input_artist_name">
+                <button class="btn btn-default orange_button" id="add_artist_button"><span>Add artist!</span></button>
+                <div id="alert_success_artist_submission" class="alert alert-success" role="alert">
+                    <button class="close" aria-label="close">&times;</button>
+                    <span id="success_artist_submission_text">Artist submitted! :D</span>
+                </div>
+                <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert">
+                    <button class="close" aria-label="close">&times;</button>
+                    <span id="unsuccess_artist_submission_text"></span>
+                </div>
+                <div id="artist_addition_form_zone_spinner"></div>
+            </div>
+        </form>
+    </div>
 
     <div>
         <h5 class="country_zone_title">Music: </h5>
@@ -112,19 +129,6 @@
         </div>
 
         <button type="button" class="btn btn-warning orange_button" id="go-to-random-artist-button"><span>Take me to a random artist!</span></button>
-
-        <div id='artist_addition_form_zone'>
-            <div id="alert_success_artist_submission" class="alert alert-success" role="alert">Artist submitted! :D</div>
-            <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert"></div>
-            <form id='artist_addition_form'>
-                <div class="form-group">
-                    <label>Artist name:</label>
-                    <input class="form-control" id="input_artist_name">
-                    <button class="btn btn-default orange_button" id="add_artist_button"><span>Add artist!</span></button>
-                </div>
-            </form>
-            <div id="artist_addition_form_zone_spinner"></div>
-        </div>
 
     </div>
 </section>

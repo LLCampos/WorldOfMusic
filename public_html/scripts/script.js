@@ -240,6 +240,10 @@ var successArtistSubmission = function(content) {
 
     $('#alert_unsuccess_artist_submission').hide(500);
     $('#alert_success_artist_submission').show(500);
+
+    $(".close").on('click', function(e) {
+        closeAlert(e);
+    });
 };
 
 var errorArtistSubmission = function(jqXHR) {
@@ -248,10 +252,14 @@ var errorArtistSubmission = function(jqXHR) {
 
     response_text = $.parseJSON(jqXHR.responseText);
 
-    $('#alert_unsuccess_artist_submission').text(response_text.message);
+    $('#unsuccess_artist_submission_text').text(response_text.message);
 
     $('#alert_success_artist_submission').hide(500);
     $('#alert_unsuccess_artist_submission').show(500);
+
+    $(".close").on('click', function(e) {
+        closeAlert(e);
+    });
 };
 
 var cleanArtistSubmissionAlerts = function() {
@@ -639,6 +647,12 @@ var activateCountriesAutocomplete = function() {
     });
 };
 
+var closeAlert = function(event) {
+    $(event.target).parent().hide(500);
+    $(".close").off();
+    event.preventDefault();
+};
+
 // ###### ONLOAD ####
 
 $(function() {
@@ -653,6 +667,10 @@ $(function() {
     // User initialy can't see the country and artist zone
     $('#country-zone').hide();
     $('#artist-zone').hide();
+
+    // Hide the alerts
+    $('#alert_success_artist_submission').hide();
+    $('#alert_unsuccess_artist_submission').hide();
 
     insertMap('world_mill');
 

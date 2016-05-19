@@ -283,11 +283,13 @@ a:hover {
 }
 
 #artist_addition_form_zone {
-    position: absolute;
+    margin: 0.5em 0px;
+    position: relative;
+    /* position: absolute;
     right: 4.7em;
     bottom: 3em;
     width: 310px;
-    height: 180px;
+    height: 180px; */
 }
 
 #artist_addition_form_zone .form-control {
@@ -296,21 +298,17 @@ a:hover {
 
 #alert_success_artist_submission,
 #alert_unsuccess_artist_submission {
-    display: none;
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0;
 }
 
 #artist_addition_form_zone_spinner .spinner {
-    left: 40%;
-    bottom: 10%;
+
 }
 
 #artist_addition_form {
-    bottom: 0px;
-    position: absolute;
-}
-
-#artist_addition_form label {
-    display: block;
+    display: inline-block;
 }
 
 #artist_addition_form input {
@@ -320,6 +318,22 @@ a:hover {
 #add_artist_button {
     position: relative;
     bottom: 1.5px;
+}
+
+#input_artist_name {
+    margin-bottom: 0.4em;
+}
+
+@media (max-width: 710px) {
+    #country_zone_flag {
+        float: none;
+        margin: 2em auto;
+    }
+
+    #input_artist_name {
+        display: block;
+    }
+
 }
 
 /* ########## Artist Zone ################ */
