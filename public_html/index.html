@@ -36,8 +36,10 @@
     <h1 id='header-title-big' class='header-title'>World Of Music</h1>
     <h1 id='header-title-small' class='header-title'>WOM</h1>
     <div id="facebook-header-zone">
+        <!--
         <div id="header-image-user-facebook"></div>
         <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div>
+        -->
     </div>
 </header>
 
@@ -45,16 +47,22 @@
 
 <div id="map-zone" class="col-md-6">
     <div class="dropdown" id="dropdown_zone_menu">
-        <button class="btn btn-default black-button" type="button" data-toggle="dropdown" id="dropdown_zone_menu_button">Zone
+        <button class="btn btn-default black-button dropdown_menu_button" type="button" data-toggle="dropdown" id="dropdown_zone_menu_button">Zone
         <span class="caret"></span></button>
-        <ul class="dropdown-menu" id="map-options">
-            <li id="world-map-option" class="map-option black-button active_option">World</li>
-            <li id="africa-map-option" class="map-option black-button">Africa</li>
-            <li id="asia-map-option"    class="map-option black-button">Asia</li>
-            <li id="europe-map-option" class="map-option black-button">Europe</li>
-            <li id="north-america-map-option" class="map-option black-button">North America</li>
-            <li id="oceania-map-option" class="map-option black-button">Oceania</li>
-            <li id="south-america-map-option" class="map-option black-button">South America</li>
+        <ul class="dropdown-menu options" id="map-options">
+            <li id="world-map-option" class="option black-button active_option">World</li>
+            <li class="divider"></li>
+            <li id="africa-map-option" class="option black-button">Africa</li>
+            <li class="divider"></li>
+            <li id="asia-map-option"    class="option black-button">Asia</li>
+            <li class="divider"></li>
+            <li id="europe-map-option" class="option black-button">Europe</li>
+            <li class="divider"></li>
+            <li id="north-america-map-option" class="option black-button">North America</li>
+            <li class="divider"></li>
+            <li id="oceania-map-option" class="option black-button">Oceania</li>
+            <li class="divider"></li>
+            <li id="south-america-map-option" class="option black-button">South America</li>
         </ul>
     </div>
     <div id="map"></div>
@@ -95,15 +103,15 @@
             <div class="form-group">
                 <input class="form-control" id="input_artist_name">
                 <button class="btn btn-default orange_button" id="add_artist_button"><span>Add artist!</span></button>
-                <div id="alert_success_artist_submission" class="alert alert-success" role="alert">
-                    <button class="close" aria-label="close">&times;</button>
-                    <span id="success_artist_submission_text">Artist submitted! :D</span>
-                </div>
-                <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert">
-                    <button class="close" aria-label="close">&times;</button>
-                    <span id="unsuccess_artist_submission_text"></span>
-                </div>
                 <div id="artist_addition_form_zone_spinner"></div>
+            </div>
+            <div id="alert_success_artist_submission" class="alert alert-success" role="alert">
+                <button class="close" aria-label="close">&times;</button>
+                <span id="success_artist_submission_text">Artist submitted! :D</span>
+            </div>
+            <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert">
+                <button class="close" aria-label="close">&times;</button>
+                <span id="unsuccess_artist_submission_text"></span>
             </div>
         </form>
     </div>
@@ -142,6 +150,20 @@
                         <div id="style-country-zone">
                             <p><b><span>Genre: </span></b><span id="artist-genre-artist-zone" property='genre'></span></p>
                             <p><b><span>Country: </span></b><span id="artist-country-artist-zone" property='foundingLocation'></span></p>
+                            <div class="dropdown" id="dropdown_feedback_menu">
+                                <button class="btn btn-default black-button dropdown_menu_button" type="button" data-toggle="dropdown" id="dropdown_feedback_menu_button">Feedback
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu options" id="feedback-options">
+                                    <li class="option black-button" id="delete_artist_button"><span>Delete artist!<span></li>
+                                    <li class="divider"></li>
+                                    <li class="option black-button" id="country_edition_btn"><span>Change artist's country</span></li>
+                                    <li class="divider"></li>
+                                    <li class="option black-button" id="facebook_edition_btn"><span>Change artist's Facebook URL</span></li>
+                                    <li class="divider"></li>
+                                    <li class="option black-button" id="genre_edition_btn"><span>Change artist's genre</span></li>
+                                    <li class="divider"></li>
+                                </ul>
+                            </div>
                         </div>
 
                     <!--
@@ -211,7 +233,7 @@
                     <p><b><span>Biography</span></b></p>
                     <p id="artist-biography-text" property="description"></p>
                 </div>
-                <button type="button" class="btn btn-danger" id="delete_artist_button">Delete artist!</button>
+
             </div>
 
             <div class="col-md-5">
@@ -222,11 +244,6 @@
 
             <div class="col-md-3">
                 <div id="artist_d3_circle_graphs"></div>
-                <div class="btn-group" id="edition-btns-group">
-                    <button type="button" class="btn btn-warning orange_button" id="country_edition_btn"><span>Change artist's country</span></button>
-                    <button type="button" class="btn btn-warning orange_button" id="facebook_edition_btn"><span>Change artist's Facebook URL</span></button>
-                    <button type="button" class="btn btn-warning orange_button" id="genre_edition_btn"><span>Change artist's genre</span></button>
-                </div>
             </div>
         </div>
     </div>

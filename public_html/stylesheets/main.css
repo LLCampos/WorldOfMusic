@@ -54,6 +54,37 @@ a:hover {
     border: none;
 }
 
+.options {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+}
+
+.option {
+    cursor: pointer;
+    padding-left: 12px;
+}
+
+.active_option,
+.option.focus,
+.option:focus,
+.option:hover {
+    color: #282828 ;
+    background-color: #FF9933;
+}
+
+.dropdown_menu_button:hover,
+.dropdown_menu_button:active,
+.dropdown_menu_button:focus {
+    color: #FF9933;
+    background-color: #282828;
+}
+
+.dropdown-menu .divider {
+    margin: 0;
+    background-color: #666666;
+}
+
 /* ##### Modal ##### */
 
 .modal-open {
@@ -163,37 +194,12 @@ a:hover {
     padding: 0;
 }
 
-#map-options {
-    position: absolute;
-    padding: 0;
-    margin: 0;
-}
-
-.map-option {
-    cursor: pointer;
-    padding-left: 12px;
-}
 
 #dropdown_zone_menu {
     position: absolute;
     left: 30px;
     top: 11.5px;
     z-index: 8;
-}
-
-#dropdown_zone_menu_button:hover,
-#dropdown_zone_menu_button:active,
-#dropdown_zone_menu_button:focus {
-    color: #FF9933;
-    background-color: #282828;
-}
-
-.active_option,
-.map-option.focus,
-.map-option:focus,
-.map-option:hover {
-    color: #282828 ;
-    background-color: #FF9933;
 }
 
 
@@ -303,6 +309,10 @@ a:hover {
     margin: 0;
 }
 
+button.close {
+    padding-left: 0.6em;
+}
+
 #artist_addition_form_zone_spinner .spinner {
 
 }
@@ -324,7 +334,7 @@ a:hover {
     margin-bottom: 0.4em;
 }
 
-@media (max-width: 710px) {
+@media (max-width:  774px) {
     #country_zone_flag {
         float: none;
         margin: 2em auto;
