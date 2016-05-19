@@ -47,6 +47,13 @@ a:hover {
     margin: 0;
 }
 
+.black-button {
+    color: #FF9933;
+    background-color: #282828;
+    font-weight: 700;
+    border: none;
+}
+
 /* ##### Modal ##### */
 
 .modal-open {
@@ -126,34 +133,6 @@ a:hover {
     border-radius: 50%;
 }
 
-#map-buttons {
-    position: absolute;
-    bottom: 0;
-}
-
-.map-button {
-    color: #FF9933;
-    background-color: #282828 ;
-    font-weight: 700;
-    border: none;
-    border-radius: 0;
-}
-
-.map-button.active.focus,
-.map-button.active:hover,
-.map-button:active.focus,
-.map-button:active:focus,
-.map-button:active:hover,
-.map-button.focus,
-.map-button:focus,
-.map-button:active,
-.map-button.active,
-.map-button.active:focus,
-.map-button:hover {
-    color: #282828 ;
-    background-color: #FF9933;
-}
-
 
 /* ############ Map Zone ################## */
 
@@ -163,7 +142,37 @@ a:hover {
 
 
 #map-zone {
-    padding-left: 0;
+    padding: 0;
+}
+
+#map-options {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+}
+
+.map-option {
+    border-radius: 0;
+    cursor: pointer;
+    padding-left: 12px;
+}
+
+#dropdown_zone_menu {
+    position: absolute;
+    right: 0px;
+    top: 10px;
+    z-index: 8;
+}
+
+.active_option,
+#dropdown_zone_menu_button:hover,
+#dropdown_zone_menu_button:active,
+#dropdown_zone_menu_button:focus,
+.map-option.focus,
+.map-option:focus,
+.map-option:hover {
+    color: #282828 ;
+    background-color: #FF9933;
 }
 
 

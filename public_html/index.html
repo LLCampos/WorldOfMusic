@@ -33,15 +33,6 @@
 <button type="button" class="btn btn-warning orange_button" data-toggle="modal" data-target="#feedback_modal" id="help_us_button"><span>Help Us Improve Our App!</span></button>
 
 <header id='header'>
-    <div id="map-buttons" class="btn-group" role="group" aria-label="...">
-        <button id="world-map-button" type="button" class="btn btn-default map-button active">World</button>
-        <button id="africa-map-button" type="button" class="btn btn-default map-button">Africa</button>
-        <button id="asia-map-button"    type="button" class="btn btn-default map-button">Asia</button>
-        <button id="europe-map-button" type="button" class="btn btn-default map-button">Europe</button>
-        <button id="north-america-map-button" type="button" class="btn btn-default map-button">North America</button>
-        <button id="oceania-map-button" type="button" class="btn btn-default map-button">Oceania</button>
-        <button id="south-america-map-button" type="button" class="btn btn-default map-button">South America</button>
-    </div>
     <h1 id='header-title'>World Of Music</h1>
     <div id="facebook-header-zone">
         <div id="header-image-user-facebook"></div>
@@ -59,6 +50,19 @@
 <section id="main-zone" class="row container-fluid">
 
 <div id="map-zone" class="col-md-6">
+    <div class="dropdown" id="dropdown_zone_menu">
+        <button class="btn btn-default black-button" type="button" data-toggle="dropdown" id="dropdown_zone_menu_button">Zone
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu" id="map-options">
+            <li id="world-map-option" class="map-option black-button active_option">World</li>
+            <li id="africa-map-option" class="map-option black-button">Africa</li>
+            <li id="asia-map-option"    class="map-option black-button">Asia</li>
+            <li id="europe-map-option" class="map-option black-button">Europe</li>
+            <li id="north-america-map-option" class="map-option black-button">North America</li>
+            <li id="oceania-map-option" class="map-option black-button">Oceania</li>
+            <li id="south-america-map-option" class="map-option black-button">South America</li>
+        </ul>
+    </div>
     <div id="map"></div>
 </div>
 

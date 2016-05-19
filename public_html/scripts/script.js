@@ -620,7 +620,7 @@ var setHeights = function() {
 
 var onPageResize = function() {
     setHeights();
-    $('#map-buttons').trigger('click');
+    $('#map-options').trigger('click');
 };
 
 var activateCountriesAutocomplete = function() {
@@ -656,13 +656,13 @@ $(function() {
 
     insertMap('world_mill');
 
-    $('#map-buttons').on('click', 'button', function() {
-        $('#map-buttons').find('.active').toggleClass("active");
-        $(this).toggleClass("active");
-        var button_pressed = $(this).text();
-        button_pressed = button_pressed.toLowerCase();
-        button_pressed = button_pressed.replace(' ', '_');
-        insertMap(button_pressed + '_mill');
+    $('#map-options').on('click', 'li', function() {
+        $('#map-options').find('.active_option').toggleClass("active_option");
+        $(this).toggleClass("active_option");
+        var option_pressed = $(this).text();
+        option_pressed = option_pressed.toLowerCase();
+        option_pressed = option_pressed.replace(' ', '_');
+        insertMap(option_pressed + '_mill');
     });
 
     $('#go-to-random-artist-button').on('click', function() {getRandomArtistFromCountryAndGoToAndFillArtistZone(current_country_code);});
