@@ -75,7 +75,8 @@ a:hover {
 
 .dropdown_menu_button:hover,
 .dropdown_menu_button:active,
-.dropdown_menu_button:focus {
+.dropdown_menu_button:focus,
+.dropdown_menu_button:active:focus {
     color: #FF9933;
     background-color: #282828;
 }
