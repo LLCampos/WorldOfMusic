@@ -138,6 +138,7 @@
 <div id = "artist-page" vocab = "http://schema.org/" typeof = "MusicGroup">
 
     <div id="artist-info-artist-zone" class="container-fluid">
+        <header id="header-artist-zone-name" property="name"></header>
         <div class="row">
 
             <div class="col-md-4" id="artist_main_info">
@@ -146,7 +147,6 @@
                         <img class="artist_picture" id="artist_zone_artist_picture" property="image" src="#" alt="picture of the artist">
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6" id="artist_id_card_second_column">
-                        <header id="header-artist-zone-name" property="name"></header>
                         <div id="style-country-zone">
                             <p><b><span>Genre: </span></b><span id="artist-genre-artist-zone" property='genre'></span></p>
                             <p><b><span>Country: </span></b><span id="artist-country-artist-zone" property='foundingLocation'></span></p>
@@ -236,13 +236,13 @@
 
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-8">
                 <div typeof="VideoObject">
                     <iframe  id="youtube_video_artist" width="480" height="360" src="#" allowfullscreen property="video"></iframe>
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-4">
                 <div id="artist_d3_circle_graphs"></div>
             </div>
         </div>

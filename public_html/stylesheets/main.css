@@ -365,7 +365,7 @@ button.close {
     font-size: 40px;
     color: #FF9933;
     line-height: 100%;
-    padding-bottom: 0.2em;
+    padding-bottom: 0.6em;
 }
 
 #artist-info-artist-zone {
@@ -426,6 +426,20 @@ button.close {
     border-width: 0;
 }
 
+@media (max-width: 1298px) {
+    #youtube_video_artist {
+        height: 277px;
+        width: 370px;
+    }
+}
+
+@media (max-width: 584px) {
+    #youtube_video_artist {
+        height: 260px;
+        width: 347px;
+    }
+}
+
 /*
 #twitters-zone {
     position: absolute;
@@ -463,7 +477,7 @@ button.close {
 #delete_artist_button {
 }
 
-#artist_d3_circle_graphs {
+#artist_d3_circle_graphs svg {
     display: block;
     margin: auto;
 }
