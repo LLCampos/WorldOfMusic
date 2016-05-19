@@ -107,7 +107,21 @@ a:hover {
     background-color: #282828;
 }
 
-#header-title {
+#header-title-big {
+    display: none;
+}
+
+@media (min-width: 531px) {
+    #header-title-big {
+        display: inline-block;
+    }
+
+    #header-title-small {
+        display: none;
+    }
+}
+
+.header-title {
     display: inline-block;
     position: absolute;
     margin: 0;
@@ -151,7 +165,6 @@ a:hover {
 }
 
 .map-option {
-    border-radius: 0;
     cursor: pointer;
     padding-left: 12px;
 }
@@ -163,10 +176,14 @@ a:hover {
     z-index: 8;
 }
 
-.active_option,
 #dropdown_zone_menu_button:hover,
 #dropdown_zone_menu_button:active,
-#dropdown_zone_menu_button:focus,
+#dropdown_zone_menu_button:focus {
+    color: #FF9933;
+    background-color: #282828;
+}
+
+.active_option,
 .map-option.focus,
 .map-option:focus,
 .map-option:hover {
