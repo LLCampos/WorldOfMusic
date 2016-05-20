@@ -234,30 +234,27 @@ var addArtistService = function(callback_success, callback_error, artist_name) {
                                                     access_token_param,
         method: 'POST',
         beforeSend: function() {
-            $("#artist_addition_form_zone_spinner").spin({top: '90%', left: '40%'});
+            $('#artist_addition_form').spin({top: '50%', left: '115%'});
         },
         success: function(content) {
             callback_success(content);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             callback_error(jqXHR);
+        },
+        complete: function() {
+            $('#input_artist_name').val('');
+            $('#artist_addition_form').spin(false);
         }
     });
 };
 
 var successArtistSubmission = function(content) {
-    $("#artist_addition_form_zone_spinner").spin(false);
-    $('#input_artist_name').val('');
-
     activateWarningModal("Request submitted!");
 };
 
 var errorArtistSubmission = function(jqXHR) {
-    $("#artist_addition_form_zone_spinner").spin(false);
-    $('#input_artist_name').val('');
-
     response_text = $.parseJSON(jqXHR.responseText);
-
     activateWarningModal(response_text.message);
 };
 

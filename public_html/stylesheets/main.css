@@ -304,22 +304,18 @@ a:hover {
 #artist_addition_form_zone {
     margin: 0.5em 0px;
     position: relative;
-    /* position: absolute;
-    right: 4.7em;
-    bottom: 3em;
-    width: 310px;
-    height: 180px; */
+}
+
+#artist_addition_form .form-group {
+    margin: 0;
 }
 
 #artist_addition_form_zone .form-control {
     width: 10em;
 }
 
-#artist_addition_form_zone_spinner .spinner {
-
-}
-
 #artist_addition_form {
+    position: relative;
     display: inline-block;
 }
 
@@ -330,10 +326,6 @@ a:hover {
 #add_artist_button {
     position: relative;
     bottom: 1.5px;
-}
-
-#input_artist_name {
-    margin-bottom: 0.4em;
 }
 
 @media (max-width:  774px) {
