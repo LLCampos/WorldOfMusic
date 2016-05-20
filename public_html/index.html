@@ -105,14 +105,6 @@
                 <button class="btn btn-default orange_button" id="add_artist_button"><span>Add artist!</span></button>
                 <div id="artist_addition_form_zone_spinner"></div>
             </div>
-            <div id="alert_success_artist_submission" class="alert alert-success" role="alert">
-                <button class="close" aria-label="close">&times;</button>
-                <span id="success_artist_submission_text">Artist submitted! :D</span>
-            </div>
-            <div id="alert_unsuccess_artist_submission" class="alert alert-danger" role="alert">
-                <button class="close" aria-label="close">&times;</button>
-                <span id="unsuccess_artist_submission_text"></span>
-            </div>
         </form>
     </div>
 
@@ -310,6 +302,27 @@
             Edition submitted
         </div>
 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="warning_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+
+      <div class="modal-body" id="warning_modal_body">
+         <p id="warning_modal_body_text"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -118,6 +118,18 @@ a:hover {
     display: none;
 }
 
+#warning_modal .modal-header {
+    padding: 15px 15px 5px 15px;
+}
+
+#warning_modal .modal-body {
+    padding: 0 15px;
+}
+
+#warning_modal .modal-footer {
+    padding: 0 15px 15px 15px;
+}
+
 /* ############ Side Button ############# */
 
 #help_us_button {
@@ -301,17 +313,6 @@ a:hover {
 
 #artist_addition_form_zone .form-control {
     width: 10em;
-}
-
-#alert_success_artist_submission,
-#alert_unsuccess_artist_submission {
-    display: inline-block;
-    padding: 6px 12px;
-    margin: 0;
-}
-
-button.close {
-    padding-left: 0.6em;
 }
 
 #artist_addition_form_zone_spinner .spinner {

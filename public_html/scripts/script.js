@@ -209,7 +209,6 @@ var onFeedbackOptionClick = function(btn_pressed) {
     if (id_btn_pressed == 'delete_artist_button') {
         deleteCurrentArtist();
     } else {
-        alert('hey!');
         onEditionModalActivation(id_btn_pressed);
     }
 
@@ -236,7 +235,6 @@ var addArtistService = function(callback_success, callback_error, artist_name) {
         method: 'POST',
         beforeSend: function() {
             $("#artist_addition_form_zone_spinner").spin({top: '90%', left: '40%'});
-            cleanArtistSubmissionAlerts();
         },
         success: function(content) {
             callback_success(content);
@@ -251,12 +249,7 @@ var successArtistSubmission = function(content) {
     $("#artist_addition_form_zone_spinner").spin(false);
     $('#input_artist_name').val('');
 
-    $('#alert_unsuccess_artist_submission').hide();
-    $('#alert_success_artist_submission').show();
-
-    $(".close").on('click', function(e) {
-        closeAlert(e);
-    });
+    activateWarningModal("Request submitted!");
 };
 
 var errorArtistSubmission = function(jqXHR) {
@@ -265,19 +258,7 @@ var errorArtistSubmission = function(jqXHR) {
 
     response_text = $.parseJSON(jqXHR.responseText);
 
-    $('#unsuccess_artist_submission_text').text(response_text.message);
-
-    $('#alert_success_artist_submission').hide();
-    $('#alert_unsuccess_artist_submission').show();
-
-    $(".close").on('click', function(e) {
-        closeAlert(e);
-    });
-};
-
-var cleanArtistSubmissionAlerts = function() {
-    $('#alert_unsuccess_artist_submission').hide();
-    $('#alert_success_artist_submission').hide();
+    activateWarningModal(response_text.message);
 };
 
 // #### Artist Deletion ####
@@ -293,11 +274,11 @@ var deleteCurrentArtist = function() {
         beforeSend: function() {
         },
         success: function(content) {
-            alert('Request submitted!');
+            activateWarningModal('Request submitted!');
         },
         error: function(jqXHR, textStatus, errorThrown) {
             response_text = $.parseJSON(jqXHR.responseText).message;
-            alert(response_text);
+            activateWarningModal(responseText);
         }
     });
 };
@@ -627,11 +608,6 @@ var getFBAccessTokenParam = function() {
     }
 };
 
-var cleanAlerts = function() {
-    // Hide all user alerts.
-    cleanArtistSubmissionAlerts();
-};
-
 var setHeights = function() {
     $('#map-zone').css('height', function() {return $(window).height() - parseInt($('#header').css('height'), 10);});
     $('#country-zone').css('minHeight', $(window).height());
@@ -664,6 +640,11 @@ var closeAlert = function(event) {
     event.preventDefault();
 };
 
+var activateWarningModal = function(text) {
+    $('#warning_modal').modal();
+    $('#warning_modal_body_text').text(text);
+};
+
 // ###### ONLOAD ####
 
 $(function() {
@@ -678,10 +659,6 @@ $(function() {
     // User initialy can't see the country and artist zone
     $('#country-zone').hide();
     $('#artist-zone').hide();
-
-    // Hide the alerts
-    $('#alert_success_artist_submission').hide();
-    $('#alert_unsuccess_artist_submission').hide();
 
     insertMap('world_mill');
 
