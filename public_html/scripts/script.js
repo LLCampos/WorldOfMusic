@@ -5,6 +5,31 @@ var scrollWindowTo= function(value) {
     $("html, body").animate({ scrollTop: value}, 1000);
 };
 
+
+// ########### AJAX ##############
+
+var getCountryArtists = function(country_code, number_of_artists, order) {
+    return $.ajax({
+        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_code + '/artists',
+        data: {limit: number_of_artists, order: order},
+        dataType: 'JSON',
+    });
+};
+
+var getArtistInfo = function(artist_name) {
+    return $.ajax({
+        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name,
+        dataType: 'JSON',
+    });
+};
+
+
+var getCountryInfo = function(country_code) {
+    return $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code, 'JSON');
+};
+
+
+
 // ######### Map Zone Functions ############# //
 
 var insertMap = function(map) {
@@ -23,8 +48,7 @@ var insertMap = function(map) {
                             }],
                          },
                          onRegionClick: function(event, country_code) {
-                            country_zone.current_country_code = country_code;
-                            country_zone.update();
+                            country_zone.update(country_code);
                           }
                         });
 };
@@ -35,7 +59,7 @@ var updateMap = function() {
     $('#map-options').trigger('click');
 };
 
-// ######### Country Zone Functions ############# //
+// ######### Country Zone ############# //
 
 var country_zone = {
 
@@ -64,7 +88,7 @@ var country_zone = {
 
     fill: function() {
 
-        ajax_call = $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code, 'JSON');
+        var ajax_call = getCountryInfo(country_zone.current_country_code);
 
         ajax_call.then(function(country_info) {
 
@@ -90,18 +114,15 @@ var country_zone = {
         });
     },
 
-    update: function() {
+    update: function(country_code) {
+        country_zone.current_country_code = country_code;
         $('#artist-zone').hide();
         country_zone.fill();
         country_zone.scrollTo();
     },
 
     fillTopArtistsChart: function(number_of_artists, order) {
-        var ajax_call = $.ajax({
-                            url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists',
-                            data: {limit: number_of_artists, order: order},
-                            dataType: 'JSON',
-                        });
+        var ajax_call = getCountryArtists(country_zone.current_country_code, number_of_artists, order);
 
         ajax_call.then(function(list_of_artists) {
 
@@ -114,102 +135,113 @@ var country_zone = {
 };
 
 
-var getCountryArtists = function(callback, number_of_artists, order) {
-    $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists',
-        data: {limit: number_of_artists, order: order},
-        dataType: 'JSON',
-        success: function(content) {
-            callback(content);
-        }
-    });
-};
+// ######### Artist Zone ############# //
 
-// ######### Artist Zone Functions ############# //
+var artist_zone = {
 
-var getArtistInfo = function(callback, artist_name) {
-    $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name,
-        dataType: 'JSON',
-        success: function(content) {
-            callback(content);
-        }
-    });
-};
+    artist_name: '',
 
-var getRandomArtistFromCountryAndGoToAndFillArtistZone = function(country_code) {
-    getCountryArtists(function(artist_object) {goToAndFillArtistZone(artist_object.artist[0].name);}, country_code, 1, 'random');
-};
+    scrollTo: function() {
+        scrollWindowTo($('#map-zone').height() + $('#header').height() + $('#country-zone').outerHeight(true) + parseInt($('#artist-zone').css('margin-top'), 10));
+    },
 
-var goToArtistZone = function() {
-    $('#artist-zone').show();
-    scrollWindowTo($('#map-zone').height() + $('#header').height() + $('#country-zone').outerHeight(true) + parseInt($('#artist-zone').css('margin-top'), 10));
-};
+    clear: function() {
 
-var clearArtistZone = function() {
+        $('#header-artist-zone-name').empty();
+        $('#artist-genre-artist-zone').empty();
+        $('#artist-country-artist-zone').empty();
+        $('#artist-biography-text').empty();
+        $('#artist_picture').attr('src', '#');
+        $('#youtube_video_artist').attr('src', '#');
 
-    $('#header-artist-zone-name').empty();
-    $('#artist-genre-artist-zone').empty();
-    $('#artist-country-artist-zone').empty();
-    $('#artist-biography-text').empty();
-    $('#artist_picture').attr('src', '#');
-    $('#youtube_video_artist').attr('src', '#');
+        $('#artist_d3_circle_graphs').html('');
+    },
 
-    $('#artist_d3_circle_graphs').html('');
-};
+    fillBiography: function(biography) {
 
-var fillArtistZone = function(artist_object) {
+        biography_end_start = biography.search('<a href');
+        biography_without_end = biography.substr(0, biography_end_start - 1);
+        biography_end = biography.substr(biography_end_start);
 
-    clearArtistZone();
+        output_biography = biography_without_end.substr(0, 500) + '... ';
 
-    $('#header-artist-zone-name').text(artist_object.name);
-    $('#artist-genre-artist-zone').text(titleCaps(artist_object.style));
-    $('#artist-country-artist-zone').text(artist_object.country);
-    $('#artist_zone_artist_picture').attr('src', artist_object.picture_url);
-    $('#youtube_video_artist').attr('src', 'https://www.youtube.com/embed/' + artist_object.music_video);
+        $('#artist-biography-text').text(output_biography);
+        $('#artist-biography-text').append(biography_end);
+    },
 
-    intact_bibliography = artist_object.bibliography;
-    bibliography_end_start = intact_bibliography.search('<a href');
-    bibliography_without_end = intact_bibliography.substr(0, bibliography_end_start - 1);
-    bibliography_end = intact_bibliography.substr(bibliography_end_start);
-
-    output_bibliography = bibliography_without_end.substr(0, 500) + '... ';
-
-    $('#artist-biography-text').text(output_bibliography);
-    $('#artist-biography-text').append(bibliography_end);
-
-    $.when(
-
-        $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists?order=likes&limit=1'),
-        $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists?order=lastfm&limit=1')
-
-    ).then(function(facebook_top_artist, lastfm_top_artist) {
-
-        var facebook_top_artist_name = facebook_top_artist[0].artist[0].name;
-        var lastfm_top_artist_name = lastfm_top_artist[0].artist[0].name;
+    fillCirclePlotZone: function(facebook_url, lastfm_url, number_of_facebook_likes, number_of_lastfm_listeners) {
 
         $.when(
-            $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + facebook_top_artist_name),
-            $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + lastfm_top_artist_name)
+
+            $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists?order=likes&limit=1'),
+            $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists?order=lastfm&limit=1')
 
         ).then(function(facebook_top_artist, lastfm_top_artist) {
 
-            var facebook_top_artist_likes = facebook_top_artist[0].number_of_facebook_likes;
-            var lastfm_top_artist_lastfm = lastfm_top_artist[0].number_of_lastfm_listeners;
+            var facebook_top_artist_name = facebook_top_artist[0].artist[0].name;
+            var lastfm_top_artist_name = lastfm_top_artist[0].artist[0].name;
+
+            $.when(
+                $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + facebook_top_artist_name),
+                $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + lastfm_top_artist_name)
+
+            ).then(function(facebook_top_artist, lastfm_top_artist) {
+
+                var facebook_top_artist_likes = facebook_top_artist[0].number_of_facebook_likes;
+                var lastfm_top_artist_lastfm = lastfm_top_artist[0].number_of_lastfm_listeners;
+
+                create_artist_circle_graphs(facebook_top_artist_likes, number_of_facebook_likes, facebook_url,
+                                            lastfm_top_artist_lastfm, number_of_lastfm_listeners, lastfm_url);
+            });
+        });
+
+    },
+
+    fill: function() {
+
+        artist_zone.clear();
+
+        var ajax_call = getArtistInfo(artist_zone.artist_name);
+
+        ajax_call.then(function(artist_object) {
+
+            $('#header-artist-zone-name').text(artist_object.name);
+            $('#artist-genre-artist-zone').text(titleCaps(artist_object.style));
+            $('#artist-country-artist-zone').text(artist_object.country);
+            $('#artist_zone_artist_picture').attr('src', artist_object.picture_url);
+            $('#youtube_video_artist').attr('src', 'https://www.youtube.com/embed/' + artist_object.music_video);
+
+            artist_zone.fillBiography(artist_object.bibliography);
 
             var facebook_url = 'https://facebook.com/' + artist_object.facebook_id;
             var lastfm_url = artist_object.lastfm_url;
+            var number_of_facebook_likes = artist_object.number_of_facebook_likes;
+            var number_of_lastfm_listeners = artist_object.number_of_lastfm_listeners;
 
-            create_artist_circle_graphs(facebook_top_artist_likes, artist_object.number_of_facebook_likes, facebook_url,
-                                        lastfm_top_artist_lastfm, artist_object.number_of_lastfm_listeners, lastfm_url);
+            artist_zone.fillCirclePlotZone(facebook_url, lastfm_url, number_of_facebook_likes, number_of_lastfm_listeners);
+
         });
-    });
+    },
+
+    randomUpdate: function(country_code) {
+        var ajax_call = getCountryArtists(country_code, 1, 'random');
+
+        ajax_call.then(function(artist_object) {
+            artist_name = artist_object.artist[0].name;
+            artist_zone.update(artist_name);
+        });
+    },
+
+    update: function(artist_name) {
+        artist_zone.artist_name = artist_name;
+
+        $('#artist-zone').show();
+        artist_zone.scrollTo();
+
+        artist_zone.fill();
+    },
 };
 
-var goToAndFillArtistZone = function(artist_name) {
-    getArtistInfo(fillArtistZone, artist_name);
-    goToArtistZone();
-};
 
 var onFeedbackOptionClick = function(btn_pressed) {
 
@@ -677,9 +709,9 @@ $(function() {
         insertMap(option_pressed + '_mill');
     });
 
-    $('#go-to-random-artist-button').on('click', function() {getRandomArtistFromCountryAndGoToAndFillArtistZone(current_country_code);});
+    $('#go-to-random-artist-button').on('click', function() {artist_zone.randomUpdate(country_zone.current_country_code);});
 
-    $('#country_artists_top').on('click', 'p', function() {goToAndFillArtistZone($(this).text());});
+    $('#country_artists_top').on('click', 'p', function() {artist_zone.update($(this).text());});
 
     $('#add_artist_button').on('click', function(event) {userClickOnSubmitArtist(event);});
 
