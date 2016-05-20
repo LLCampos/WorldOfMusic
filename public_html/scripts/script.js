@@ -8,10 +8,10 @@ var scrollWindowTo= function(value) {
 // ######### Map Zone Functions ############# //
 
 var insertMap = function(map) {
+
     $('#map').empty();
 
     var header_height = $('#header').height();
-
     $('#map').css('height', $(window).height() - header_height);
 
     $('#map').vectorMap({map: map,
@@ -23,35 +23,100 @@ var insertMap = function(map) {
                             }],
                          },
                          onRegionClick: function(event, country_code) {
-                            current_country_code = country_code;
-                            goToAndFillCountryZone(event, country_code);
+                            country_zone.current_country_code = country_code;
+                            country_zone.update();
                           }
                         });
 };
 
+var updateMap = function() {
+
+    // Inserts the map again. Used for update of map size after window resize.
+    $('#map-options').trigger('click');
+};
+
 // ######### Country Zone Functions ############# //
 
-var getCountryInfoAndFillCountryZone = function(country_code) {
-    getCountryInfoFromService(fillCountryZone, country_code);
+var country_zone = {
+
+    current_country_code: '',
+
+    clear: function() {
+        $('#country_name').empty();
+        $('#country_zone_capital').empty();
+        $('#country_zone_population').empty();
+        $('#country_zone_region').empty();
+        $('#country_zone_subregion').empty();
+        $('#country_zone_music_description').empty();
+        $('#country_zone_music_description').removeData();
+        $('#country_zone_flag').attr('src', '#');
+        $('#country_artists_top ol').empty();
+    },
+
+    scrollTo: function() {
+        $('#country-zone').show();
+        scrollWindowTo($('#map-zone').height() + $('#header').height());
+    },
+
+    setMinHeight: function(minHeight) {
+        $('#country-zone').css('minHeight', minHeight);
+    },
+
+    fill: function() {
+
+        ajax_call = $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code, 'JSON');
+
+        ajax_call.then(function(country_info) {
+
+            country_zone.setMinHeight($(window).height());
+
+            country_zone.clear();
+
+            $('#country_name').text(country_info.name);
+            $('#country_zone_capital').text(country_info.capital);
+            $('#country_zone_population').text(country_info.population);
+            $('#country_zone_region').text(country_info.region);
+            $('#country_zone_subregion').text(country_info.subregion);
+            $('#country_zone_music_description').text(country_info.description_of_music);
+            $('#country_zone_flag').attr('src', country_info.flag_img_url);
+
+            $('#country_zone_music_description').shorten({
+                moreText: 'Read more...',
+                lessText: 'Read less.',
+                showChars: 200,
+            });
+
+            country_zone.fillTopArtistsChart(10, 'likes');
+        });
+    },
+
+    update: function() {
+        $('#artist-zone').hide();
+        country_zone.fill();
+        country_zone.scrollTo();
+    },
+
+    fillTopArtistsChart: function(number_of_artists, order) {
+        var ajax_call = $.ajax({
+                            url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists',
+                            data: {limit: number_of_artists, order: order},
+                            dataType: 'JSON',
+                        });
+
+        ajax_call.then(function(list_of_artists) {
+
+            $.each(list_of_artists.artist, function(i, artist) {
+                $('#country_artists_top ol').append('<li><p>' + artist.name + '</p></li>');
+            });
+
+        });
+    },
 };
 
-var getCountryTopArtistsAndFillCountryTopArtistsChart = function(country_code, number_of_artists) {
-    getCountryArtists(fillCountryTopArtistsChart, country_code, number_of_artists, 'likes');
-};
 
-var getCountryInfoFromService = function(callback, country_code) {
+var getCountryArtists = function(callback, number_of_artists, order) {
     $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_code,
-        dataType: 'JSON',
-        success: function(content) {
-            callback(content, country_code);
-        }
-    });
-};
-
-var getCountryArtists = function(callback, country_code, number_of_artists, order) {
-    $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_code + '/artists',
+        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists',
         data: {limit: number_of_artists, order: order},
         dataType: 'JSON',
         success: function(content) {
@@ -59,62 +124,6 @@ var getCountryArtists = function(callback, country_code, number_of_artists, orde
         }
     });
 };
-
-var fillCountryTopArtistsChart = function(list_of_artists) {
-    $.each(list_of_artists.artist, function(i, artist) {
-        $('#country_artists_top ol').append('<li><p>' + artist.name + '</p></li>');
-    });
-};
-
-var goToCountryZone = function(event, country_code) {
-    $('#country-zone').show();
-    // $('#country-zone').css('height', $(window).height());
-    scrollWindowTo($('#map-zone').height() + $('#header').height());
-};
-
-cleanCountryZone = function() {
-
-    $('#country_name').empty();
-    $('#country_zone_capital').empty();
-    $('#country_zone_population').empty();
-    $('#country_zone_region').empty();
-    $('#country_zone_subregion').empty();
-    $('#country_zone_music_description').empty();
-    $('#country_zone_music_description').removeData();
-    $('#country_zone_flag').attr('src', '#');
-    $('#country_artists_top ol').empty();
-};
-
-
-var fillCountryZone = function(country_info, country_code) {
-
-    $('#country-zone').css('minHeight', $(window).height());
-
-    cleanCountryZone();
-
-    $('#country_name').text(country_info.name);
-    $('#country_zone_capital').text(country_info.capital);
-    $('#country_zone_population').text(country_info.population);
-    $('#country_zone_region').text(country_info.region);
-    $('#country_zone_subregion').text(country_info.subregion);
-    $('#country_zone_music_description').text(country_info.description_of_music);
-    $('#country_zone_flag').attr('src', country_info.flag_img_url);
-
-    $('#country_zone_music_description').shorten({
-        moreText: 'Read more...',
-        lessText: 'Read less.',
-        showChars: 200,
-    });
-
-    getCountryTopArtistsAndFillCountryTopArtistsChart(country_code, 10);
-};
-
-var goToAndFillCountryZone = function(event, country_code) {
-    $('#artist-zone').hide(0);
-    getCountryInfoAndFillCountryZone(country_code);
-    goToCountryZone();
-};
-
 
 // ######### Artist Zone Functions ############# //
 
@@ -171,8 +180,8 @@ var fillArtistZone = function(artist_object) {
 
     $.when(
 
-        $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + current_country_code + '/artists?order=likes&limit=1'),
-        $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + current_country_code + '/artists?order=lastfm&limit=1')
+        $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists?order=likes&limit=1'),
+        $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists?order=lastfm&limit=1')
 
     ).then(function(facebook_top_artist, lastfm_top_artist) {
 
@@ -230,7 +239,7 @@ var addArtistService = function(callback_success, callback_error, artist_name) {
 
     $.ajax({
         url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name + '?' +
-                                                    'country=' + current_country_code + '&' +
+                                                    'country=' + country_zone.current_country_code + '&' +
                                                     access_token_param,
         method: 'POST',
         beforeSend: function() {
@@ -612,7 +621,7 @@ var setHeights = function() {
 
 var onPageResize = function() {
     setHeights();
-    $('#map-options').trigger('click');
+    updateMap();
 };
 
 var activateCountriesAutocomplete = function() {
