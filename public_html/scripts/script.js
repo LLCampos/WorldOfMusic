@@ -1,3 +1,4 @@
+var base_url = "http://appserver.di.fc.ul.pt/~aw008/webservices";
 
 // ######### General Functions ############# //
 
@@ -5,27 +6,21 @@ var scrollWindowTo= function(value) {
     $("html, body").animate({ scrollTop: value}, 1000);
 };
 
-
 // ########### AJAX ##############
 
 var getCountryArtists = function(country_code, number_of_artists, order) {
-    return $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_code + '/artists',
-        data: {limit: number_of_artists, order: order},
-        dataType: 'JSON',
-    });
+    // Request to GET country/{country_code}/artists resource
+    return $.getJSON(base_url + '/country/' + country_code + '/artists', {limit: number_of_artists, order: order});
 };
 
 var getArtistInfo = function(artist_name) {
-    return $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name,
-        dataType: 'JSON',
-    });
+    // Request to GET artist/{name_of_artist} resource
+    return $.getJSON(base_url + '/artist/' + artist_name);
 };
 
-
 var getCountryInfo = function(country_code) {
-    return $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code, 'JSON');
+    // Request to GET country/{country_code} resource
+    return $.getJSON(base_url + '/country/' + country_zone.current_country_code);
 };
 
 
@@ -173,8 +168,8 @@ var artist_zone = {
 
         $.when(
 
-            $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists?order=likes&limit=1'),
-            $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country/' + country_zone.current_country_code + '/artists?order=lastfm&limit=1')
+            $.get(base_url + '/country/' + country_zone.current_country_code + '/artists?order=likes&limit=1'),
+            $.get(base_url + '/country/' + country_zone.current_country_code + '/artists?order=lastfm&limit=1')
 
         ).then(function(facebook_top_artist, lastfm_top_artist) {
 
@@ -182,8 +177,8 @@ var artist_zone = {
             var lastfm_top_artist_name = lastfm_top_artist[0].artist[0].name;
 
             $.when(
-                $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + facebook_top_artist_name),
-                $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + lastfm_top_artist_name)
+                $.get(base_url + '/artist/' + facebook_top_artist_name),
+                $.get(base_url + '/artist/' + lastfm_top_artist_name)
 
             ).then(function(facebook_top_artist, lastfm_top_artist) {
 
@@ -258,19 +253,26 @@ var onFeedbackOptionClick = function(btn_pressed) {
 
 // #### Artist Addition ####
 
-var userClickOnSubmitArtist = function(event) {
-    var artist_name = $('#input_artist_name').val();
-    addArtistService(successArtistSubmission, errorArtistSubmission, artist_name);
+var submit_artist_button = {
 
-    event.preventDefault();
+    id: '#add_artist_button',
+
+    activate: function() {$(submit_artist_button.id).on('click', function(event) {submit_artist_button.click(event);});},
+
+    click : function(event) {
+                var artist_name = $('#input_artist_name').val();
+                addArtistService(successArtistSubmission, errorArtistSubmission, artist_name);
+                event.preventDefault();
+            }
 };
+
 
 var addArtistService = function(callback_success, callback_error, artist_name) {
 
     access_token_param = getFBAccessTokenParam();
 
     $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name + '?' +
+        url: base_url + '/artist/' + artist_name + '?' +
                                                     'country=' + country_zone.current_country_code + '&' +
                                                     access_token_param,
         method: 'POST',
@@ -307,7 +309,7 @@ var deleteCurrentArtist = function() {
     var param = getFBAccessTokenParam();
 
     $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name + '?' + param,
+        url: base_url + '/artist/' + artist_name + '?' + param,
         method: 'DELETE',
         beforeSend: function() {
         },
@@ -329,7 +331,7 @@ global_submission_types_without_votes = [];
 var submissionIDsUserAlreadyVoted = function(submission_type, user_id, callback) {
     // Returns an array with the ids of the submissions of the type submission_type in which the user already voted
 
-    var service_url = 'http://appserver.di.fc.ul.pt/~aw008/webservices/user/' + user_id + '/votes';
+    var service_url = base_url + '/user/' + user_id + '/votes';
 
     $.ajax({
         url: service_url,
@@ -385,9 +387,9 @@ var activateButtons = function(submission_type, submission_id) {
         if (button_id == 'vote_button_positive' || button_id == 'vote_button_negative') {
 
             if (submission_type == 'addition') {
-                service_url = 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_addition/' + submission_id + '/';
+                service_url = base_url + '/pending_addition/' + submission_id + '/';
             } else if (submission_type == 'deletion') {
-                service_url = 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_deletion/' + submission_id + '/';
+                service_url = base_url + '/pending_deletion/' + submission_id + '/';
             }
 
             // What a positive or negative vote means depends on the type of submission (addition or deletion)
@@ -473,7 +475,7 @@ var onFeedbackModalActivation = function() {
 var getSubmissionToVote = function(submission_type, list_of_submissions_ids, page) {
 
     $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/pending_' + submission_type + '/?limit=1&page=' + page,  // Get a random pending submission.
+        url: base_url + '/pending_' + submission_type + '/?limit=1&page=' + page,  // Get a random pending submission.
         success: function(content) {
 
             if ($.isEmptyObject(content)) {
@@ -508,7 +510,7 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
 var fillModalDeletionOrAddition = function(submission_type, artist_name, id) {
 
     $.ajax({
-        url: 'http://appserver.di.fc.ul.pt/~aw008/webservices/artist/' + artist_name,
+        url: base_url + '/artist/' + artist_name,
 
         success: function(response) {
             createContentForModalDeletionOrAddition(response);
@@ -540,7 +542,6 @@ var createContentForModalDeletionOrAddition = function(response) {
 // #### Edition Modal ####
 
 var onEditionModalClosure = function() {
-    console.log('done');
     $('#edition_modal_submit_button').off();
     $('#edition_modal').off();
 
@@ -607,7 +608,7 @@ var ajaxCallPUTArtist = function(artist_name, param_changing, value) {
     access_token_param = getFBAccessTokenParam();
 
     $.ajax({
-        url: "http://appserver.di.fc.ul.pt/~aw008/webservices/artist/" + artist_name + '?' + param_changing + '=' + value + '&' + access_token_param,
+        url: base_url + "/artist/" + artist_name + '?' + param_changing + '=' + value + '&' + access_token_param,
         method: "PUT",
         beforeSend: function() {
             $('#edition_modal_form').spin();
@@ -657,7 +658,7 @@ var onPageResize = function() {
 };
 
 var activateCountriesAutocomplete = function() {
-    $.get('http://appserver.di.fc.ul.pt/~aw008/webservices/country', function(data) {
+    $.get(base_url + '/country', function(data) {
         var countries_list = [];
 
         for (var i in data.countries) {
@@ -713,7 +714,7 @@ $(function() {
 
     $('#country_artists_top').on('click', 'p', function() {artist_zone.update($(this).text());});
 
-    $('#add_artist_button').on('click', function(event) {userClickOnSubmitArtist(event);});
+    submit_artist_button.activate();
 
     $('#help_us_button').on('click', function() {onFeedbackModalActivation();});
 
