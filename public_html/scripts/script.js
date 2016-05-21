@@ -23,6 +23,57 @@ var getCountryInfo = function(country_code) {
     return $.getJSON(base_url + '/country/' + country_zone.current_country_code);
 };
 
+var addArtistService = function(artist_name) {
+
+    access_token_param = getFBAccessTokenParam();
+
+    $.ajax({
+        url: base_url + '/artist/' + artist_name + '?' +
+                                                    'country=' + country_zone.current_country_code + '&' +
+                                                    access_token_param,
+        method: 'POST',
+        beforeSend: function() {
+            $('#artist_addition_form').spin({top: '50%', left: '115%'});
+        },
+        success: function(content) {
+            warning_modal.activateWithText("Request submitted!");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            response_text = $.parseJSON(jqXHR.responseText);
+            warning_modal.activateWithText(response_text.message);
+        },
+        complete: function() {
+            $('#input_artist_name').val('');
+            $('#artist_addition_form').spin(false);
+        }
+    });
+};
+
+var ajaxCallPUTArtist = function(artist_name, param_changing, value) {
+
+    access_token_param = getFBAccessTokenParam();
+
+    $.ajax({
+        url: base_url + "/artist/" + artist_name + '?' + param_changing + '=' + value + '&' + access_token_param,
+        method: "PUT",
+        beforeSend: function() {
+            $('#' + editionModal.form_id).spin();
+        },
+        success: function(response) {
+            $('#' + editionModal.form_id).spin(false);
+            $('#' + editionModal.form_id).hide();
+            $('#' + editionModal.submitted_screen_id).show();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var response_text = $.parseJSON(jqXHR.responseText).message;
+
+            $('#' + editionModal.form_id).spin(false);
+            alert(response_text);
+            $('#' + editionModal.id).modal('hide');
+        }
+    });
+};
+
 
 
 // ######### Map Zone Functions ############# //
@@ -242,64 +293,115 @@ var onFeedbackOptionClick = function(btn_pressed) {
 
     var id_btn_pressed = $(btn_pressed).attr('id');
 
-    if (id_btn_pressed == 'delete_artist_button') {
+    if (id_btn_pressed == delete_artist_button.id) {
         deleteCurrentArtist();
     } else {
-        onEditionModalActivation(id_btn_pressed);
+        editionModal.activate(id_btn_pressed);
     }
 
 };
 
 
-// #### Artist Addition ####
+// #### Buttons ####
 
 var submit_artist_button = {
 
-    id: '#add_artist_button',
+    id: 'add_artist_button',
 
-    activate: function() {$(submit_artist_button.id).on('click', function(event) {submit_artist_button.click(event);});},
+    activate: function() {$('#' + submit_artist_button.id).on('click', function(event) {submit_artist_button.click(event);});},
 
     click : function(event) {
                 var artist_name = $('#input_artist_name').val();
-                addArtistService(successArtistSubmission, errorArtistSubmission, artist_name);
+                addArtistService(artist_name);
                 event.preventDefault();
             }
 };
 
-
-var addArtistService = function(callback_success, callback_error, artist_name) {
-
-    access_token_param = getFBAccessTokenParam();
-
-    $.ajax({
-        url: base_url + '/artist/' + artist_name + '?' +
-                                                    'country=' + country_zone.current_country_code + '&' +
-                                                    access_token_param,
-        method: 'POST',
-        beforeSend: function() {
-            $('#artist_addition_form').spin({top: '50%', left: '115%'});
-        },
-        success: function(content) {
-            callback_success(content);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            callback_error(jqXHR);
-        },
-        complete: function() {
-            $('#input_artist_name').val('');
-            $('#artist_addition_form').spin(false);
-        }
-    });
+var delete_artist_button = {
+    id : 'delete_artist_button',
 };
 
-var successArtistSubmission = function(content) {
-    activateWarningModal("Request submitted!");
+var edition_modal_submit_button = {
+    id : 'edition_modal_submit_button',
+
+    deactivate: function() {$('#' + edition_modal_submit_button.id).off();},
+
+    activate: function() {
+        $('#' + edition_modal_submit_button.id).on('click', function(e) {
+
+            var user_input = $('#' + editionModal.input_id).val();
+            var artist_name = artist_zone.artist_name;
+
+            ajaxCallPUTArtist(artist_name, editionModal.param_changing, user_input);
+            e.preventDefault();
+        });
+    },
 };
 
-var errorArtistSubmission = function(jqXHR) {
-    response_text = $.parseJSON(jqXHR.responseText);
-    activateWarningModal(response_text.message);
+var feedback_modal_vote_buttons = {
+    id : 'feedback_modal_vote_buttons',
+
+    activate: function(submission_type, submission_id) {
+
+        $('#feedback_modal_vote_buttons').on('click', 'button', function(event) {
+
+            // Gets id of the button pressed.
+            var button_id = event.target.id;
+
+            // If the button pressed was the positive or negative one, makes POST request. Otherwise, show another submission for the user to vote at.
+            if (button_id == 'vote_button_positive' || button_id == 'vote_button_negative') {
+
+                if (submission_type == 'addition') {
+                    service_url = base_url + '/pending_addition/' + submission_id + '/';
+                } else if (submission_type == 'deletion') {
+                    service_url = base_url + '/pending_deletion/' + submission_id + '/';
+                }
+
+                // What a positive or negative vote means depends on the type of submission (addition or deletion)
+                if (button_id == 'vote_button_positive') {
+                    if (submission_type == 'addition') {
+                        service_url += 'positive_vote';
+                    } else if (submission_type == 'deletion') {
+                        service_url += 'negative_vote';
+                    }
+                } else {
+                    if (submission_type == 'addition') {
+                        service_url += 'negative_vote';
+                    } else if (submission_type == 'deletion') {
+                        service_url += 'positive_vote';
+                    }
+                }
+
+                var access_token_param = getFBAccessTokenParam();
+                service_url += "?" + access_token_param;
+
+                $.ajax({
+                    url: service_url,
+                    method: 'POST',
+
+                    success: function(response) {
+                        feedback_modal.onActivation();
+                    },
+
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        response_text = $.parseJSON(jqXHR.responseText).message;
+                        alert(response_text);
+                    },
+                });
+
+            } else if (button_id == 'vote_button_neutral') {
+                global_submissions_user_not_want_to_vote[submission_type].push(submission_id);
+                feedback_modal.onActivation();
+            }
+        });
+    },
+
+    deactivate: function() {
+        $('#feedback_modal_vote_buttons').off();
+    }
+
 };
+
 
 // #### Artist Deletion ####
 
@@ -311,19 +413,114 @@ var deleteCurrentArtist = function() {
     $.ajax({
         url: base_url + '/artist/' + artist_name + '?' + param,
         method: 'DELETE',
-        beforeSend: function() {
-        },
         success: function(content) {
-            activateWarningModal('Request submitted!');
+            warning_modal.activateWithText('Request submitted!');
         },
         error: function(jqXHR, textStatus, errorThrown) {
             response_text = $.parseJSON(jqXHR.responseText).message;
-            activateWarningModal(responseText);
+            warning_modal.activateWithText(responseText);
         }
     });
 };
 
 // #### Votes Modal ####
+
+var feedback_modal = {
+
+    id : 'feedback_modal',
+    addition_deletion_body_id: 'feedback_modal_body_addition_deletion',
+    simple_message_body_id: 'simple_message_body',
+
+    no_auth_message: 'You have to be authenticated to use this feature.',
+    no_submissions_message: 'There are currently no submissions for you to vote at. You can explore the rest of the app. :)',
+
+    activateLoading: function() {
+        $('#' + feedback_modal.addition_deletion_body_id).hide();
+        $('#' + feedback_modal.simple_message_body_id).hide();
+        $('#feedback_modal .modal-body').spin();
+    },
+
+    deactivateLoading: function() {
+        $('#feedback_modal .modal-body').spin(false);
+    },
+
+    onActivation: function() {
+
+        feedback_modal.activateLoading();
+
+        // Remove handlers from buttons that could be attached to them from the last call of this function.
+        feedback_modal_vote_buttons.deactivate();
+
+        FB.getLoginStatus(function(response) {
+            if (response.status != 'connected') {
+                feedback_modal.deactivateLoading();
+                feedback_modal.showNoAuthMessage();
+            } else {
+
+                var types_of_submissions = ['addition', 'deletion'];
+
+                var types_of_submissions_left = $(types_of_submissions).not(global_submission_types_without_votes).get();
+
+                if (types_of_submissions_left.length === 0) {
+                    feedback_modal.deactivateLoading();
+                    feedback_modal.showNoSubmittionMessage();
+                } else {
+
+                    var submission_type = types_of_submissions_left[Math.floor(Math.random()*types_of_submissions_left.length)];
+
+                    var user_id = FB.getUserID();
+
+                    $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
+
+                    // Gets a list of IDs of the submissions the user already voted and then calls getSubmissionVote with that list as one of the attributes.
+                    // This list will be used to avoid that a submission in which the user already voted at appear again.
+                    submissionIDsUserAlreadyVoted(submission_type, user_id, getSubmissionToVote);
+                }
+            }
+        });
+    },
+
+    fillWithArtistInformation: function(submission_type, artist_name, id) {
+
+        var ajax_call = $.getJSON(base_url + '/artist/' + artist_name);
+
+        ajax_call.then(function(artist_info) {
+
+            var artist_country = artist_info.country;
+            var artist_name = artist_info.name;
+            var artist_genre = titleCaps(artist_info.style);
+            var picture = artist_info.picture_url;
+            var lastfm_url = artist_info.lastfm_url;
+
+            $('#feedback_modal_artist_picture').attr('src', picture);
+            $('#feedback_modal_artist_name').text(artist_name);
+            $('#feedback_modal_country_name').text(artist_country);
+            $('#feedback_modal_genre').text(artist_genre);
+            $('#feedback_modal_lastfm_logo_link').attr('href', lastfm_url);
+
+            feedback_modal.deactivateLoading();
+            $('#' + feedback_modal.addition_deletion_body_id).show();
+            feedback_modal_vote_buttons.activate(submission_type, id);
+
+        });
+    },
+
+    showSimpleMessage: function(message) {
+        $('#' + feedback_modal.simple_message_body_id).show().text(message);
+    },
+
+    showNoAuthMessage: function() {
+        feedback_modal.showSimpleMessage(feedback_modal.no_auth_message);
+    },
+
+    showNoSubmittionMessage: function() {
+        feedback_modal.showSimpleMessage(feedback_modal.no_submissions_message);
+    }
+};
+
+
+
+
 
 global_submissions_user_not_want_to_vote = {addition: [], deletion: []};
 global_submission_types_without_votes = [];
@@ -357,120 +554,6 @@ var submissionIDsUserAlreadyVoted = function(submission_type, user_id, callback)
 };
 
 
-// Displays message informing user that there are no submissions to vote on.
-var noSubmissionsToVoteOn = function() {
-    $('#feedback_modal_no_submissions_message').show();
-};
-
-var feedbackModalLoading = function(type) {
-    // Type if a boolean. true to activate the loading and false to deactivate it.
-
-    if (type) {
-        $('#feedback_modal_body_addition_deletion').hide();
-        $('#feedback_modal_no_submissions_message').hide();
-        $('#feedback_modal_no_auth').hide();
-        $('#feedback_modal .modal-body').spin();
-    } else if (type === false) {
-        $('#feedback_modal .modal-body').spin(false);
-    }
-};
-
-var activateButtons = function(submission_type, submission_id) {
-
-    $('#feedback_modal_vote_buttons').on('click', 'button', function(event) {
-
-        // Gets id of the button pressed.
-        var button_id = event.target.id;
-
-
-        // If the button pressed was the positive or negative one, makes POST request. Otherwise, show another submission for the user to vote at.
-        if (button_id == 'vote_button_positive' || button_id == 'vote_button_negative') {
-
-            if (submission_type == 'addition') {
-                service_url = base_url + '/pending_addition/' + submission_id + '/';
-            } else if (submission_type == 'deletion') {
-                service_url = base_url + '/pending_deletion/' + submission_id + '/';
-            }
-
-            // What a positive or negative vote means depends on the type of submission (addition or deletion)
-            if (button_id == 'vote_button_positive') {
-                if (submission_type == 'addition') {
-                    service_url += 'positive_vote';
-                } else if (submission_type == 'deletion') {
-                    service_url += 'negative_vote';
-                }
-            } else {
-                if (submission_type == 'addition') {
-                    service_url += 'negative_vote';
-                } else if (submission_type == 'deletion') {
-                    service_url += 'positive_vote';
-                }
-            }
-
-            var access_token_param = getFBAccessTokenParam();
-            service_url += "?" + access_token_param;
-
-            $.ajax({
-                url: service_url,
-                method: 'POST',
-
-                success: function(response) {
-                    onFeedbackModalActivation();
-                },
-
-                error: function(jqXHR, textStatus, errorThrown) {
-                    response_text = $.parseJSON(jqXHR.responseText).message;
-                    alert(response_text);
-                },
-            });
-        } else if (button_id == 'vote_button_neutral') {
-            global_submissions_user_not_want_to_vote[submission_type].push(submission_id);
-            onFeedbackModalActivation();
-        }
-    });
-};
-
-var deactivateButtons = function() {
-   $('#feedback_modal_vote_buttons').off();
-};
-
-var onFeedbackModalActivation = function() {
-
-    feedbackModalLoading(true);
-
-    // Remove handlers from buttons that could be attached to them from the last call of this function.
-    deactivateButtons();
-
-    FB.getLoginStatus(function(response) {
-        if (response.status != 'connected') {
-
-            feedbackModalLoading(false);
-            $('#feedback_modal_no_auth').show();
-
-        } else {
-
-            var types_of_submissions = ['addition', 'deletion'];
-
-            var types_of_submissions_left = $(types_of_submissions).not(global_submission_types_without_votes).get();
-
-            if (types_of_submissions_left.length === 0) {
-                feedbackModalLoading(false);
-                noSubmissionsToVoteOn();
-            } else {
-
-                var submission_type = types_of_submissions_left[Math.floor(Math.random()*types_of_submissions_left.length)];
-
-                var user_id = FB.getUserID();
-
-                $('#feedback_modal .modal-title').text("Should we have this artists on our app?");
-
-                // Gets a list of IDs of the submissions the user already voted and then calls getSubmissionVote with that list as one of the attributes.
-                // This list will be used to avoid that a submission in which the user already voted at appear again.
-                submissionIDsUserAlreadyVoted(submission_type, user_id, getSubmissionToVote);
-            }
-        }
-    });
-};
 
 var getSubmissionToVote = function(submission_type, list_of_submissions_ids, page) {
 
@@ -479,9 +562,9 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
         success: function(content) {
 
             if ($.isEmptyObject(content)) {
-                feedbackModalLoading(false);
+                feedback_modal.deactivateLoading();
                 global_submission_types_without_votes.push(submission_type);
-                onFeedbackModalActivation();
+                feedback_modal.onActivation();
             } else {
                 if (submission_type == 'addition') {
                     submission_info = content.pending_additions[0];
@@ -496,7 +579,7 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
                     getSubmissionToVote(submission_type, list_of_submissions_ids, page + 1);
                 } else {
                     var change_artist_name = submission_info.artist_name;
-                    fillModalDeletionOrAddition(submission_type, change_artist_name, submission_id);
+                    feedback_modal.fillWithArtistInformation(submission_type, change_artist_name, submission_id);
                 }
             }
         },
@@ -507,126 +590,72 @@ var getSubmissionToVote = function(submission_type, list_of_submissions_ids, pag
 
 };
 
-var fillModalDeletionOrAddition = function(submission_type, artist_name, id) {
-
-    $.ajax({
-        url: base_url + '/artist/' + artist_name,
-
-        success: function(response) {
-            createContentForModalDeletionOrAddition(response);
-            feedbackModalLoading(false);
-            $('#feedback_modal_body_addition_deletion').show();
-            activateButtons(submission_type, id);
-        },
-
-        error: function(jqXHR, textStatus, errorThrown) {
-        }
-    });
-};
-
-var createContentForModalDeletionOrAddition = function(response) {
-    var artist_country = response.country;
-    var artist_name = response.name;
-    var artist_genre = titleCaps(response.style);
-    var picture = response.picture_url;
-    var lastfm_url = response.lastfm_url;
-
-    $('#feedback_modal_artist_picture').attr('src', picture);
-    $('#feedback_modal_artist_name').text(artist_name);
-    $('#feedback_modal_country_name').text(artist_country);
-    $('#feedback_modal_genre').text(artist_genre);
-    $('#feedback_modal_lastfm_logo_link').attr('href', lastfm_url);
-};
 
 
 // #### Edition Modal ####
 
-var onEditionModalClosure = function() {
-    $('#edition_modal_submit_button').off();
-    $('#edition_modal').off();
+var editionModal = {
+    id: 'edition_modal',
+    input_id: 'edition_modal_input',
+    form_id: 'edition_modal_form',
+    submitted_screen_id: 'edition_modal_submitted_screen',
+    param_changing: '',
+    onClose: function() {
 
-    $('#edition_modal_input').autocomplete('destroy');
+        edition_modal_submit_button.deactivate();
 
-    $('#edition_modal_input').removeAttr('name type');
+        $('#' + editionModal.id).off();
+        $('#' + editionModal.input_id).autocomplete('destroy');
+        $('#' + editionModal.input_id).removeAttr('name type');
+        $('#' + editionModal.form_id).spin(false);
 
-    $('#edition_modal_form').spin(false);
-};
+    },
 
-var onEditionModalActivation = function(id_btn_pressed) {
-    $('#edition_modal_input').val('');
+    activate: function(id_btn_pressed) {
 
-    $('#edition_modal_form').show();
-    $('#edition_modal_submitted_screen').hide();
+        $('#' + editionModal.input_id).val('');
+        $('#' + editionModal.form_id).show();
+        $('#' + editionModal.submitted_screen_id).hide();
+        $('#' + editionModal.id).modal();
 
-    $('#edition_modal').modal();
+        $('#' + editionModal.id).on('hidden.bs.modal', function(){
+             editionModal.onClose();
+        });
 
-    $('#edition_modal').on('hidden.bs.modal', function(){
-         onEditionModalClosure();
-    });
+        var text_to_show_on_header;
+        var edition_input_id;
+        var edition_input_type;
 
-    var text_to_show_on_header;
-    var edition_input_id;
-    var edition_input_type;
-    var param_changing;
+        if (id_btn_pressed == 'country_edition_btn') {
+            text_to_show_on_header = 'country';
+            edition_input_name = 'country';
+            edition_input_type = 'text';
+            editionModal.param_changing = 'country';
 
-    if (id_btn_pressed == 'country_edition_btn') {
-        text_to_show_on_header = 'country';
-        edition_input_name = 'country';
-        edition_input_type = 'text';
-        param_changing = 'country';
+            activateCountriesAutocomplete();
 
-        activateCountriesAutocomplete();
+        } else if (id_btn_pressed == 'facebook_edition_btn') {
+            text_to_show_on_header = 'Facebook URL';
+            edition_input_name = 'facebook';
+            edition_input_type = 'url';
+            editionModal.param_changing = 'facebook_url';
 
-    } else if (id_btn_pressed == 'facebook_edition_btn') {
-        text_to_show_on_header = 'Facebook URL';
-        edition_input_name = 'facebook';
-        edition_input_type = 'url';
-        param_changing = 'facebook_url';
-
-    } else if (id_btn_pressed == 'genre_edition_btn') {
-        text_to_show_on_header = 'genre';
-        edition_input_name = 'genre';
-        edition_input_type = 'text';
-        param_changing = 'style';
-    }
-
-    $('#attribute_being_edited_edition_modal_header').text(text_to_show_on_header);
-    $('#edition_modal_input').attr('name', edition_input_name);
-    $('#edition_modal_input').attr('type', edition_input_type);
-
-    $('#edition_modal_submit_button').on('click', function(e) {
-        var user_input = $('#edition_modal_input').val();
-        var artist_name = $("#header-artist-zone-name").text();
-
-        ajaxCallPUTArtist(artist_name, param_changing, user_input);
-        e.preventDefault();
-    });
-};
-
-var ajaxCallPUTArtist = function(artist_name, param_changing, value) {
-
-    access_token_param = getFBAccessTokenParam();
-
-    $.ajax({
-        url: base_url + "/artist/" + artist_name + '?' + param_changing + '=' + value + '&' + access_token_param,
-        method: "PUT",
-        beforeSend: function() {
-            $('#edition_modal_form').spin();
-        },
-        success: function(response) {
-            $('#edition_modal_form').spin(false);
-            $('#edition_modal_form').hide();
-            $('#edition_modal_submitted_screen').show();
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            var response_text = $.parseJSON(jqXHR.responseText).message;
-
-            $('#edition_modal_form').spin(false);
-            alert(response_text);
-            $('#edition_modal').modal('hide');
+        } else if (id_btn_pressed == 'genre_edition_btn') {
+            text_to_show_on_header = 'genre';
+            edition_input_name = 'genre';
+            edition_input_type = 'text';
+            editionModal.param_changing = 'style';
         }
-    });
+
+        $('#attribute_being_edited_edition_modal_header').text(text_to_show_on_header);
+        $('#' + editionModal.input_id).attr('name', edition_input_name);
+        $('#' + editionModal.input_id).attr('type', edition_input_type);
+
+        edition_modal_submit_button.activate();
+    }
 };
+
+
 
 
 // #### General ####
@@ -665,23 +694,31 @@ var activateCountriesAutocomplete = function() {
             countries_list.push(data.countries[i].name);
         }
 
-        $('#edition_modal_input').autocomplete({
+        $('#' + editionModal.input_id).autocomplete({
            source: countries_list,
-           appendTo: "#edition_modal_form"
+           appendTo: "#" + editionModal.form_id
         });
 
     });
 };
 
-var closeAlert = function(event) {
-    $(event.target).parent().hide();
-    $(".close").off();
-    event.preventDefault();
-};
 
-var activateWarningModal = function(text) {
-    $('#warning_modal').modal();
-    $('#warning_modal_body_text').text(text);
+// ######## WarningModal #############
+
+var warning_modal = {
+    id: '#warning_modal',
+    body_text_id: '#warning_modal_body_text',
+
+    activate: function() {
+        $(warning_modal.id).modal();
+    },
+    writeTextOnBody: function(text) {
+        $(warning_modal.body_text_id).text(text);
+    },
+    activateWithText: function(text) {
+        warning_modal.activate();
+        warning_modal.writeTextOnBody(text);
+    }
 };
 
 // ###### ONLOAD ####
@@ -716,7 +753,7 @@ $(function() {
 
     submit_artist_button.activate();
 
-    $('#help_us_button').on('click', function() {onFeedbackModalActivation();});
+    $('#help_us_button').on('click', function() {feedback_modal.onActivation();});
 
     $('#feedback-options').on('click', 'li', function() {onFeedbackOptionClick(this);});
 
