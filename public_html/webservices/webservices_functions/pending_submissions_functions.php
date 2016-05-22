@@ -41,7 +41,7 @@ function GETPendingSubmissions($submission_type, $outputType) {
     if ($submission_type == 'edition') {
         foreach ($pending_submissions as $key => $pending_submission) {
             if ($pending_submission['attribute_changing'] == "country_fk") {
-                $pending_submissions[$key]['attribute_changing'] = "country_code";
+                $pending_submissions[$key]['attribute_changing'] = "country";
             } else if ($pending_submission['attribute_changing'] == "facebook_id") {
                 $pending_submissions[$key]['attribute_changing'] = "facebook_url";
             }
@@ -72,7 +72,7 @@ function GETOnePendingSubmission($submission_type, $submission_id, $outputType) 
     $pending_submission = getInformationAboutOnePendingSubmissionPrettyArray($submission_type, $submission_id);
 
     if ($pending_submission['attribute_changing'] == "country_fk" ) {
-        $pending_submission['attribute_changing'] = "country_code";
+        $pending_submission['attribute_changing'] = "country";
     } else if ($pending_submission['attribute_changing'] == "facebook_id") {
         $pending_submission['attribute_changing'] = "facebook_url";
         $pending_submission['old_value'] = "http://facebook.com/" . $pending_submission['old_value'];

@@ -390,11 +390,12 @@ function getInformationAboutOnePendingSubmissionPrettyArray($submission_type, $s
 
         if ($attribute_changing == 'country_fk') {
 
-            $query_string = "SELECT S.id AS id, AR1.name AS artist_name, S.attribute_changing, C1.name_alpha2 AS old_value, C2.name_alpha2 AS new_value, S.yes AS positive_votes, S.no as negative_votes, S.user_id as added_by, S." . $submission_type . "_creation_date as creation_time
+            $query_string = "SELECT S.id AS id, AR1.name AS artist_name, S.attribute_changing, C1.name AS old_value, C2.name AS new_value, S.yes AS positive_votes, S.no as negative_votes, S.user_id as added_by, S." . $submission_type . "_creation_date as creation_time
                             FROM " . ucfirst($submission_type) . " S, Artist AR1, Artist AR2, Country C1, Country C2
                             WHERE AR1.id = S.old_artist_id AND AR2.id = S.new_artist_id AND S.pending = 1 AND S.id = :submission_id AND
-                                AR1." . $attribute_changing . " = C1.id AND AR2." . $attribute_changing . " = C2.id";
+                                AR1.country_fk = C1.id AND AR2.country_fk = C2.id";
         } else {
+
             $query_string = "SELECT S.id AS id, AR1.name AS artist_name, S.attribute_changing, AR1." . $attribute_changing . " AS old_value, AR2." . $attribute_changing . " AS new_value, S.yes AS positive_votes, S.no as negative_votes, S.user_id as added_by, S." . $submission_type . "_creation_date as creation_time
         FROM " . ucfirst($submission_type) . " S, Artist AR1, Artist AR2, Country C
         WHERE AR1.id = S.old_artist_id AND AR2.id = S.new_artist_id AND S.pending = 1 AND S.id = :submission_id";
