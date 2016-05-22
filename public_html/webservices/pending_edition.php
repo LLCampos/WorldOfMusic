@@ -13,7 +13,7 @@ header("access-control-allow-origin: *");
 if (sizeof($path_params) > 1) {
     $edition_id = $path_params[1];
     if (!submissionIDExists('edition', $edition_id)) {
-        $response = "There's no Pending Addition with that ID!";
+        $response = "There's no Pending Edition with that ID!";
         simpleResponse($response, $outputType, 404);
     }
 }
