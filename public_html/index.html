@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script type='text/javascript' src="scripts/script.js"></script>
-    <script type='text/javascript' src="scripts/d3_script.js"></script>
     <script type='text/javascript' src="scripts/facebook.js"></script>
+    <script type='text/javascript' src="scripts/script.js"></script>
+    <script type='text/javascript' src="scripts/modules.js"></script>
+    <script type='text/javascript' src="scripts/d3_script.js"></script>
     <script type="text/javascript" src="scripts/jquery.shorten.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/map_variables.js"></script>
@@ -253,13 +254,14 @@
 
       <div class="modal-body">
 
-        <div class="row" id="feedback_modal_body_addition_deletion">
+        <div class="row" id="feedback_modal_vote_body">
             <img class="artist_picture col-md-4" id="feedback_modal_artist_picture" src='#' alt="picture of the artist">
             <div id="feedback_modal_artist_info" class="col-md-4">
                 <h4 id="feedback_modal_artist_name"></h4>
                 <p><strong>Country:</strong> <span id="feedback_modal_country_name"></span></p>
                 <p><strong>Genre:</strong> <span id="feedback_modal_genre"></span></p>
                 <a id="feedback_modal_lastfm_logo_link" href=""><img id="lastfm-logo-pic" src="resources/images/lastfm-logo.png" alt="last-fm logo"></a>
+                <a id="feedback_modal_facebook_logo_link" href=""><img id="facebook-logo-pic" src="resources/images/facebook-logo.png" alt="facebook logo"></a>
             </div>
             <div id="feedback_modal_vote_buttons" class="btn-group-vertical col-md-4" role="group">
                 <button type="button" id="vote_button_positive" class="btn btn-success">Yes!</button>

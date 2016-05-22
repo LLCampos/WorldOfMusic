@@ -367,7 +367,7 @@ var feedback_options = {
 var feedback_modal = {
 
     id : 'feedback_modal',
-    addition_deletion_body_id: 'feedback_modal_body_addition_deletion',
+    addition_deletion_body_id: 'feedback_modal_vote_body',
     simple_message_body_id: 'simple_message_body',
     title_id: 'feedback_modal .modal-title',
 
@@ -435,12 +435,14 @@ var feedback_modal = {
             var artist_genre = titleCaps(artist_info.style);
             var picture = artist_info.picture_url;
             var lastfm_url = artist_info.lastfm_url;
+            var facebook_url = "https://facebook.com/" + artist_info.facebook_id;
 
             $('#feedback_modal_artist_picture').attr('src', picture);
             $('#feedback_modal_artist_name').text(artist_name);
             $('#feedback_modal_country_name').text(artist_country);
             $('#feedback_modal_genre').text(artist_genre);
             $('#feedback_modal_lastfm_logo_link').attr('href', lastfm_url);
+            $('#feedback_modal_facebook_logo_link').attr('href', facebook_url);
 
             feedback_modal.deactivateLoading();
             $('#' + feedback_modal.addition_deletion_body_id).show();
