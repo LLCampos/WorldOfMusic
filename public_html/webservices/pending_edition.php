@@ -8,6 +8,7 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/pending_
 $outputType = checkClientAcceptMIME();
 $path_params = getPathParams();
 $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
+header("access-control-allow-origin: *");
 
 if (sizeof($path_params) > 1) {
     $edition_id = $path_params[1];

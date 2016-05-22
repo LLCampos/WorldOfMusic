@@ -8,6 +8,7 @@ include_once '/home/aw008/database/users/user_table_functions.php';
 $outputType = checkClientAcceptMIME();
 $path_params = getPathParams();
 $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
+header("access-control-allow-origin: *");
 
 if ($REQUEST_METHOD == 'POST') {
 
