@@ -93,7 +93,7 @@ simpleResponse($response, $outputType, 400);
 * @apiName EditArtist
 * @apiGroup Artist
 * @apiVersion 0.0.1
-* @apiDescription Submits a new edition to approval by other users. In practise, this method creates a new Pending Addition. The edition will be accepted if it receive 5 positive votes. If it receives 5 negatives votes it will not.
+* @apiDescription Submits a new edition to approval by other users. In practise, this method creates a new Pending Edition. The edition will be accepted if it receive 5 positive votes. If it receives 5 negatives votes it will not.
 
 You can only request edition of one parameter.
 *
