@@ -280,11 +280,7 @@ var feedback_modal_vote_buttons = {
             // If the button pressed was the positive or negative one, makes POST request. Otherwise, show another submission for the user to vote at.
             if (button_id == 'vote_button_positive' || button_id == 'vote_button_negative') {
 
-                if (submission_type == 'addition') {
-                    service_url = base_url + '/pending_addition/' + submission_id + '/';
-                } else if (submission_type == 'deletion') {
-                    service_url = base_url + '/pending_deletion/' + submission_id + '/';
-                }
+                service_url = base_url + '/pending_' + submission_type + '/' + submission_id + '/';
 
                 // What a positive or negative vote means depends on the type of submission (addition or deletion)
                 if (button_id == 'vote_button_positive') {
