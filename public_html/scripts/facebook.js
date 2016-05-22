@@ -73,8 +73,6 @@ function statusChangeCallback(response) {
      } else {
         removeUserPictureOnHeader();
      }
-    // From script.js
-    cleanAlerts();
 }
 
 function checkLoginState () {
