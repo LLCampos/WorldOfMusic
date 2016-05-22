@@ -410,7 +410,7 @@ var feedback_modal = {
                     submission_type = user_voting.getRandomTypeOfSubmission();
 
                     if ((submission_type == 'addition') || (submission_type == 'deletion')) {
-                        $('#' + feedback_modal.title_id).text(feedback_modal.addition_deletion_title);
+                        feedback_modal.fillTitle(feedback_modal.addition_deletion_title);
                     }
 
                     $.when(
@@ -461,7 +461,11 @@ var feedback_modal = {
 
     showNoSubmittionMessage: function() {
         feedback_modal.showSimpleMessage(feedback_modal.no_submissions_message);
-    }
+    },
+
+    fillTitle: function(text) {
+        $('#' + feedback_modal.title_id).text(text);
+    },
 };
 
 // ######## WarningModal #############
@@ -601,7 +605,9 @@ var user_voting = {
             } else {
                 if (submission_type == 'addition') {
                     submission_info = content.pending_additions[0];
-                } else {
+                } else if (submission_type == 'deletion') {
+                    submission_info = content.pending_deletions[0];
+                } else if (submission_type == 'edition') {
                     submission_info = content.pending_deletions[0];
                 }
 
