@@ -71,22 +71,22 @@
 
 </section>
 
-<section id="country-zone" vocab="http://schema.org/" typeof="Country" class="">
+<section id="country-zone" vocab="http://schema.org/" prefix="dbp: http://dbpedia.org/property/" typeof="Country" class="">
     <div>
-        <h2 id="country_name" vocab = "http://schema.org/" typeof = "Country" property="name"></h2>
+        <h2 id="country_name" property="name"></h2>
     </div>
     <div>
-        <img id="country_zone_flag" src="#" class="img-responsive" alt="country flag" width="304" height="236" property="dbo:flag" vocab="http://dbpeorg">
+        <img id="country_zone_flag" src="#" class="img-responsive" alt="country flag" width="304" height="236">
     </div>
 
     <div id="country_general_info">
         <div>
             <h5 class="country_zone_title">Capital: </h5>
-            <p id="country_zone_capital" class="country_zone_description" property="dbo:capital" vocab="http://dbpedia.org"></p>
+            <p id="country_zone_capital" class="country_zone_description" property="dbp:capital"></p>
         </div>
         <div>
             <h5 class="country_zone_title">Population: </h5>
-            <p id="country_zone_population" class="country_zone_description" property="dbo:populationTotal" vocab="http://dbpedia.org"></p>
+            <p id="country_zone_population" class="country_zone_description" property="dbp:populationTotal"></p>
         </div>
         <div>
             <h5 class="country_zone_title">Region: </h5>
@@ -108,7 +108,7 @@
 
     <div>
         <h5 class="country_zone_title">Music: </h5>
-        <p id="country_zone_music_description" class="country_zone_description" property="country music"></p>
+        <p id="country_zone_music_description" class="country_zone_description"></p>
     </div>
 
     <div class="row">
@@ -125,7 +125,7 @@
 </section>
 
 <section id="artist-zone">
-<div id = "artist-page" vocab = "http://schema.org/" typeof = "MusicGroup">
+<div id="artist-page" vocab="http://schema.org/" typeof="MusicGroup">
 
     <div id="artist-info-artist-zone" class="container-fluid">
         <header id="header-artist-zone-name" property="name"></header>
@@ -227,8 +227,8 @@
             </div>
 
             <div class="col-md-5 col-sm-8">
-                <div typeof="VideoObject">
-                    <iframe  id="youtube_video_artist" width="480" height="360" src="#" allowfullscreen property="video"></iframe>
+                <div property="video" typeof="VideoObject">
+                    <iframe id="youtube_video_artist" width="480" height="360" src="#" allowfullscreen></iframe>
                 </div>
             </div>
 
