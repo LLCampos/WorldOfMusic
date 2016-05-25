@@ -32,6 +32,7 @@
 <body>
 
 <button type="button" class="btn btn-warning orange_button" data-toggle="modal" data-target="#feedback_modal" id="help_us_button"><span>Help Us Improve Our App!</span></button>
+<button type="button" class="btn btn-warning orange_button" data-toggle="modal" data-target="#about_modal" id="about_button"><span>About</span></button>
 
 <header id='header'>
     <h1 id='header-title-big' class='header-title'>World Of Music</h1>
@@ -320,6 +321,33 @@
          <p id="warning_modal_body_text"></p>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="about_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" id="about-modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title">About</h3>
+      </div>
+
+      <div class="modal-body" id="about-modal-body">
+        <p>This app was developed by <a href="https://github.com/LLCampos">Luís Campos</a>, Ana Pena and Patrícia Abrantes as a project for the Web Applications course at <a href="https://ciencias.ulisboa.pt/">FCUL</a>.</p>
+        <h4>Data Sources</h4>
+        <p>The names of the artists that were used to initially fill our database were obtained using <a href="http://www.last.fm/api">Lastfm API</a> and <a href="http://pt.dbpedia.org/sparql/"> DBPedia SPARQL Endpoint</a>. The information about the artists, with the exception of the Facebook URL and number of likes and Youtube video URL, is also obtained using the Lastfm API.</p>
+        <p>The Facebook pages of the artists and number of likes of that pages were obtained using the <a href="https://developers.facebook.com/docs/graph-api"> Facebook Graph API</a></p>
+        <p>The Youtube video ID was obtained using the <a href="https://developers.google.com/youtube/v3/">Youtube API</a> and the name of the song of the video using, once again, the Lastfm API.</p>
+        <p>The information about the music of each country was obtained using the <a href="https://www.mediawiki.org/wiki/API:Main_page">MediaWiki API</a>.</p>
+        <p>This list of countries and all the other information about the countries was obtained using the <a href="http://restcountries.eu/">REST Countries API</a></p>
+      </div>
+      <div class="modal-footer" id="about-modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
