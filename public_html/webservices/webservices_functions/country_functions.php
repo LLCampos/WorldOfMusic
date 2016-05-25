@@ -91,7 +91,9 @@ function outPutListOfArtistsJSON($result_array) {
         $json['artist'][] = array('name' => $artist);
     }
 
-    echo json_encode($json);
+    $output = checkIfCallback(json_encode($json));
+
+    echo $output;
 }
 
 
@@ -151,7 +153,10 @@ function outPutListOfCountriesJSON($country_codes_array, $country_names_array) {
 
         $json['countries'][] = array('code' => $code, 'name' => $name, "url" => "/country/$code");
     }
-    echo json_encode($json);
+
+    $output = checkIfCallback(json_encode($json));
+
+    echo $output;
 }
 
 
@@ -226,7 +231,9 @@ function outPutCountryInfoJSON($country) {
         'region'=>$region, 'subregion'=>$subregion, 'description_of_music'=>$description_of_music);
     }
 
-    echo json_encode($json);
+    $output = checkIfCallback(json_encode($json));
+
+    echo $output;
 }
 
 

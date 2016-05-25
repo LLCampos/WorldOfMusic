@@ -5,7 +5,9 @@ function simpleResponse($response, $outputType, $code) {
     if ($outputType == "xml") {
         echo "<message>$response</message>";
     } else {
-        echo json_encode(Array("message" => $response));
+        $json = json_encode(Array("message" => $response));
+        $output = checkIfCallback($json);
+        echo $output;
     }
     exit;
 }
@@ -32,12 +34,26 @@ function buildSimpleXMLOutput($entity, $array) {
 }
 
 function buildSimpleJSONOutput($array) {
-    $json = Array();
+    $json_array = Array();
     foreach($array as $key=>$value) {
-      $json[$key] = $value;
+      $json_array[$key] = $value;
     }
 
-    echo json_encode($json);
+    $json = json_encode($json_array);
+
+    $output = checkIfCallback($json);
+
+    echo $output;
+}
+
+function checkIfCallback($json) {
+
+    if (array_key_exists('callback', $_GET)) {
+        $callback = $_GET['callback'];
+        return $callback . '(' . $json . ')';
+    } else {
+        return $json;
+    }
 }
 
 ?>

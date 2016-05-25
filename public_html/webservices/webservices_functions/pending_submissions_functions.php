@@ -63,7 +63,11 @@ function GETPendingSubmissions($submission_type, $outputType) {
         foreach ($pending_submissions as $pending_submission) {
             $json['pending_'. $submission_type . 's'][] = $pending_submission;
         }
-        echo json_encode($json);
+
+    $output = checkIfCallback(json_encode($json));
+
+    echo $output;
+
     }
 }
 
