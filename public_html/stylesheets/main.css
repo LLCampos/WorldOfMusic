@@ -96,7 +96,8 @@ a:hover {
     background-color: #666666;
 }
 
-.modal-header h4 {
+#about-modal-body h4,
+.modal-header h3 {
     color: #FF9933;
     font-weight: 700;
 }
@@ -130,7 +131,11 @@ a:hover {
     padding: 0 15px 15px 15px;
 }
 
-/* ############ Side Button ############# */
+#about-modal-header {
+    padding-bottom: 0;
+}
+
+/* ############ Buttons ############# */
 
 #help_us_button {
     position: fixed;
@@ -145,6 +150,15 @@ a:hover {
     border-bottom-right-radius: 0;
 }
 
+#about_button {
+    position: fixed;
+    bottom: 0px;
+    z-index: 999;
+    right: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0;
+}
 
 /* ############ Header ################## */
 
