@@ -18,7 +18,8 @@ function outPutListOfArtists($country, $outputType) {
 
     $page = checkPageParameter($_GET);
 
-    $query = "SELECT A.name
+    $query = "SELECT A.name, A.style, C.name as country, A.picture_url, A.lastfm_url, A.number_of_lastfm_listeners, A.music_video, A.facebook_id, A.number_of_facebook_likes, A.twitter_url,
+                       A.number_of_twitter_followers, A.musicbrainz_id
               FROM Artist A, Country C
               WHERE C.id = A.country_fk AND C.name_alpha2 = :country AND A.deleted = 0";
 
@@ -52,13 +53,7 @@ function outPutListOfArtists($country, $outputType) {
     $prepared_query->execute() or die("Query failed: " . $conn->errorInfo());
 
     # Coloca os valors da única coluna num array
-    $result_array = array();
-
-    $results = $prepared_query->fetchAll();
-
-    foreach ($results as $row) {
-        $result_array[] = $row['name'];
-    }
+    $result_array = $prepared_query->fetchAll(PDO::FETCH_ASSOC);
 
     if ($outputType == "xml") {
         outPutListOfArtistsXML($result_array);
@@ -74,9 +69,15 @@ function outPutListOfArtistsXML($result_array) {
     echo "<artists>";
 
     foreach ($result_array as $artist) {
-        $artist =  htmlspecialchars($artist);
+
         echo "<artist>";
-        echo "<name>" . $artist . "</name>";
+
+        foreach($artist as $attribute=>$value) {
+            # Transforma of caracteres do $value para caracteres legais de XML
+            $value = htmlentities($value, ENT_XML1, 'UTF-8');
+            echo "<$attribute>$value</$attribute>";
+        }
+
         echo "</artist>";
     }
 
@@ -88,7 +89,7 @@ function outPutListOfArtistsJSON($result_array) {
     $json = array("artist" => array());
 
     foreach ($result_array as $artist) {
-        $json['artist'][] = array('name' => $artist);
+          $json['artist'][] = $artist;
     }
 
     $output = checkIfCallback(json_encode($json));
