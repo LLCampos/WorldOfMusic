@@ -69,16 +69,7 @@ function outPutListOfArtistsXML($result_array) {
     echo "<artists>";
 
     foreach ($result_array as $artist) {
-
-        echo "<artist>";
-
-        foreach($artist as $attribute=>$value) {
-            # Transforma of caracteres do $value para caracteres legais de XML
-            $value = htmlentities($value, ENT_XML1, 'UTF-8');
-            echo "<$attribute>$value</$attribute>";
-        }
-
-        echo "</artist>";
+        buildSimpleXMLOutput('artist', $artist);
     }
 
     echo "</artists>";
