@@ -97,7 +97,7 @@ a:hover {
 }
 
 #about-modal-body h4,
-.modal-header h3 {
+.modal-header {
     color: #FF9933;
     font-weight: 700;
 }
