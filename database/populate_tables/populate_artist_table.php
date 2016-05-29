@@ -58,7 +58,7 @@ function addInfoToArtist($artist_array) {
         $artist_array['style'] = $tag;
         $artist_array['number_of_lastfm_listeners'] = $listeners;
         $artist_array['picture_url'] = $image_big;
-        $artist_array['bibliography'] = $bio;
+        $artist_array['biography'] = $bio;
 
         include_once "/home/aw008/database/facebook_api/facebook_api_functions.php";
 
@@ -112,12 +112,12 @@ function populateArtistsTable($artist_array, $deleted = 0) {
 
     include "/home/aw008/database/connect_to_database.php";
 
-    $sql = $conn->prepare("insert into Artist (name, country_fk, picture_url, bibliography, style, music_video, lastfm_url, number_of_lastfm_listeners, musicbrainz_id, facebook_id, number_of_facebook_likes, Deleted)
-    values (:name, :country_fk, :picture_url, :bibliography, :style, :music_video, :lastfm_url, :number_of_lastfm_listeners, :musicbrainz_id, :facebook_id, :number_of_facebook_likes, :deleted);");
+    $sql = $conn->prepare("insert into Artist (name, country_fk, picture_url, biography, style, music_video, lastfm_url, number_of_lastfm_listeners, musicbrainz_id, facebook_id, number_of_facebook_likes, Deleted)
+    values (:name, :country_fk, :picture_url, :biography, :style, :music_video, :lastfm_url, :number_of_lastfm_listeners, :musicbrainz_id, :facebook_id, :number_of_facebook_likes, :deleted);");
 
     $sql->bindParam(':name', $artist_array['name']);
     $sql->bindParam(':picture_url', $artist_array['picture_url']);
-    $sql->bindParam(':bibliography', $artist_array['bibliography']);
+    $sql->bindParam(':biography', $artist_array['biography']);
     $sql->bindParam(':style', $artist_array['style']);
     $sql->bindParam(':music_video', $artist_array['music_video']);
     $sql->bindParam(':lastfm_url', $artist_array['lastfm_url']);

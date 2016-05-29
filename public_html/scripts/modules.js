@@ -200,7 +200,7 @@ var artist_zone = {
             $('#artist_zone_artist_picture').attr('src', artist_object.picture_url);
             $('#youtube_video_artist').attr('src', 'https://www.youtube.com/embed/' + artist_object.music_video);
 
-            artist_zone.fillBiography(artist_object.bibliography);
+            artist_zone.fillBiography(artist_object.biography);
 
             var facebook_url = 'https://facebook.com/' + artist_object.facebook_id;
             var lastfm_url = artist_object.lastfm_url;

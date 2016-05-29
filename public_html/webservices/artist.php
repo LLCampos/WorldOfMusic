@@ -143,7 +143,7 @@ You can only request edition of one parameter.
 * @apiSuccess (200 OK) {String} picture_url Image of Artist
 * @apiSuccess (200 OK) {String} lastfm_url  URL to Artist Last.fm page
 * @apiSuccess (200 OK) {Number} number_of_lastfm_listeners Number of Artist in Last.fm website
-* @apiSuccess (200 OK) {String} bibliography Short bibliography Artist
+* @apiSuccess (200 OK) {String} biography Short biography Artist
 * @apiSuccess (200 OK) {String} music_video  An ID of one Youtube music video from Artist
 * @apiSuccess (200 OK) {Number} facebook_id Artist Facebook page ID
 * @apiSuccess (200 OK) {Number} number_of_facebook_likes  Number of likes at Artist Facebook Page
@@ -159,7 +159,7 @@ You can only request edition of one parameter.
 *   "picture_url": "http://img2-ak.lst.fm/i/u/174s/4a7fbbf4749645cda4025c1deb829273.png",
 *   "lastfm_url": "http://www.last.fm/music/Capicua",
 *   "number_of_lastfm_listeners": ​3880,
-*   "bibliography": "About CAPICUA\n\nSe chegaste até aqui (...)",
+*   "biography": "About CAPICUA\n\nSe chegaste até aqui (...)",
 *   "music_video": null,
 *   "facebook_id": "272101826169708",
 *   "number_of_facebook_likes": ​80212,
@@ -177,7 +177,7 @@ You can only request edition of one parameter.
 *     <picture_url>http://img2-ak.lst.fm/i/u/174s/4a7fbbf4749645cda4025c1deb829273.png</picture_url>
 *     <lastfm_url>http://www.last.fm/music/Capicua</lastfm_url>
 *     <number_of_lastfm_listeners>3880</number_of_lastfm_listeners>
-*     <bibliography>About CAPICUA\n\nSe chegaste até aqui (...)</bibliography>
+*     <biography>About CAPICUA\n\nSe chegaste até aqui (...)</biography>
 *     <music_video/>
 *     <facebook_id>272101826169708</facebook_id>
 *     <number_of_facebook_likes>80212</number_of_facebook_likes>

@@ -9,7 +9,7 @@ function createArtistsTable() {
             name varchar(200) unique,
             country varchar(200),
             picture_url varchar(500),
-            bibliography text,
+            biography text,
             style varchar(200),
             music_video varchar(500),
             lastfm_url varchar(500),
