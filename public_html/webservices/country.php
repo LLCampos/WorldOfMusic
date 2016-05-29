@@ -163,41 +163,68 @@ simpleResponse($response, $outputType, 400);
 * @apiSuccessExample {json} Success Response (JSON):
 * {
 *   "artist": [
-*     {
-*       "name": "Jorge Palma"
-*     },
-*     {
-*       "name": "Ena P\u00e1 2000"
-*     },
-*     {
-*       "name": "Capicua"
-*     },
-*     {
-*       "name": "Regula"
-*     },
-*     {
-*       "name": "Virgem Suta"
-*     }
+*       {
+*           "name": "Jorge Palma",
+*           "style": "singer-songwriter",
+*           "country": "Portugal",
+*           "picture_url": "http://img2-ak.lst.fm/i/u/174s/3e48b70219b24a03a7e7bc8cee06de9f.png",
+*           "lastfm_url": "http://www.last.fm/music/Jorge+Palma",
+*           "number_of_lastfm_listeners": 23591,
+*           "music_video": "NgUPRDIwu1U",
+*           "facebook_id": "288425643789",
+*           "number_of_facebook_likes": 239059,
+*           "twitter_url": null,
+*           "number_of_twitter_followers": null,
+*           "musicbrainz_id": "386c9f8f-31d8-4815-b4c5-7c875f96c2b0"
+*       },
+*       {
+*
+*           "name": "Ena Pá 2000",
+*           "style": "rock",
+*           "country": "Portugal",
+*           "picture_url": "http://img2-ak.lst.fm/i/u/174s/dd106ce8a47a45e486e6ffe890ae3eb8.png",
+*           "lastfm_url": "http://www.last.fm/music/+noredirect/Ena+P%C3%A1+2000",
+*           "number_of_lastfm_listeners": 4971,
+*           "music_video": "CR6K5iaAHho",
+*           "facebook_id": "137403672998884",
+*           "number_of_facebook_likes": 4435,
+*           "twitter_url": null,
+*           "number_of_twitter_followers": null,
+*           "musicbrainz_id": "4dc776c2-a16e-46d8-8a81-8c63804f373f"
+*       }
 *   ]
 * }
 *
 * @apiSuccessExample {xml} Success Response (XML)
 * <artists>
-*     <artist>
-*         <name>Jorge Palma</name>
-*     </artist>
-*     <artist>
-*         <name>Ena P&#xE1; 2000</name>
-*     </artist>
-*     <artist>
-*         <name>Capicua</name>
-*     </artist>
-*     <artist>
-*         <name>Regula</name>
-*     </artist>
-*     <artist>
-*         <name>Virgem Suta</name>
-*     </artist>
+*    <artist>
+*        <name>Jorge Palma</name>
+*        <style>singer-songwriter</style>
+*        <country>Portugal</country>
+*        <picture_url>http://img2-ak.lst.fm/i/u/174s/3e48b70219b24a03a7e7bc8cee06de9f.png</picture_url>
+*        <lastfm_url>http://www.last.fm/music/Jorge+Palma</lastfm_url>
+*        <number_of_lastfm_listeners>23591</number_of_lastfm_listeners>
+*        <music_video>NgUPRDIwu1U</music_video>
+*        <facebook_id>288425643789</facebook_id>
+*        <number_of_facebook_likes>239059</number_of_facebook_likes>
+*        <twitter_url/>
+*        <number_of_twitter_followers/>
+*        <musicbrainz_id>386c9f8f-31d8-4815-b4c5-7c875f96c2b0</musicbrainz_id>
+*    </artist>
+*    <artist>
+*        <name>Ena P&#xE1; 2000</name>
+*        <style>rock</style>
+*        <country>Portugal</country>
+*        <picture_url>http://img2-ak.lst.fm/i/u/174s/dd106ce8a47a45e486e6ffe890ae3eb8.png</picture_url>
+*        <lastfm_url>http://www.last.fm/music/+noredirect/Ena+P%C3%A1+2000</lastfm_url>
+*        <number_of_lastfm_listeners>4971</number_of_lastfm_listeners>
+*        <music_video>CR6K5iaAHho</music_video>
+*        <facebook_id>137403672998884</facebook_id>
+*        <number_of_facebook_likes>4435</number_of_facebook_likes>
+*        <twitter_url/>
+*        <number_of_twitter_followers/>
+*        <musicbrainz_id>4dc776c2-a16e-46d8-8a81-8c63804f373f</musicbrainz_id>
+*    </artist>
 * </artists>
 */
 
