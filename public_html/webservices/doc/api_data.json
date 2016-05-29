@@ -99,7 +99,7 @@
     "name": "EditArtist",
     "group": "Artist",
     "version": "0.0.1",
-    "description": "<p>Submits a new edition to approval by other users. In practise, this method creates a new Pending Addition. The edition will be accepted if it receive 5 positive votes. If it receives 5 negatives votes it will not.</p> <p>You can only request edition of one parameter.</p>",
+    "description": "<p>Submits a new edition to approval by other users. In practise, this method creates a new Pending Edition. The edition will be accepted if it receive 5 positive votes. If it receives 5 negatives votes it will not.</p> <p>You can only request edition of one parameter.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -121,8 +121,8 @@
             "group": "Parameter",
             "type": "String",
             "optional": true,
-            "field": "country_code",
-            "description": "<p>New ISO 3166-1 alpha-2 country code of Artist</p>"
+            "field": "country",
+            "description": "<p>New country name or ISO 3166-1 alpha-2 country code of Artist</p>"
           },
           {
             "group": "Parameter",
@@ -218,8 +218,8 @@
             "group": "200 OK",
             "type": "String",
             "optional": false,
-            "field": "bibliography",
-            "description": "<p>Short bibliography Artist</p>"
+            "field": "biography",
+            "description": "<p>Short biography Artist</p>"
           },
           {
             "group": "200 OK",
@@ -268,12 +268,12 @@
       "examples": [
         {
           "title": "Success Response (JSON):",
-          "content": "{\n  \"name\": \"Capicua\",\n  \"style\": \"hip-hop\",\n  \"country\": \"Portugal\",\n  \"picture_url\": \"http://img2-ak.lst.fm/i/u/174s/4a7fbbf4749645cda4025c1deb829273.png\",\n  \"lastfm_url\": \"http://www.last.fm/music/Capicua\",\n  \"number_of_lastfm_listeners\": ​3880,\n  \"bibliography\": \"About CAPICUA\\n\\nSe chegaste até aqui (...)\",\n  \"music_video\": null,\n  \"facebook_id\": \"272101826169708\",\n  \"number_of_facebook_likes\": ​80212,\n  \"twitter_url\": null,\n  \"number_of_twitter_followers\": null,\n  \"musicbrainz_id\": \"451107dc-7d40-4bd4-86e6-f76e566ff17b\"\n}",
+          "content": "{\n  \"name\": \"Capicua\",\n  \"style\": \"hip-hop\",\n  \"country\": \"Portugal\",\n  \"picture_url\": \"http://img2-ak.lst.fm/i/u/174s/4a7fbbf4749645cda4025c1deb829273.png\",\n  \"lastfm_url\": \"http://www.last.fm/music/Capicua\",\n  \"number_of_lastfm_listeners\": ​3880,\n  \"biography\": \"About CAPICUA\\n\\nSe chegaste até aqui (...)\",\n  \"music_video\": null,\n  \"facebook_id\": \"272101826169708\",\n  \"number_of_facebook_likes\": ​80212,\n  \"twitter_url\": null,\n  \"number_of_twitter_followers\": null,\n  \"musicbrainz_id\": \"451107dc-7d40-4bd4-86e6-f76e566ff17b\"\n}",
           "type": "json"
         },
         {
           "title": "Success Response (XML)",
-          "content": "<?xml version=\"1.0\"?>\n<artist>\n    <name>Capicua</name>\n    <style>hip-hop</style>\n    <country>Portugal</country>\n    <picture_url>http://img2-ak.lst.fm/i/u/174s/4a7fbbf4749645cda4025c1deb829273.png</picture_url>\n    <lastfm_url>http://www.last.fm/music/Capicua</lastfm_url>\n    <number_of_lastfm_listeners>3880</number_of_lastfm_listeners>\n    <bibliography>About CAPICUA\\n\\nSe chegaste até aqui (...)</bibliography>\n    <music_video/>\n    <facebook_id>272101826169708</facebook_id>\n    <number_of_facebook_likes>80212</number_of_facebook_likes>\n    <twitter_url/>\n    <number_of_twitter_followers/>\n    <musicbrainz_id>451107dc-7d40-4bd4-86e6-f76e566ff17b</musicbrainz_id>\n</artist>",
+          "content": "<?xml version=\"1.0\"?>\n<artist>\n    <name>Capicua</name>\n    <style>hip-hop</style>\n    <country>Portugal</country>\n    <picture_url>http://img2-ak.lst.fm/i/u/174s/4a7fbbf4749645cda4025c1deb829273.png</picture_url>\n    <lastfm_url>http://www.last.fm/music/Capicua</lastfm_url>\n    <number_of_lastfm_listeners>3880</number_of_lastfm_listeners>\n    <biography>About CAPICUA\\n\\nSe chegaste até aqui (...)</biography>\n    <music_video/>\n    <facebook_id>272101826169708</facebook_id>\n    <number_of_facebook_likes>80212</number_of_facebook_likes>\n    <twitter_url/>\n    <number_of_twitter_followers/>\n    <musicbrainz_id>451107dc-7d40-4bd4-86e6-f76e566ff17b</musicbrainz_id>\n</artist>",
           "type": "xml"
         }
       ]
@@ -526,12 +526,12 @@
       "examples": [
         {
           "title": "Success Response (JSON):",
-          "content": "{\n  \"artist\": [\n    {\n      \"name\": \"Jorge Palma\"\n    },\n    {\n      \"name\": \"Ena P\\u00e1 2000\"\n    },\n    {\n      \"name\": \"Capicua\"\n    },\n    {\n      \"name\": \"Regula\"\n    },\n    {\n      \"name\": \"Virgem Suta\"\n    }\n  ]\n}",
+          "content": "{\n  \"artist\": [\n      {\n          \"name\": \"Jorge Palma\",\n          \"style\": \"singer-songwriter\",\n          \"country\": \"Portugal\",\n          \"picture_url\": \"http://img2-ak.lst.fm/i/u/174s/3e48b70219b24a03a7e7bc8cee06de9f.png\",\n          \"lastfm_url\": \"http://www.last.fm/music/Jorge+Palma\",\n          \"number_of_lastfm_listeners\": 23591,\n          \"music_video\": \"NgUPRDIwu1U\",\n          \"facebook_id\": \"288425643789\",\n          \"number_of_facebook_likes\": 239059,\n          \"twitter_url\": null,\n          \"number_of_twitter_followers\": null,\n          \"musicbrainz_id\": \"386c9f8f-31d8-4815-b4c5-7c875f96c2b0\"\n      },\n      {\n\n          \"name\": \"Ena Pá 2000\",\n          \"style\": \"rock\",\n          \"country\": \"Portugal\",\n          \"picture_url\": \"http://img2-ak.lst.fm/i/u/174s/dd106ce8a47a45e486e6ffe890ae3eb8.png\",\n          \"lastfm_url\": \"http://www.last.fm/music/+noredirect/Ena+P%C3%A1+2000\",\n          \"number_of_lastfm_listeners\": 4971,\n          \"music_video\": \"CR6K5iaAHho\",\n          \"facebook_id\": \"137403672998884\",\n          \"number_of_facebook_likes\": 4435,\n          \"twitter_url\": null,\n          \"number_of_twitter_followers\": null,\n          \"musicbrainz_id\": \"4dc776c2-a16e-46d8-8a81-8c63804f373f\"\n      }\n  ]\n}",
           "type": "json"
         },
         {
           "title": "Success Response (XML)",
-          "content": "<artists>\n    <artist>\n        <name>Jorge Palma</name>\n    </artist>\n    <artist>\n        <name>Ena P&#xE1; 2000</name>\n    </artist>\n    <artist>\n        <name>Capicua</name>\n    </artist>\n    <artist>\n        <name>Regula</name>\n    </artist>\n    <artist>\n        <name>Virgem Suta</name>\n    </artist>\n</artists>",
+          "content": "<artists>\n   <artist>\n       <name>Jorge Palma</name>\n       <style>singer-songwriter</style>\n       <country>Portugal</country>\n       <picture_url>http://img2-ak.lst.fm/i/u/174s/3e48b70219b24a03a7e7bc8cee06de9f.png</picture_url>\n       <lastfm_url>http://www.last.fm/music/Jorge+Palma</lastfm_url>\n       <number_of_lastfm_listeners>23591</number_of_lastfm_listeners>\n       <music_video>NgUPRDIwu1U</music_video>\n       <facebook_id>288425643789</facebook_id>\n       <number_of_facebook_likes>239059</number_of_facebook_likes>\n       <twitter_url/>\n       <number_of_twitter_followers/>\n       <musicbrainz_id>386c9f8f-31d8-4815-b4c5-7c875f96c2b0</musicbrainz_id>\n   </artist>\n   <artist>\n       <name>Ena P&#xE1; 2000</name>\n       <style>rock</style>\n       <country>Portugal</country>\n       <picture_url>http://img2-ak.lst.fm/i/u/174s/dd106ce8a47a45e486e6ffe890ae3eb8.png</picture_url>\n       <lastfm_url>http://www.last.fm/music/+noredirect/Ena+P%C3%A1+2000</lastfm_url>\n       <number_of_lastfm_listeners>4971</number_of_lastfm_listeners>\n       <music_video>CR6K5iaAHho</music_video>\n       <facebook_id>137403672998884</facebook_id>\n       <number_of_facebook_likes>4435</number_of_facebook_likes>\n       <twitter_url/>\n       <number_of_twitter_followers/>\n       <musicbrainz_id>4dc776c2-a16e-46d8-8a81-8c63804f373f</musicbrainz_id>\n   </artist>\n</artists>",
           "type": "xml"
         }
       ]
