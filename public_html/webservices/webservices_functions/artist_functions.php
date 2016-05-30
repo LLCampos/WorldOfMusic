@@ -12,14 +12,30 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
 
       $query = $conn->prepare("SELECT a.name, a.style, c.name as country, a.picture_url, a.lastfm_url, a.number_of_lastfm_listeners,
                        a.biography, a.music_video, a.facebook_id, a.number_of_facebook_likes, a.twitter_url,
-                       a.number_of_twitter_followers, a.musicbrainz_id
+                       a.number_of_twitter_followers, a.musicbrainz_id, a.Deleted
                 FROM Artist as a, Country as c
                 WHERE a.name = :artist_name AND c.id = a.country_fk");
 
       $query->execute(array(':artist_name' => $artist_name)) or die("Query failed: " . $query->errorInfo());
 
-      # Fetch the only row of the result
-      $artist_info = $query->fetch(PDO::FETCH_ASSOC);
+      $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+      # If there is only one record of the artist, return that one. If not, return the one which is visible.
+      if (sizeof($results) == 1) {
+        $artist_info = $results[0];
+
+      } else {
+        foreach ($results as $record) {
+          if ($record["Deleted"] == "0") {
+            $artist_info = $record;
+            break;
+          }
+        }
+      }
+
+      unset($artist_info['Deleted']);
+
+      require "/home/aw008/database/disconnect_database.php";
 
       if ($outputType == "xml") {
         buildSimpleXMLOutput('artist', $artist_info);
@@ -27,7 +43,6 @@ include_once "/home/aw008/public_html/webservices/webservices_functions/response
         buildSimpleJSONOutput($artist_info);
       }
 
-      require "/home/aw008/database/disconnect_database.php";
     } else {
         include_once "/home/aw008/public_html/webservices/webservices_functions/responses_utility_functions.php";
         $response = 'Artist/Group is not in the database.';
