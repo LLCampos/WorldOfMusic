@@ -370,7 +370,7 @@ var feedback_modal = {
     no_auth_message: 'You have to be authenticated to use this feature.',
     no_submissions_message: 'There are currently no submissions for you to vote at. You can explore the rest of the app. :)',
 
-    addition_deletion_title: 'Should we have this artists on our app?',
+    addition_deletion_title: 'Should we have this artist on our app?',
     country_edition_title: 'Is the country of this artist correct?',
     facebook_edition_title: 'Is the Facebook URL of this artist correct?',
     genre_edition_title: 'Is the genre of this artist correct?',
