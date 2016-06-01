@@ -1,11 +1,8 @@
 var create_artist_circle_graphs = function(max_facebook, current_facebook, facebook_url, max_lastfm, current_lastfm, lastfm_url) {
 
-    var color_facebook = '#3b5998';
-    var color_lastfm = '#AD434A';
-
     data = [
-            {name: 'Lastfm', name_of_interaction: 'listeners', max_size: max_lastfm, current_size: current_lastfm, color: color_lastfm, url: lastfm_url},
-            {name: 'Facebook', name_of_interaction: 'likes', max_size: max_facebook, current_size: current_facebook, color: color_facebook, url: facebook_url},
+            {name: 'Lastfm', name_of_interaction: 'listeners', max_size: max_lastfm, current_size: current_lastfm, color: color.lastfm, url: lastfm_url},
+            {name: 'Facebook', name_of_interaction: 'likes', max_size: max_facebook, current_size: current_facebook, color: color.facebook, url: facebook_url},
             ];
 
     max_circle_radius = 100;

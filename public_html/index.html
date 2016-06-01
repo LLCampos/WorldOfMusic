@@ -9,6 +9,7 @@
     <script type='text/javascript' src="scripts/modules.js"></script>
     <script type='text/javascript' src="scripts/facebook.js"></script>
     <script type='text/javascript' src="scripts/d3_script.js"></script>
+    <script type='text/javascript' src="scripts/d3_bar_chart.js"></script>
     <script type="text/javascript" src="scripts/jquery.shorten.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/map_variables.js"></script>
@@ -74,7 +75,7 @@
 
 <section id="country-zone" vocab="http://schema.org/" prefix="dbp: http://dbpedia.org/property/" typeof="Country" class="">
     <div>
-        <h2 id="country_name" property="name"></h2>
+        <h2 id="country_zone_header" property="name"><span class="country_name"></span></h2>
     </div>
     <div>
         <img id="country_zone_flag" src="#" class="img-responsive" alt="country flag" width="304" height="236">
@@ -112,12 +113,16 @@
         <p id="country_zone_music_description" class="country_zone_description"></p>
     </div>
 
-    <div class="row">
-
-        <div id="country_artists_top">
-            <ol>
-
-            </ol>
+    <div class="row" id="country_zone_top_and_random_button">
+        <div id="artist_top">
+            <h3 id="artist_top_header">Top 10 Artists from <span class="country_name"></span></h3>
+            <div class="btn-group" id="type_of_artist_top_buttons">
+                <button class="btn btn-default facebook_button" id="facebook_artist_top_button">Facebook Likes</button>
+                <button class="btn btn-default lastfm_button" id="lastfm_artist_top_button">LastFM Listeners</button>
+            </div>
+            <div id="artist_top_chart">
+                <svg id="artist_top_chart_svg"></svg>
+            </div>
         </div>
 
         <button type="button" class="btn btn-warning orange_button" id="go-to-random-artist-button"><span>Take me to a random artist!</span></button>

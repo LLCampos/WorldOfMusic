@@ -54,6 +54,39 @@ a:hover {
     border: none;
 }
 
+
+.facebook_button,
+.lastfm_button {
+    color: white;
+    border: none;
+}
+
+.lastfm_button {
+    background-color: #AD434A;
+}
+
+.facebook_button {
+    background-color: #3b5998;
+}
+
+.lastfm_button:hover,
+.lastfm_button:focus,
+.lastfm_button:active {
+    color: white;
+    background-color: #AD434A;
+    filter: brightness(130%);
+    opacity: .8;
+}
+
+.facebook_button:hover,
+.facebook_button:focus,
+.facebook_button:active {
+    color: white;
+    background-color: #3b5998;
+    filter: brightness(130%);
+    opacity: .8;
+}
+
 .options {
     position: absolute;
     padding: 0;
@@ -160,6 +193,10 @@ a:hover {
     border-top-right-radius: 0;
 }
 
+#go-to-random-artist-button {
+    display: block;
+}
+
 /* ############ Header ################## */
 
 #header {
@@ -249,7 +286,7 @@ a:hover {
     text-align: justify;
 }
 
-#country_name {
+#country_zone_header {
     text-align: center;
     color: white;
     margin: 1em 0;
@@ -285,31 +322,73 @@ a:hover {
     padding: 0.3em;
 }
 
-#country_artists_top {
+#country_zone_top_and_random_button {
+    margin: 0;
+    display: inline;
+}
+
+#artist_top_chart {
+    padding: 1em 0;
+}
+
+#artist_top_chart_svg rect {
+    fill: fillColor;
+}
+
+#artist_top_chart_svg .legend {
+  fill: black;
+  font: 14px sans-serif;
+  text-anchor: start;
+  font-size: 12px;
+}
+
+#artist_top_chart_svg text {
+  fill: white;
+  font: 12px sans-serif;
+  text-anchor: end;
+}
+
+#artist_top_chart_svg .label {
+  fill: white;
+  font: 14px sans-serif;
+  text-anchor: end;
+}
+
+#artist_top_chart_svg g:hover > * {
+    fill: #FF9933;
+    cursor: pointer;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+/*
+#artist_top_chart_svg {
     margin: 10px 0;
     width: 250px;
     background-color: rgb(102, 102, 102);
 }
 
-#country_artists_top ol {
+#artist_top_chart_svg ol {
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-#country_artists_top li {
+#artist_top_chart_svg li {
     font-weight: 600;
 }
 
-#country_artists_top p {
+#artist_top_chart_svg p {
     display: inline-block;
     margin-bottom: 2px;
 }
 
-#country_artists_top li p:hover {
-    text-decoration: underline;
-    color: #FF9933;
-    cursor: pointer;
-}
+
+*/
 
 #country_general_info {
     display: inline-block;

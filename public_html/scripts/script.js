@@ -30,6 +30,7 @@ var setHeights = function() {
 var onPageResize = function() {
     setHeights();
     map_zone.updateMap();
+    top_artist_zone.updateSize();
 };
 
 var activateCountriesAutocomplete = function() {
@@ -153,8 +154,9 @@ $(function() {
     map_zone.insertMap('world_mill');
     map_zone.activateOptions();
 
-    $('#country_artists_top').on('click', 'p', function() {artist_zone.update($(this).text());});
+    $('#artist_top_chart_svg').on('click', 'p', function() {artist_zone.update($(this).text());});
 
+    type_of_vote_buttons.activate();
     go_to_random_artist_button.activate();
     submit_artist_button.activate();
     help_us_button.activate();

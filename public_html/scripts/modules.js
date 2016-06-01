@@ -1,6 +1,9 @@
-// ########## User #################
+// ########## Colors #################
 
-
+var color = {
+    facebook: '#3b5998',
+    lastfm: '#AD434A',
+};
 
 // ######### Map Zones ############# //
 
@@ -53,9 +56,11 @@ var map_zone = {
 var country_zone = {
 
     current_country_code: '',
+    top_10_artists_likes: [],
+    top_10_artists_listeners: [],
 
     clear: function() {
-        $('#country_name').empty();
+        $('.country_name').empty();
         $('#country_zone_capital').empty();
         $('#country_zone_population').empty();
         $('#country_zone_region').empty();
@@ -63,7 +68,6 @@ var country_zone = {
         $('#country_zone_music_description').empty();
         $('#country_zone_music_description').removeData();
         $('#country_zone_flag').attr('src', '#');
-        $('#country_artists_top ol').empty();
     },
 
     scrollTo: function() {
@@ -85,7 +89,7 @@ var country_zone = {
 
             country_zone.clear();
 
-            $('#country_name').text(country_info.name);
+            $('.country_name').text(country_info.name);
             $('#country_zone_capital').text(country_info.capital);
             $('#country_zone_population').text(country_info.population);
             $('#country_zone_region').text(country_info.region);
@@ -99,7 +103,18 @@ var country_zone = {
                 showChars: 200,
             });
 
-            country_zone.fillTopArtistsChart(10, 'likes');
+            $.when(
+
+                getCountryArtists(country_zone.current_country_code, 10, "likes"),
+                getCountryArtists(country_zone.current_country_code, 10, "lastfm")
+
+            ).then(function(response_top_10_artists_likes, response_top_10_artists_listeners) {
+
+                country_zone.top_10_artists_likes = response_top_10_artists_likes[0].artist;
+                country_zone.top_10_artists_listeners = response_top_10_artists_listeners[0].artist;
+
+                top_artist_zone.fillTopArtistsChart('likes');
+            });
         });
     },
 
@@ -109,18 +124,46 @@ var country_zone = {
         country_zone.fill();
         country_zone.scrollTo();
     },
+};
 
-    fillTopArtistsChart: function(number_of_artists, order) {
-        var ajax_call = getCountryArtists(country_zone.current_country_code, number_of_artists, order);
-
-        ajax_call.then(function(list_of_artists) {
-
-            $.each(list_of_artists.artist, function(i, artist) {
-                $('#country_artists_top ol').append('<li><p>' + artist.name + '</p></li>');
-            });
-
-        });
+var top_artist_zone = {
+    svg_id: "artist_top_chart_svg",
+    current_type: "",
+    activateClickBars: function() {
+        $("#" + top_artist_zone.svg_id).on("click", "g", function(event) {top_artist_zone.clickOnBar(event);});
     },
+    deactivateClickBars: function() {
+        $("#" + top_artist_zone.svg_id).off();
+    },
+    clickOnBar: function(event) {
+        var artist_name = $(event.target).parent().children(".label").text();
+
+        artist_zone.update(artist_name);
+    },
+    updateSize: function() {
+        if (top_artist_zone.current_type !== "") {
+            top_artist_zone.fillTopArtistsChart(top_artist_zone.current_type);
+        }
+    },
+    fillTopArtistsChart: function(type) {
+
+        top_artist_zone.current_type = type;
+
+        top_artist_zone.deactivateClickBars();
+        top_artist_zone.activateClickBars();
+
+        $('#' + top_artist_zone.svg_id).empty();
+
+        var artist_list;
+        if (type == "likes") {
+            artist_list = country_zone.top_10_artists_likes;
+        } else if (type == "listeners") {
+            artist_list = country_zone.top_10_artists_listeners;
+        }
+
+        barchart_top_artists(artist_list, type, "#" + top_artist_zone.svg_id);
+    },
+
 };
 
 
@@ -355,6 +398,27 @@ var feedback_options = {
             editionModal.activate(id_btn_pressed);
         }
     },
+};
+
+var type_of_vote_buttons = {
+    id: "type_of_artist_top_buttons",
+    listeners_button_id: "lastfm_artist_top_button",
+    facebook_button_id: "facebook_artist_top_button",
+    click: function (event) {
+        var button_id = event.target.id;
+
+        if (button_id == type_of_vote_buttons.listeners_button_id) {
+            top_artist_zone.fillTopArtistsChart("listeners");
+        } else if (button_id == type_of_vote_buttons.facebook_button_id) {
+            top_artist_zone.fillTopArtistsChart("likes");
+        }
+    },
+    activate: function() {
+        $("#" + type_of_artist_top_buttons.id).on('click', "button", function(event) {type_of_vote_buttons.click(event);});
+    },
+    deactivate: function() {
+         $("#" + type_of_artist_top_buttons.id).off();
+    }
 };
 
 
